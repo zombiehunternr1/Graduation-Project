@@ -73,6 +73,9 @@ crashlytics-build.properties
 # Never ignore DLLs in the FMOD subfolder.
 !/[Aa]ssets/Plugins/FMOD/**/lib/*
 
+# Ignore FMOD plists files.
+/[Aa]ssets/Plugins/FMOD/**/lib/info.plist
+
 # Don't ignore images and gizmos used by FMOD in the Unity Editor.
 !/[Aa]ssets/Plugins/Gizmos/FMOD/*
 !/[Aa]ssets/Plugins/Editor Default Resources/FMOD/*
