@@ -4,10 +4,11 @@ using TMPro;
 using ZXing;
 using ZXing.Common;
 
-public class QRCodeGenerator : MonoBehaviour
+public class QRCodeTextGenerator : MonoBehaviour
 {
     [SerializeField] private RawImage _qrCodeImage;
     [SerializeField] private TMP_InputField _textInputField;
+    [SerializeField] private GameObject _objectToDisplay;
     private Texture2D _storedEncodedTexture;
 
     void Start()
@@ -29,12 +30,12 @@ public class QRCodeGenerator : MonoBehaviour
         {
             _textWrite = _textInputField.text;
         }
-        Color32[] _convertPixelsToTexture = Encode(_textWrite, _storedEncodedTexture.width, _storedEncodedTexture.height);
+        Color32[] _convertPixelsToTexture = EncodeText(_textWrite, _storedEncodedTexture.width, _storedEncodedTexture.height);
         _storedEncodedTexture.SetPixels32(_convertPixelsToTexture);
         _storedEncodedTexture.Apply();
         _qrCodeImage.texture = _storedEncodedTexture;
     }
-    private Color32[] Encode(string textForEncoding, int width, int height)
+    private Color32[] EncodeText(string textForEncoding, int width, int height)
     {
         BarcodeWriter writer = new BarcodeWriter
         {
