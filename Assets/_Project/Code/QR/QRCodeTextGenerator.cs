@@ -8,7 +8,6 @@ public class QRCodeTextGenerator : MonoBehaviour
 {
     [SerializeField] private RawImage _qrCodeImage;
     [SerializeField] private TMP_InputField _textInputField;
-    [SerializeField] private GameObject _objectToDisplay;
     private Texture2D _storedEncodedTexture;
 
     void Start()
