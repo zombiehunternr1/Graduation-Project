@@ -618,8 +618,8 @@ MonoBehaviour:
   - {fileID: 1123108241}
   - {fileID: 994668730}
   _objectList:
-  - {fileID: 6595995094671200216, guid: 59bcbf54197438f4a85e17c9db7c9c8d, type: 3}
-  - {fileID: 2032555531198519456, guid: 55cb809fcfe29ca4a89afd07547ad256, type: 3}
+  - {fileID: 2383458734725716552, guid: 59bcbf54197438f4a85e17c9db7c9c8d, type: 3}
+  - {fileID: 8853623610238404252, guid: 55cb809fcfe29ca4a89afd07547ad256, type: 3}
 --- !u!1 &994668728
 GameObject:
   m_ObjectHideFlags: 0
