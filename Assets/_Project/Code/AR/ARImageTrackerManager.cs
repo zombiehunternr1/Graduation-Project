@@ -1,38 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
 using UnityEngine.XR.ARFoundation;
+using TMPro;
 
 
 public class ARImageTrackerManager : MonoBehaviour
 {
     [SerializeField] private ARTrackedImageManager _arTrackedImageManager;
-    [SerializeField] private List<GameObject> _cubesToSpawn;
-    private List<GameObject> _cubesExist = new List<GameObject>();
-
+    [SerializeField] private TextMeshProUGUI _greenText;
+    [SerializeField] private TextMeshProUGUI _blueText;
     private void OnEnable()
     {
-        _arTrackedImageManager.trackedImagesChanged += OnColorDetected;
+        _arTrackedImageManager.trackedImagesChanged += OnImageTrackedChanged;
     }
     private void OnDisable()
     {
-        _arTrackedImageManager.trackedImagesChanged -= OnColorDetected;
+        _arTrackedImageManager.trackedImagesChanged -= OnImageTrackedChanged;
     }
-    private void OnColorDetected(ARTrackedImagesChangedEventArgs args)
+
+    GameObject _spawnBlue;
+    GameObject _spawnGreen;
+    private void OnImageTrackedChanged(ARTrackedImagesChangedEventArgs args)
     {
-        foreach(ARTrackedImage trackedImage in args.added)
+        foreach (ARTrackedImage trackedImage in args.added)
         {
-            for(int i = 0; i < _cubesToSpawn.Count; i++)
+            if(_spawnGreen == null)
             {
-                if(trackedImage.name == _cubesToSpawn[i].GetComponent<Material>().name)
+                _spawnGreen = Instantiate(trackedImage.gameObject);
+            }
+            if(_spawnBlue == null)
+            {
+                _spawnBlue = Instantiate(trackedImage.gameObject);
+            }
+            if(trackedImage.trackingState != UnityEngine.XR.ARSubsystems.TrackingState.None)
+            {
+                if(trackedImage.referenceImage.name == "Blue")
                 {
-                    if (!_cubesExist.Contains(_cubesToSpawn[i]))
-                    {
-                        _arTrackedImageManager.trackedImagePrefab = _cubesToSpawn[i];
-                    }
-                    _cubesExist.Add(_cubesToSpawn[i]);
+                    _spawnBlue.transform.GetChild(0).gameObject.SetActive(true);
                 }
+                if(trackedImage.referenceImage.name == "Green")
+                {
+                    _spawnGreen.transform.GetChild(1).gameObject.SetActive(true);
+                }
+            }
+        }
+        foreach(ARTrackedImage trackedImage in args.updated)
+        {
+            if(trackedImage.referenceImage.name == "Blue")
+            {
+                _spawnBlue.transform.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
+            }
+            if(trackedImage.referenceImage.name == "Green")
+            {
+                _spawnGreen.transform.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
             }
         }
     }
