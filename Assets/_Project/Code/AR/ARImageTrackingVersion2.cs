@@ -2,12 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.InputSystem;
-using TMPro;
 
 public class ARImageTrackingVersion2 : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _textFieldBlue;
-    [SerializeField] private TextMeshProUGUI _textFieldGreen;
     [SerializeField] private ARTrackedImageManager _aRTrackedImageManager;
     [SerializeField] private List<GameObject> _placeblePrefabs;
     private Dictionary<string, GameObject> _spawnedPrefabs = new Dictionary<string, GameObject>();
@@ -62,7 +59,6 @@ public class ARImageTrackingVersion2 : MonoBehaviour
         if (context.performed)
         {
             Vector2 position = context.ReadValue<Vector2>();
-            _textFieldBlue.text = position.ToString();
             Ray ray = Camera.main.ScreenPointToRay(position);
             if (Physics.Raycast(ray, out hit, 200))
             {
