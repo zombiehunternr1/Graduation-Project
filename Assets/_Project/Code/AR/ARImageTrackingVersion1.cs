@@ -3,7 +3,7 @@ using UnityEngine.XR.ARFoundation;
 using TMPro;
 
 
-public class ARImageTrackerManager : MonoBehaviour
+public class ARImageTrackingVersion1 : MonoBehaviour
 {
     [SerializeField] private ARTrackedImageManager _arTrackedImageManager;
     [SerializeField] private TextMeshProUGUI _greenText;
