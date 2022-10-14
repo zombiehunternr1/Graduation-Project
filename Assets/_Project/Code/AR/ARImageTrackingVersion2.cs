@@ -47,20 +47,9 @@ public class ARImageTrackingVersion2 : MonoBehaviour
         {
             if (gameObject.Key == trackedImage.referenceImage.name)
             {
-                if (trackedImage.referenceImage.name == "Blue")
-                {
-                    GameObject cube1 = _spawnedPrefabs[gameObject.Key];
-                    cube1.SetActive(true);
-                    cube1.transform.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
-                    return;
-                }
-                if (trackedImage.referenceImage.name == "Green")
-                {
-                    GameObject cube2 = _spawnedPrefabs[gameObject.Key];
-                    cube2.SetActive(true);
-                    cube2.transform.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
-                    return;
-                }
+                _spawnedPrefabs[gameObject.Key].SetActive(true);
+                _spawnedPrefabs[gameObject.Key].transform.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
+                return;
             }
         }
     }
