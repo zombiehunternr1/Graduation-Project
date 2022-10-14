@@ -73,7 +73,7 @@ public class ARImageTrackingVersion2 : MonoBehaviour
                         if (hit.collider.name == gameObject.Key)
                         {
                             MeshRenderer mesh = gameObject.Value.GetComponent<MeshRenderer>();
-                            mesh.material.SetColor("_Color", Color.black);
+                            mesh.material.color = Color.black;
                         }
                     }
                 }
