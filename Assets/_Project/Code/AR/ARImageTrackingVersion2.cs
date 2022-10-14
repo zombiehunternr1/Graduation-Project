@@ -68,15 +68,12 @@ public class ARImageTrackingVersion2 : MonoBehaviour
             {
                 if (hit.collider != null)
                 {
-                    _textFieldGreen.text = hit.collider.name;
-                    _textFieldGreen.text = "Before for loop " + hit.collider.name;
                     foreach (KeyValuePair<string, GameObject> gameObject in _spawnedPrefabs)
                     {
                         if (hit.collider.name == gameObject.Key)
                         {
-                            _textFieldGreen.text = "After for loop " + hit.collider.name;
-                            //MeshRenderer mesh = gameObject.Value.GetComponent<MeshRenderer>();
-                            //mesh.material.SetColor("_Color", Color.black);
+                            MeshRenderer mesh = gameObject.Value.GetComponent<MeshRenderer>();
+                            mesh.material.SetColor("_Color", Color.black);
                         }
                     }
                 }
