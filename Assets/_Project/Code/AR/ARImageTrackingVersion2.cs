@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.InputSystem;
 
 public class ARImageTrackingVersion2 : MonoBehaviour
 {
@@ -49,7 +50,17 @@ public class ARImageTrackingVersion2 : MonoBehaviour
             {
                 _spawnedPrefabs[gameObject.Key].SetActive(true);
                 _spawnedPrefabs[gameObject.Key].transform.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
-                return;
+            }
+        }
+    }
+    public void OnScreenTapped(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            foreach(KeyValuePair<string, GameObject> gameObject in _spawnedPrefabs)
+            {
+                MeshRenderer mesh = gameObject.Value.GetComponent<MeshRenderer>();
+                mesh.material.SetColor("_Color", Color.black);
             }
         }
     }

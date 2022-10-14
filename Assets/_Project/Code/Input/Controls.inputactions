@@ -1,1 +1,34 @@
-{}
+{
+    "name": "Controls",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "71c794b0-60a3-4ddb-9e98-490555c4780a",
+            "actions": [
+                {
+                    "name": "Pressing",
+                    "type": "PassThrough",
+                    "id": "3d2b2ae3-ba20-410f-8461-4cd54ceb37de",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dfadcb60-bd34-4805-ab0b-b5fe513570c0",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pressing",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
