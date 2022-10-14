@@ -394,7 +394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4a69c828093f049a88095c778e80a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textField: {fileID: 1773237291}
+  _textFieldBlue: {fileID: 1773237291}
+  _textFieldGreen: {fileID: 1478218046}
   _aRTrackedImageManager: {fileID: 223974228}
   _placeblePrefabs:
   - {fileID: 8853623610238404252, guid: e70a8fdd790eb3648a39e5f65ef1cf37, type: 3}
@@ -996,8 +997,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 3d2b2ae3-ba20-410f-8461-4cd54ceb37de
-    m_ActionName: Player/Pressing
+    m_ActionId: 9631bb43-1a9d-401e-95f7-7d7ae97728ee
+    m_ActionName: Player/TouchPosition
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 223974231}
+        m_TargetAssemblyTypeName: ARImageTrackingVersion2, Assembly-CSharp
+        m_MethodName: OnScreenTapped
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3cdacca5-4bd6-464e-8f98-bcaf34594118
+    m_ActionName: Player/TouchPosition
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

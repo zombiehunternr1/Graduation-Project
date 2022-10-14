@@ -2,9 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class ARImageTrackingVersion2 : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI _textFieldBlue;
+    [SerializeField] private TextMeshProUGUI _textFieldGreen;
     [SerializeField] private ARTrackedImageManager _aRTrackedImageManager;
     [SerializeField] private List<GameObject> _placeblePrefabs;
     private Dictionary<string, GameObject> _spawnedPrefabs = new Dictionary<string, GameObject>();
@@ -53,15 +56,31 @@ public class ARImageTrackingVersion2 : MonoBehaviour
             }
         }
     }
+    RaycastHit hit;
     public void OnScreenTapped(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            foreach(KeyValuePair<string, GameObject> gameObject in _spawnedPrefabs)
+            Vector2 position = context.ReadValue<Vector2>();
+            _textFieldBlue.text = position.ToString();
+            Ray ray = Camera.main.ScreenPointToRay(position);
+            if (Physics.Raycast(ray, out hit, 200))
             {
-                MeshRenderer mesh = gameObject.Value.GetComponent<MeshRenderer>();
-                mesh.material.SetColor("_Color", Color.black);
-            }
+                if (hit.collider != null)
+                {
+                    _textFieldGreen.text = hit.collider.name;
+                    _textFieldGreen.text = "Before for loop " + hit.collider.name;
+                    foreach (KeyValuePair<string, GameObject> gameObject in _spawnedPrefabs)
+                    {
+                        if (hit.collider.name == gameObject.Key)
+                        {
+                            _textFieldGreen.text = "After for loop " + hit.collider.name;
+                            //MeshRenderer mesh = gameObject.Value.GetComponent<MeshRenderer>();
+                            //mesh.material.SetColor("_Color", Color.black);
+                        }
+                    }
+                }
+            }         
         }
     }
 }
