@@ -2,21 +2,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.InputSystem;
+using Mirror;
+using Unity.VisualScripting;
+using UnityEngine.XR.ARSubsystems;
 
-public class ARImageTrackingVersion2 : MonoBehaviour
+public class ARImageTrackingVersion2 : NetworkBehaviour
 {
     [SerializeField] private ARTrackedImageManager _aRTrackedImageManager;
     [SerializeField] private List<GameObject> _placeblePrefabs;
     private Dictionary<string, GameObject> _spawnedPrefabs = new Dictionary<string, GameObject>();
 
-    private void Awake()
+    private void Start()
     {
+        if (!isServer)
+        {
+            return;
+        }
         foreach (GameObject prefab in _placeblePrefabs)
         {
             GameObject newPrefab = Instantiate(prefab, Vector3.zero, Quaternion.identity);
             newPrefab.name = prefab.name;
             _spawnedPrefabs.Add(prefab.name, newPrefab);
             newPrefab.SetActive(false);
+            NetworkServer.Spawn(newPrefab);
         }
     }
     private void OnEnable()
@@ -44,12 +52,11 @@ public class ARImageTrackingVersion2 : MonoBehaviour
     }
     private void UpdateImage(ARTrackedImage trackedImage)
     {
-        foreach (KeyValuePair<string, GameObject> gameObject in _spawnedPrefabs)
+        foreach (KeyValuePair<uint, NetworkIdentity> networkObject in NetworkServer.spawned)
         {
-            if (gameObject.Key == trackedImage.referenceImage.name)
+            if (networkObject.Value.name == trackedImage.referenceImage.name)
             {
-                _spawnedPrefabs[gameObject.Key].SetActive(true);
-                _spawnedPrefabs[gameObject.Key].transform.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
+                CmdShowObject(networkObject.Value.gameObject, trackedImage.transform);
             }
         }
     }
@@ -68,12 +75,33 @@ public class ARImageTrackingVersion2 : MonoBehaviour
                     {
                         if (hit.collider.name == gameObject.Key)
                         {
-                            MeshRenderer mesh = gameObject.Value.GetComponent<MeshRenderer>();
-                            mesh.material.color = Color.black;
+                            CmdChangeColor(gameObject.Value);
                         }
                     }
                 }
             }         
         }
+    }
+    [ClientRpc]
+    private void RpcChangeColor(GameObject gameObject)
+    {
+        MeshRenderer mesh = gameObject.GetComponent<MeshRenderer>();
+        mesh.material.color = Color.black;
+    }
+    [ClientRpc]
+    private void RpcShowObject(GameObject gameObject, Transform trackedImagePosition)
+    {
+        gameObject.SetActive(true);
+        gameObject.transform.SetPositionAndRotation(trackedImagePosition.position, trackedImagePosition.rotation);
+    }
+    [Command(requiresAuthority = false)]
+    private void CmdChangeColor(GameObject gameObject)
+    {
+        RpcChangeColor(gameObject);
+    }
+    [Command(requiresAuthority = false)]
+    private void CmdShowObject(GameObject gameObject, Transform trackedImagePosition)
+    {
+        RpcShowObject(gameObject, trackedImagePosition);
     }
 }
