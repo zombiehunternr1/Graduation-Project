@@ -394,8 +394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4a69c828093f049a88095c778e80a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textFieldBlue: {fileID: 1773237291}
-  _textFieldGreen: {fileID: 1478218046}
   _aRTrackedImageManager: {fileID: 223974228}
   _placeblePrefabs:
   - {fileID: 8853623610238404252, guid: e70a8fdd790eb3648a39e5f65ef1cf37, type: 3}
