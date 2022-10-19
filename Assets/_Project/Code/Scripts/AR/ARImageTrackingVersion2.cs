@@ -10,24 +10,19 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI _greenText;
     [SerializeField] private TextMeshProUGUI _blueText;
     [SerializeField] private ARTrackedImageManager _aRTrackedImageManager;
-    [SerializeField] private List<GameObject> _placeblePrefabs;
-    private List<GameObject> _spawnedObjects;
-    //[SerializeField][HideInInspector] private List<GameObject> _spawnedPrefabs;
+    [SerializeField] private List<GameObject> _spawnedObjects = new List<GameObject>();
 
     private void Start()
     {
         if (!isServer)
         {
-            return;
+            foreach (GameObject prefab in NetworkManager.singleton.spawnPrefabs)
+            {
+                GameObject instantiatedObject = (GameObject)Instantiate(prefab, Vector3.zero, Quaternion.identity);
+                instantiatedObject.name = prefab.name;
+                _spawnedObjects.Add(instantiatedObject);
+            }
         }
-        /*
-        foreach (GameObject prefab in _placeblePrefabs)
-        {
-            GameObject newPrefab = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-            _spawnedPrefabs.Add(newPrefab);
-            newPrefab.SetActive(false);
-        }
-        */
     }
     private void OnEnable()
     {
@@ -60,21 +55,12 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
     }
     private void UpdateImage(ARTrackedImage trackedImage)
     {
-        foreach (GameObject spawnedObject in NetworkManager.singleton.spawnPrefabs)
+        foreach (GameObject spawnedObject in _spawnedObjects)
         {
             if (spawnedObject.name == trackedImage.referenceImage.name)
             {
-                if (spawnedObject.activeInHierarchy)
-                {
-                    return;
-                }
-                else
-                {
-                    _blueText.text = "Show object!";
-                    GameObject test = Instantiate(spawnedObject, Vector3.zero, Quaternion.identity);
-                    test.SetActive(true);
-                    test.transform.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
-                }
+                spawnedObject.SetActive(true);
+                spawnedObject.transform.SetLocalPositionAndRotation(trackedImage.transform.position, transform.transform.rotation);
             }
         }
     }
@@ -89,22 +75,15 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
             {
                 if (hit.collider != null)
                 {
-                    foreach(GameObject spawnedobject in NetworkManager.singleton.spawnPrefabs)
+                    foreach(GameObject spawnedobject in _spawnedObjects)
                     {
                         if(hit.collider.name == spawnedobject.name)
                         {
-                            CmdChangeColor(hit.collider.gameObject);
+                            //CmdChangeColor(hit.collider.gameObject);
+                            MeshRenderer mesh = hit.collider.GetComponent<MeshRenderer>();
+                            mesh.material.color = Color.black;
                         }
                     }
-                    /*
-                    foreach (KeyValuePair<string, GameObject> gameObject in _spawnedPrefabs)
-                    {
-                        if (hit.collider.name == gameObject.Key)
-                        {
-                            
-                        }
-                    }
-                    */
                 }
             }         
         }
