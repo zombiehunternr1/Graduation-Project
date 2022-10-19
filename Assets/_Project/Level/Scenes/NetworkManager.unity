@@ -330,7 +330,12 @@ MonoBehaviour:
   playerPrefab: {fileID: 17594209521950092, guid: 0c0f145e6374cae48b7821f4b62185a3, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 8853623610238404252, guid: e70a8fdd790eb3648a39e5f65ef1cf37, type: 3}
+  - {fileID: 8853623610238404252, guid: 55cb809fcfe29ca4a89afd07547ad256, type: 3}
+  - {fileID: 8853623610238404252, guid: 7de58583427b14e4bbb88916e11d85f8, type: 3}
+  - {fileID: 8853623610238404252, guid: 1ce04568ee5d98048a9dc2d136899b66, type: 3}
+  - {fileID: 8853623610238404252, guid: f6778a65fb6fef144b6fd0065961cf55, type: 3}
 --- !u!4 &688765627
 Transform:
   m_ObjectHideFlags: 0
@@ -736,10 +741,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
+  m_fontSize: 72
   m_fontSizeBase: 14
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
