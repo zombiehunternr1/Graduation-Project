@@ -3,14 +3,15 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.InputSystem;
 using Mirror;
-using Unity.VisualScripting;
-using UnityEngine.XR.ARSubsystems;
+using TMPro;
 
 public class ARImageTrackingVersion2 : NetworkBehaviour
 {
+    [SerializeField] private TextMeshProUGUI _greenText;
+    [SerializeField] private TextMeshProUGUI _blueText;
     [SerializeField] private ARTrackedImageManager _aRTrackedImageManager;
     [SerializeField] private List<GameObject> _placeblePrefabs;
-    private Dictionary<string, GameObject> _spawnedPrefabs = new Dictionary<string, GameObject>();
+    private SyncDictionary<string, GameObject> _spawnedPrefabs = new SyncDictionary<string, GameObject>();
 
     private void Start()
     {
@@ -52,11 +53,14 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
     }
     private void UpdateImage(ARTrackedImage trackedImage)
     {
-        foreach (KeyValuePair<uint, NetworkIdentity> networkObject in NetworkServer.spawned)
+        _blueText.text = "Image detected!";
+        foreach (KeyValuePair<string, GameObject> spawnedObject in _spawnedPrefabs)
         {
-            if (networkObject.Value.name == trackedImage.referenceImage.name)
+            if (spawnedObject.Value.name == trackedImage.referenceImage.name)
             {
-                CmdShowObject(networkObject.Value.gameObject, trackedImage.transform);
+                _blueText.text = "Show object!";
+                gameObject.SetActive(true);
+                gameObject.transform.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
             }
         }
     }
@@ -88,20 +92,9 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
         MeshRenderer mesh = gameObject.GetComponent<MeshRenderer>();
         mesh.material.color = Color.black;
     }
-    [ClientRpc]
-    private void RpcShowObject(GameObject gameObject, Transform trackedImagePosition)
-    {
-        gameObject.SetActive(true);
-        gameObject.transform.SetPositionAndRotation(trackedImagePosition.position, trackedImagePosition.rotation);
-    }
     [Command(requiresAuthority = false)]
     private void CmdChangeColor(GameObject gameObject)
     {
         RpcChangeColor(gameObject);
-    }
-    [Command(requiresAuthority = false)]
-    private void CmdShowObject(GameObject gameObject, Transform trackedImagePosition)
-    {
-        RpcShowObject(gameObject, trackedImagePosition);
     }
 }

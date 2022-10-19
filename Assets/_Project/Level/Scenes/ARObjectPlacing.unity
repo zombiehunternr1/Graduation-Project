@@ -398,6 +398,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  _greenText: {fileID: 1478218046}
+  _blueText: {fileID: 1773237291}
   _aRTrackedImageManager: {fileID: 223974228}
   _placeblePrefabs:
   - {fileID: 8853623610238404252, guid: e70a8fdd790eb3648a39e5f65ef1cf37, type: 3}
