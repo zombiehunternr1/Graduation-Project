@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -332,7 +332,6 @@ GameObject:
   - component: {fileID: 223974228}
   - component: {fileID: 223974231}
   - component: {fileID: 223974232}
-  - component: {fileID: 223974233}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -398,15 +397,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  _greenText: {fileID: 1478218046}
-  _blueText: {fileID: 1773237291}
   _aRTrackedImageManager: {fileID: 223974228}
-  _placeblePrefabs:
-  - {fileID: 8853623610238404252, guid: e70a8fdd790eb3648a39e5f65ef1cf37, type: 3}
-  - {fileID: 8853623610238404252, guid: 7de58583427b14e4bbb88916e11d85f8, type: 3}
-  - {fileID: 8853623610238404252, guid: 1ce04568ee5d98048a9dc2d136899b66, type: 3}
-  - {fileID: 8853623610238404252, guid: f6778a65fb6fef144b6fd0065961cf55, type: 3}
-  - {fileID: 8853623610238404252, guid: 55cb809fcfe29ca4a89afd07547ad256, type: 3}
+  _objectsToSpawn:
+  - {fileID: 3831849688423007641, guid: ada839c011c0955478e047c3c936f703, type: 3}
+  - {fileID: 3831849688423007641, guid: 12542d7671e0c9449b245a4b08507541, type: 3}
+  - {fileID: 3831849688423007641, guid: fee15933fb1de7542bfc01a452ff49e5, type: 3}
+  - {fileID: 3831849688423007641, guid: 57b5901ed80fe2049999d779627ce777, type: 3}
+  - {fileID: 3831849688423007641, guid: 66b31eb31e205b74ab2f0f0688f5ad84, type: 3}
+  _spawnedNetworkObjects: []
 --- !u!114 &223974232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,34 +422,6 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 
   hasSpawned: 0
---- !u!114 &223974233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223974226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87a9f3f8daa295e418816f7313ccf381, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputEvent: {fileID: 11400000, guid: b7522ac7b43f413418559e41b50d58db, type: 2}
-  _respondse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 223974231}
-        m_TargetAssemblyTypeName: ARImageTrackingVersion2, Assembly-CSharp
-        m_MethodName: OnScreenTapped
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &782628375
 GameObject:
   m_ObjectHideFlags: 0

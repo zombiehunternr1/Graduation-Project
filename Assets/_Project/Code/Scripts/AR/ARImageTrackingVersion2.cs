@@ -1,28 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
-using UnityEngine.InputSystem;
 using Mirror;
-using TMPro;
 
 public class ARImageTrackingVersion2 : NetworkBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _greenText;
-    [SerializeField] private TextMeshProUGUI _blueText;
     [SerializeField] private ARTrackedImageManager _aRTrackedImageManager;
-    [SerializeField] private List<GameObject> _spawnedObjects = new List<GameObject>();
-
+    [SerializeField] private List<GameObject> _objectsToSpawn = new List<GameObject>();
+    [SerializeField] private List<NetworkCube> _spawnedNetworkObjects = new List<NetworkCube>();
     private void Start()
     {
         if (!isServer)
         {
-            foreach (GameObject prefab in NetworkManager.singleton.spawnPrefabs)
+            foreach (GameObject spawnableObject in _objectsToSpawn)
             {
-                GameObject instantiatedObject = (GameObject)Instantiate(prefab, Vector3.zero, Quaternion.identity);
-                instantiatedObject.name = prefab.name;
-                _spawnedObjects.Add(instantiatedObject);
+                GameObject instantiatedObject = (GameObject)Instantiate(spawnableObject, Vector3.zero, Quaternion.identity);
+                _objectsToSpawn.Add(instantiatedObject);
             }
         }
+        _spawnedNetworkObjects.AddRange(FindObjectsOfType<NetworkCube>());
     }
     private void OnEnable()
     {
@@ -44,59 +40,24 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
         }
         foreach (ARTrackedImage trackedImage in args.removed)
         {
-            foreach(GameObject spawnedObject in _spawnedObjects)
+            foreach(NetworkCube networkCube in _spawnedNetworkObjects)
             {
-                if(spawnedObject.name == trackedImage.name)
+                if(networkCube.TrackerName == trackedImage.name)
                 {
-                    spawnedObject.SetActive(false);
+                    networkCube.Show(false);
                 }
             }
         }
     }
     private void UpdateImage(ARTrackedImage trackedImage)
     {
-        foreach (GameObject spawnedObject in _spawnedObjects)
+        foreach (NetworkCube networkCube in _spawnedNetworkObjects)
         {
-            if (spawnedObject.name == trackedImage.referenceImage.name)
+            if (networkCube.TrackerName == trackedImage.referenceImage.name)
             {
-                spawnedObject.SetActive(true);
-                spawnedObject.transform.SetLocalPositionAndRotation(trackedImage.transform.position, transform.transform.rotation);
+                networkCube.SetPositionAndRotation(trackedImage.transform.position, Quaternion.identity);
+                networkCube.Show(true);
             }
         }
-    }
-    RaycastHit hit;
-    public void OnScreenTapped(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            Vector2 position = context.ReadValue<Vector2>();
-            Ray ray = Camera.main.ScreenPointToRay(position);
-            if (Physics.Raycast(ray, out hit, 200))
-            {
-                if (hit.collider != null)
-                {
-                    foreach(GameObject spawnedobject in _spawnedObjects)
-                    {
-                        if(hit.collider.name == spawnedobject.name)
-                        {
-                            //CmdChangeColor(hit.collider.gameObject);
-                            MeshRenderer mesh = hit.collider.GetComponent<MeshRenderer>();
-                            mesh.material.color = Color.black;
-                        }
-                    }
-                }
-            }         
-        }
-    }
-    [ClientRpc]
-    private void RpcChangeColor(GameObject gameObject)
-    {
-        MeshRenderer mesh = gameObject.GetComponent<MeshRenderer>();
-        mesh.material.color = Color.black;
-    }
-    [Command(requiresAuthority = false)]
-    private void CmdChangeColor(GameObject gameObject)
-    {
-        RpcChangeColor(gameObject);
     }
 }
