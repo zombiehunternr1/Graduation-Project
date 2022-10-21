@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7d0f8e437b01c40afcc15b312be656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _genericEvent: {fileID: 11400000, guid: 3c155e9334fc9be448d54b073acb44d5, type: 2}
+  _baseEvent: {fileID: 11400000, guid: 3c155e9334fc9be448d54b073acb44d5, type: 2}
   _unityEvent:
     m_PersistentCalls:
       m_Calls:
