@@ -78,9 +78,10 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: b7522ac7b43f413418559e41b50d58db, type: 2}
-        m_TargetAssemblyTypeName: GameEventInput, Assembly-CSharp
-        m_MethodName: RaiseInputEvent
+      - m_Target: {fileID: 11400000, guid: 3c155e9334fc9be448d54b073acb44d5, type: 2}
+        m_TargetAssemblyTypeName: GameEventGeneric`1[[UnityEngine.InputSystem.InputAction+CallbackContext,
+          Unity.InputSystem
+        m_MethodName: Invoke
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -94,9 +95,10 @@ MonoBehaviour:
     m_ActionName: Player/TouchPress
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: b7522ac7b43f413418559e41b50d58db, type: 2}
-        m_TargetAssemblyTypeName: GameEventInput, Assembly-CSharp
-        m_MethodName: RaiseInputEvent
+      - m_Target: {fileID: 11400000, guid: 3c155e9334fc9be448d54b073acb44d5, type: 2}
+        m_TargetAssemblyTypeName: GameEventGeneric`1[[UnityEngine.InputSystem.InputAction+CallbackContext,
+          Unity.InputSystem
+        m_MethodName: Invoke
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

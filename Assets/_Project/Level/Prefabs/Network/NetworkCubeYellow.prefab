@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7542668605362104889}
   - component: {fileID: 8756165707989884507}
   - component: {fileID: -4477279008849819980}
-  - component: {fileID: -7118547577513662854}
+  - component: {fileID: 2016504497430870665}
   m_Layer: 0
   m_Name: NetworkCubeYellow
   m_TagString: Untagged
@@ -66,7 +66,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _cubePrefab: {fileID: 8853623610238404252, guid: 55cb809fcfe29ca4a89afd07547ad256, type: 3}
---- !u!114 &-7118547577513662854
+--- !u!114 &2016504497430870665
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,11 +75,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3831849688423007641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87a9f3f8daa295e418816f7313ccf381, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f7d0f8e437b01c40afcc15b312be656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputEvent: {fileID: 11400000, guid: b7522ac7b43f413418559e41b50d58db, type: 2}
-  _respondse:
+  _genericEvent: {fileID: 11400000, guid: 3c155e9334fc9be448d54b073acb44d5, type: 2}
+  _unityEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -4477279008849819980}
