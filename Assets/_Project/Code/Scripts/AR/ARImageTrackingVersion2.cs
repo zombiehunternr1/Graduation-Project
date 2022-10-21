@@ -10,12 +10,12 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
     [SerializeField] private List<NetworkCube> _spawnedNetworkObjects = new List<NetworkCube>();
     private void Start()
     {
-        if (!isServer)
+        if (isServer)
         {
             foreach (GameObject spawnableObject in _objectsToSpawn)
             {
-                GameObject instantiatedObject = (GameObject)Instantiate(spawnableObject, Vector3.zero, Quaternion.identity);
-                _objectsToSpawn.Add(instantiatedObject);
+                GameObject instantiatedObject = Instantiate(spawnableObject, Vector3.zero, Quaternion.identity);
+                NetworkServer.Spawn(instantiatedObject);
             }
         }
         _spawnedNetworkObjects.AddRange(FindObjectsOfType<NetworkCube>());
