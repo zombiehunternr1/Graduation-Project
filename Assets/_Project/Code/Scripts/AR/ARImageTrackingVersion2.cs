@@ -55,7 +55,7 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
         {
             if (networkCube.TrackerName == trackedImage.referenceImage.name)
             {
-                networkCube.SetPositionAndRotation(trackedImage.transform.position, Quaternion.identity);
+                networkCube.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
                 networkCube.Show(true);
             }
         }
