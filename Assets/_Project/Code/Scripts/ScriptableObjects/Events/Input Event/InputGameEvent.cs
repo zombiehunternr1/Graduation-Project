@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[CreateAssetMenu(fileName = "Generic Event", menuName = "Scriptable Objects/Generic Event")]
+[CreateAssetMenu(fileName = "Input event", menuName = "Scriptable Objects/Input Event")]
 public class InputGameEvent : BaseEventGeneric<InputAction.CallbackContext>
 {  
 }
