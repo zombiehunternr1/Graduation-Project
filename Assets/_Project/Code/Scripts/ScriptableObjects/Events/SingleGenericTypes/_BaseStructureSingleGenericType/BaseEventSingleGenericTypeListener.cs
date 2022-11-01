@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class BaseEventGenericListener<T> : MonoBehaviour
+public class BaseEventSingleGenericTypeListener<T> : MonoBehaviour
 {
-    [SerializeField] private BaseEventGeneric<T> _baseEvent;
+    [SerializeField] private BaseEventSingleGenericType<T> _baseEvent;
     [SerializeField] private UnityEvent<T> _unityEvent;
     private void OnEnable()
     {

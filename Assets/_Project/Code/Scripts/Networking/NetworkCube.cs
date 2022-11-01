@@ -4,11 +4,14 @@ using UnityEngine.InputSystem;
 
 public class NetworkCube : NetworkBehaviour
 {
+    [SerializeField] private UpdatePressedNetworkCubeEvent _cubePressed;
     [SerializeField] private GameObject _cubePrefab;
     private string _trackerName;
+    private bool _isReset = false;
     private GameObject _cubeInstance;
-    MeshRenderer _meshRenderer;
-    [SyncVar] private Color _cubeColor;
+    private MeshRenderer _meshRenderer;
+    [SyncVar] private Color32 _cubeColor;
+    [SyncVar] private Color32 _cubeOriginalColor;
     public string TrackerName
     {
         get
@@ -19,8 +22,10 @@ public class NetworkCube : NetworkBehaviour
     private void Start()
     {
         _cubeInstance = Instantiate(_cubePrefab);
+        _cubeInstance.name = _cubeInstance.name.Replace("(Clone)", "");
+        _trackerName = _cubeInstance.name;
         _meshRenderer = _cubeInstance.GetComponent<MeshRenderer>();
-        _trackerName = _cubePrefab.name;
+        _cubeOriginalColor = _meshRenderer.material.color;
         _cubeInstance.SetActive(false);
         if (isServer)
         {
@@ -49,14 +54,29 @@ public class NetworkCube : NetworkBehaviour
             {
                 if(hit.collider.gameObject == _cubeInstance)
                 {
+                    _cubeColor = Color.black;
                     CmdChangeColor();
+                    _cubePressed.Invoke(_trackerName);
                 }
             }
         }
     }
+    public void ResetColor()
+    {
+        _isReset = true;
+        CmdChangeColor();
+    }
     private void ChangeColor()
     {
-        _meshRenderer.material.color = _cubeColor;
+        if (_isReset)
+        {
+            _meshRenderer.material.color = _cubeOriginalColor;
+            _isReset = false;
+        }
+        else
+        {
+            _meshRenderer.material.color = _cubeColor;
+        }
     }
     [ClientRpc]
     private void RpcChangeColor()
@@ -66,7 +86,6 @@ public class NetworkCube : NetworkBehaviour
     [Command(requiresAuthority = false)]
     private void CmdChangeColor()
     {
-        _cubeColor = Color.black;
         RpcChangeColor();
     }
 }

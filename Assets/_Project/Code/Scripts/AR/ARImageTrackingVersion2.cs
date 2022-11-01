@@ -5,9 +5,10 @@ using Mirror;
 
 public class ARImageTrackingVersion2 : NetworkBehaviour
 {
+    [SerializeField] private Transform _TrackableObjectReference;
     [SerializeField] private ARTrackedImageManager _aRTrackedImageManager;
     [SerializeField] private List<GameObject> _objectsToSpawn = new List<GameObject>();
-    [SerializeField] private List<NetworkCube> _spawnedNetworkObjects = new List<NetworkCube>();
+    private List<NetworkCube> _spawnedNetworkObjects = new List<NetworkCube>();
     private void Start()
     {
         if (isServer)
@@ -15,6 +16,7 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
             foreach (GameObject spawnableObject in _objectsToSpawn)
             {
                 GameObject instantiatedObject = Instantiate(spawnableObject, Vector3.zero, Quaternion.identity);
+                instantiatedObject.transform.SetParent(_TrackableObjectReference);
                 NetworkServer.Spawn(instantiatedObject);
             }
         }
