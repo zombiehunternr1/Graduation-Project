@@ -1219,6 +1219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _TrackableObjectReference: {fileID: 1933408091}
   _aRTrackedImageManager: {fileID: 223974228}
   _objectsToSpawn:

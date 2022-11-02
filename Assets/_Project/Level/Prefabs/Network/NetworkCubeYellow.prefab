@@ -66,6 +66,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _cubePressed: {fileID: 11400000, guid: 6f7dc120a8af4cc4597d3fef1bfb468e, type: 2}
   _cubePrefab: {fileID: 8853623610238404252, guid: 55cb809fcfe29ca4a89afd07547ad256, type: 3}
 --- !u!114 &2016504497430870665

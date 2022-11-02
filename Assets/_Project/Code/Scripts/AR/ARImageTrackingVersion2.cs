@@ -40,16 +40,6 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
         {
             UpdateImage(trackedImage);
         }
-        foreach (ARTrackedImage trackedImage in args.removed)
-        {
-            foreach(NetworkCube networkCube in _spawnedNetworkObjects)
-            {
-                if(networkCube.TrackerName == trackedImage.name)
-                {
-                    networkCube.Show(false);
-                }
-            }
-        }
     }
     private void UpdateImage(ARTrackedImage trackedImage)
     {
@@ -59,6 +49,10 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
             {
                 networkCube.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
                 networkCube.Show(true);
+            }
+            if(trackedImage.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Limited)
+            {
+                networkCube.Show(false);
             }
         }
     }
