@@ -5,7 +5,8 @@ public class ButtonSO : ScriptableObject
 {
     [SerializeField] private GameObject _cubeReference;
     [SerializeField] private bool _isSelected;
-
+    [SerializeField] private Color32 _cubeNewColor;
+    [SerializeField] private Color32 _cubeOriginalColor;
     public GameObject CubeReference
     {
         get
@@ -13,7 +14,7 @@ public class ButtonSO : ScriptableObject
             return _cubeReference;
         }
     }
-    public bool setSelected
+    public bool SetSelected
     {
         set
         {
@@ -25,6 +26,20 @@ public class ButtonSO : ScriptableObject
         get
         {
             return _isSelected;
+        }
+    }
+    public Color32 NewCubeColor
+    {
+        get
+        {
+            return _cubeNewColor;
+        }
+    }
+    public Color32 OriginalColor
+    {
+        get
+        {
+            return _cubeOriginalColor;
         }
     }
 }

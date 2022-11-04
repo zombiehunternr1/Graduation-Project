@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9751e84d72e754c965fbb8d565275d, type: 3}
   m_Name: Button2
   m_EditorClassIdentifier: 
-  _cubeReference: {fileID: 8853623610238404252, guid: 7de58583427b14e4bbb88916e11d85f8, type: 3}
+  _cubeReference: {fileID: 8853623610238404252, guid: 1ce04568ee5d98048a9dc2d136899b66, type: 3}
   _isSelected: 0
+  _cubeNewColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  _cubeOriginalColor:
+    serializedVersion: 2
+    rgba: 4278232319

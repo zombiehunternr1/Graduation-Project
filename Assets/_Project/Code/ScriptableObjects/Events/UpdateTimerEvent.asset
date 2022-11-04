@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b76416d3298abf042a6bbb15b9662bae, type: 3}
-  m_Name: TimerEvent
+  m_Name: UpdateTimerEvent
   m_EditorClassIdentifier: 

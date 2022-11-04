@@ -14,3 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cubeReference: {fileID: 8853623610238404252, guid: e70a8fdd790eb3648a39e5f65ef1cf37, type: 3}
   _isSelected: 0
+  _cubeNewColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  _cubeOriginalColor:
+    serializedVersion: 2
+    rgba: 4294955776

@@ -1,10 +1,11 @@
+using Mirror;
 using System.Collections;
 using UnityEngine;
 
-public class ButtonTestManager : MonoBehaviour
+public class ButtonTestManager : NetworkBehaviour
 {
     [SerializeField] private ButtonsListSO _buttonListSO;
-    [SerializeField] private DebugEvent _debugEvent;
+    [SerializeField] private UpdateResultEvent _updateResultEvent;
     [SerializeField] private UpdateTimerEvent _updateTimerEvent;
     [SerializeField] private ResetCubeColorEvent _resetCubeColorEvent;
     [SerializeField] private float _startTime = 10f;
@@ -40,8 +41,9 @@ public class ButtonTestManager : MonoBehaviour
             {
                 if (button.CubeReference.name == cube)
                 {
-                    button.setSelected = true;
-                    CheckButtonsPressed();
+                    button.SetSelected = true;
+                    CmdUpdateButtonStatus(button);
+                    CmdCheckButtonsPressed();
                 }
             }
         }
@@ -52,23 +54,20 @@ public class ButtonTestManager : MonoBehaviour
         {
             if (AllButtonsPressed)
             {
-                StopAllCoroutines();
-                _isTimerStarted = false;
-                _currentTime = _startTime;
-                _debugEvent.Invoke("Pressed both buttons within the time limit!");
-                StartCoroutine(ResetTime());
+                CmdSetTimerStatus(false);
+                CmdTaskCompleted();
             }
         }
         else
         {
+            CmdSetTimerStatus(true);
             StartCoroutine(Timer());
         }
     }
     private IEnumerator Timer()
     {
-        _isTimerStarted = true;
         _currentTime = _startTime;
-        while(_currentTime > 0)
+        while (_currentTime > 0)
         {
             _currentTime -= Time.deltaTime * _speed;
             _seconds = Mathf.FloorToInt(_currentTime % 60);
@@ -76,34 +75,120 @@ public class ButtonTestManager : MonoBehaviour
             {
                 _updateTimerEvent.Invoke("Time remaining: " + _seconds.ToString() + " Second");
             }
-            else if (_seconds !> 0)
+            else if (_seconds! > 0)
             {
                 _updateTimerEvent.Invoke("Time remaining: " + _seconds.ToString() + " Seconds");
             }
             yield return _currentTime;
         }
-        _allowPress = false;
-        _isTimerStarted = false;
-        _currentTime = _startTime;
+        CmdAllowPressStatus(false);
+        CmdSetTimerStatus(false);
         _updateTimerEvent.Invoke("Time remaining: " + 0 + " Seconds");
-        _debugEvent.Invoke("You didn't press them in time!");
+        _updateResultEvent.Invoke("You didn't press them in time!");
         StartCoroutine(ResetTime());
     }
-    private IEnumerator ResetTime()
+    private void TaskCompleted()
     {
-        yield return new WaitForSeconds(3);
-        _updateTimerEvent.Invoke("Time remaining: " + _startTime.ToString() + " Seconds");
-        _debugEvent.Invoke(null);
-        _resetCubeColorEvent.Invoke();
-        ResetButtons();
-        _allowPress = true;
-        yield return null;
+        StartCoroutine(ResetTime());
     }
     private void ResetButtons()
     {
-        foreach(ButtonSO button in _buttonListSO.Buttons)
+        StopAllCoroutines();
+        _updateTimerEvent.Invoke("Time remaining: " + _startTime.ToString() + " Seconds");
+        _updateResultEvent.Invoke(null);
+        _resetCubeColorEvent.Invoke();
+        foreach (ButtonSO button in _buttonListSO.Buttons)
         {
-            button.setSelected = false;
+            button.SetSelected = false;
+            CmdUpdateButtonStatus(button);
         }
+        CmdAllowPressStatus(true);
+    }
+    private void UpdateButtonStatus(ButtonSO pressedButton)
+    {
+        foreach (ButtonSO button in _buttonListSO.Buttons)
+        {
+            if (button == pressedButton)
+            {
+                button.SetSelected = pressedButton.IsSelected;
+            }
+        }
+    }
+    private void AllowPressStatus(bool allowPress)
+    {
+        _allowPress = allowPress;
+    }
+    private void SetTimerStatus(bool timerStarted)
+    {
+        _isTimerStarted = timerStarted;
+    }
+    private IEnumerator ResetTime()
+    {
+        if (AllButtonsPressed)
+        {
+            _updateResultEvent.Invoke("Pressed both buttons within the time limit!");
+        }
+        yield return new WaitForSeconds(3);
+        CmdResetButtons();
+    }
+    [ClientRpc]
+    private void RpcUpdateButtonStatus(ButtonSO pressedButton)
+    {
+        UpdateButtonStatus(pressedButton);
+    }
+    [Command(requiresAuthority = false)]
+    private void CmdUpdateButtonStatus(ButtonSO pressedButton)
+    {
+        RpcUpdateButtonStatus(pressedButton);
+    }
+    [ClientRpc]
+    private void RpcResetButtons()
+    {
+        ResetButtons();
+    }
+    [Command(requiresAuthority = false)]
+    private void CmdResetButtons()
+    {
+        RpcResetButtons();
+    }
+    [ClientRpc]
+    private void RpcAllowPressStatus(bool allowPress)
+    {
+        AllowPressStatus(allowPress);
+    }
+    [Command(requiresAuthority = false)]
+    private void CmdAllowPressStatus(bool allowPress)
+    {
+        RpcAllowPressStatus(allowPress);
+    }
+    [ClientRpc]
+    private void RpcSetTimerStatus(bool timerStarted)
+    {
+        SetTimerStatus(timerStarted);
+    }
+    [Command(requiresAuthority = false)]
+    private void CmdSetTimerStatus(bool timerStarted)
+    {
+        RpcSetTimerStatus(timerStarted);
+    }
+    [ClientRpc]
+    private void RpcCheckButtonsPressed()
+    {
+        CheckButtonsPressed();
+    }
+    [Command(requiresAuthority = false)]
+    private void CmdCheckButtonsPressed()
+    {
+        RpcCheckButtonsPressed();
+    }
+    [ClientRpc]
+    private void RpcTaskCompleted()
+    {
+        TaskCompleted();
+    }
+    [Command(requiresAuthority = false)]
+    private void CmdTaskCompleted()
+    {
+        RpcTaskCompleted();
     }
 }

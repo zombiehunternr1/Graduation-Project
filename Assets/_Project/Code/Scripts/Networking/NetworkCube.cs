@@ -4,12 +4,13 @@ using UnityEngine.InputSystem;
 
 public class NetworkCube : NetworkBehaviour
 {
+    [SerializeField] private ButtonSO _buttonSO;
     [SerializeField] private UpdatePressedNetworkCubeEvent _cubePressed;
     [SerializeField] private GameObject _cubePrefab;
-    private string _trackerName;
+    [SerializeField] private string _trackerName;
     private bool _isReset = false;
     private GameObject _cubeInstance;
-    private MeshRenderer _meshRenderer;
+    private Renderer _cubeRenderer;
     [SyncVar] private Color32 _cubeColor;
     [SyncVar] private Color32 _cubeOriginalColor;
     public string TrackerName
@@ -24,16 +25,16 @@ public class NetworkCube : NetworkBehaviour
         _cubeInstance = Instantiate(_cubePrefab);
         _cubeInstance.name = _cubeInstance.name.Replace("(Clone)", "");
         _trackerName = _cubeInstance.name;
-        _meshRenderer = _cubeInstance.GetComponent<MeshRenderer>();
-        _cubeOriginalColor = _meshRenderer.material.color;
-        _cubeInstance.SetActive(false);
+        _cubeRenderer = _cubeInstance.GetComponent<Renderer>();
+        if(_buttonSO != null)
+        {
+            _cubeOriginalColor = _buttonSO.OriginalColor;
+        }
+        _cubeRenderer.enabled = false;
         if (isServer)
         {
-            _cubeColor = _cubeInstance.GetComponent<MeshRenderer>().material.color;
-        }
-        else
-        {
-            ChangeColor();
+            _cubeColor = _cubeOriginalColor;
+            _cubeRenderer.material.color = _cubeColor;
         }
     }
     public void SetPositionAndRotation(Vector3 pos, Quaternion rot)
@@ -42,7 +43,7 @@ public class NetworkCube : NetworkBehaviour
     }
     public void Show(bool shown)
     {
-        _cubeInstance.SetActive(shown);
+        _cubeRenderer.enabled = shown;
     }
     public void OnScreenTapped(InputAction.CallbackContext context)
     {
@@ -54,8 +55,7 @@ public class NetworkCube : NetworkBehaviour
             {
                 if(hit.collider.gameObject == _cubeInstance)
                 {
-                    _cubeColor = Color.black;
-                    CmdChangeColor();
+                    CmdChangeColor(_buttonSO.NewCubeColor);
                     _cubePressed.Invoke(_trackerName);
                 }
             }
@@ -64,28 +64,36 @@ public class NetworkCube : NetworkBehaviour
     public void ResetColor()
     {
         _isReset = true;
-        CmdChangeColor();
+        if(_buttonSO != null)
+        {
+            CmdChangeColor(_buttonSO.OriginalColor);
+        }
     }
-    private void ChangeColor()
+    private void ChangeColor(Color32 color)
     {
         if (_isReset)
         {
-            _meshRenderer.material.color = _cubeOriginalColor;
             _isReset = false;
+            _cubeOriginalColor = color;
+            _cubeRenderer.material.color = _cubeOriginalColor;
         }
         else
         {
-            _meshRenderer.material.color = _cubeColor;
+            if(_buttonSO != null)
+            {
+                _cubeColor = color;
+                _cubeRenderer.material.color = _cubeColor;
+            }
         }
     }
     [ClientRpc]
-    private void RpcChangeColor()
+    private void RpcChangeColor(Color32 color)
     {
-        ChangeColor();
+        ChangeColor(color);
     }
     [Command(requiresAuthority = false)]
-    private void CmdChangeColor()
+    private void CmdChangeColor(Color32 color)
     {
-        RpcChangeColor();
+        RpcChangeColor(color);
     }
 }

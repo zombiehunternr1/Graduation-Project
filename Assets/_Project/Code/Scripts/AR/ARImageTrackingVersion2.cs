@@ -5,6 +5,7 @@ using Mirror;
 
 public class ARImageTrackingVersion2 : NetworkBehaviour
 {
+    //[SerializeField] private DebugEvent _debugEvent;
     [SerializeField] private Transform _TrackableObjectReference;
     [SerializeField] private ARTrackedImageManager _aRTrackedImageManager;
     [SerializeField] private List<GameObject> _objectsToSpawn = new List<GameObject>();
@@ -34,11 +35,17 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
     {
         foreach(ARTrackedImage trackedImage in args.added)
         {
-            UpdateImage(trackedImage);
+            if(trackedImage.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Tracking)
+            {
+                UpdateImage(trackedImage);
+            }
         }
         foreach(ARTrackedImage trackedImage in args.updated)
         {
-            UpdateImage(trackedImage);
+            if (trackedImage.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Tracking)
+            {
+                UpdateImage(trackedImage);
+            }
         }
     }
     private void UpdateImage(ARTrackedImage trackedImage)
@@ -50,7 +57,7 @@ public class ARImageTrackingVersion2 : NetworkBehaviour
                 networkCube.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
                 networkCube.Show(true);
             }
-            if(trackedImage.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Limited)
+            else
             {
                 networkCube.Show(false);
             }
