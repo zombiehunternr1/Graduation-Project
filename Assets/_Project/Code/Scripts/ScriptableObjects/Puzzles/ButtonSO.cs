@@ -1,10 +1,11 @@
+using Mirror;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Button", menuName = "Scriptable Objects/Testing/Button Test")]
 public class ButtonSO : ScriptableObject
 {
     [SerializeField] private GameObject _cubeReference;
-    [SerializeField] private bool _isSelected;
+    [SyncVar] [SerializeField] private bool _isSelected;
     [SerializeField] private Color32 _cubeNewColor;
     [SerializeField] private Color32 _cubeOriginalColor;
     public GameObject CubeReference

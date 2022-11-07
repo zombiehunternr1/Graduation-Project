@@ -4,11 +4,13 @@ using UnityEngine.InputSystem;
 
 public class NetworkCube : NetworkBehaviour
 {
+    [SerializeField] private DebugEvent _debugEvent;
     [SerializeField] private ButtonSO _buttonSO;
     [SerializeField] private UpdatePressedNetworkCubeEvent _cubePressed;
     [SerializeField] private GameObject _cubePrefab;
-    [SerializeField] private string _trackerName;
+    [SyncVar] [SerializeField] private string _trackerName;
     private bool _isReset = false;
+    private bool _allowPress = true;
     private GameObject _cubeInstance;
     private Renderer _cubeRenderer;
     [SyncVar] private Color32 _cubeColor;
@@ -53,8 +55,9 @@ public class NetworkCube : NetworkBehaviour
             Ray ray = Camera.main.ScreenPointToRay(postion);
             if(Physics.Raycast(ray, out RaycastHit hit, 200))
             {
-                if(hit.collider.gameObject == _cubeInstance)
+                if(hit.collider.gameObject == _cubeInstance && _allowPress)
                 {
+                    _allowPress = false;
                     CmdChangeColor(_buttonSO.NewCubeColor);
                     _cubePressed.Invoke(_trackerName);
                 }
@@ -68,6 +71,7 @@ public class NetworkCube : NetworkBehaviour
         {
             CmdChangeColor(_buttonSO.OriginalColor);
         }
+        _allowPress = true;
     }
     private void ChangeColor(Color32 color)
     {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ButtonTestManager : NetworkBehaviour
 {
+    [SerializeField] private DebugEvent _debugEvent;
     [SerializeField] private ButtonsListSO _buttonListSO;
     [SerializeField] private UpdateResultEvent _updateResultEvent;
     [SerializeField] private UpdateTimerEvent _updateTimerEvent;
@@ -37,13 +38,14 @@ public class ButtonTestManager : NetworkBehaviour
     {
         if (_allowPress)
         {
-            foreach (ButtonSO button in _buttonListSO.Buttons)
+            for(int i = 0; i < _buttonListSO.Buttons.Count; i++)
             {
-                if (button.CubeReference.name == cube)
+                if (_buttonListSO.Buttons[i].CubeReference.name == cube)
                 {
-                    button.SetSelected = true;
-                    CmdUpdateButtonStatus(button);
+                    _buttonListSO.Buttons[i].SetSelected = true;
+                    CmdUpdateButtonStatus(i, true);
                     CmdCheckButtonsPressed();
+                    return;
                 }
             }
         }
@@ -89,6 +91,7 @@ public class ButtonTestManager : NetworkBehaviour
     }
     private void TaskCompleted()
     {
+        StopAllCoroutines();
         StartCoroutine(ResetTime());
     }
     private void ResetButtons()
@@ -97,22 +100,15 @@ public class ButtonTestManager : NetworkBehaviour
         _updateTimerEvent.Invoke("Time remaining: " + _startTime.ToString() + " Seconds");
         _updateResultEvent.Invoke(null);
         _resetCubeColorEvent.Invoke();
-        foreach (ButtonSO button in _buttonListSO.Buttons)
+        for(int i = 0; i < _buttonListSO.Buttons.Count; i++)
         {
-            button.SetSelected = false;
-            CmdUpdateButtonStatus(button);
+            _buttonListSO.Buttons[i].SetSelected = false;
         }
         CmdAllowPressStatus(true);
     }
-    private void UpdateButtonStatus(ButtonSO pressedButton)
+    private void UpdateButtonStatus(int buttonIndex, bool isSelected)
     {
-        foreach (ButtonSO button in _buttonListSO.Buttons)
-        {
-            if (button == pressedButton)
-            {
-                button.SetSelected = pressedButton.IsSelected;
-            }
-        }
+        _buttonListSO.Buttons[buttonIndex].SetSelected = isSelected;
     }
     private void AllowPressStatus(bool allowPress)
     {
@@ -132,14 +128,14 @@ public class ButtonTestManager : NetworkBehaviour
         CmdResetButtons();
     }
     [ClientRpc]
-    private void RpcUpdateButtonStatus(ButtonSO pressedButton)
+    private void RpcUpdateButtonStatus(int buttonIndex, bool isSelected)
     {
-        UpdateButtonStatus(pressedButton);
+        UpdateButtonStatus(buttonIndex, isSelected);
     }
     [Command(requiresAuthority = false)]
-    private void CmdUpdateButtonStatus(ButtonSO pressedButton)
+    private void CmdUpdateButtonStatus(int buttonIndex, bool isSelected)
     {
-        RpcUpdateButtonStatus(pressedButton);
+        RpcUpdateButtonStatus(buttonIndex, isSelected);
     }
     [ClientRpc]
     private void RpcResetButtons()

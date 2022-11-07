@@ -843,6 +843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _buttonListSO: {fileID: 11400000, guid: 820182c0195a0314abc1888b96376f0f, type: 2}
   _updateResultEvent: {fileID: 11400000, guid: 2687d9fe9cec1604c908b6b8414a90c0, type: 2}
   _updateTimerEvent: {fileID: 11400000, guid: 165c345e20c0dca40a0a79ff5e8c66d9, type: 2}
@@ -1408,7 +1409,6 @@ MonoBehaviour:
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _TrackableObjectReference: {fileID: 1933408091}
   _aRTrackedImageManager: {fileID: 223974228}
-  _aRSession: {fileID: 782628377}
   _objectsToSpawn:
   - {fileID: 3831849688423007641, guid: ada839c011c0955478e047c3c936f703, type: 3}
   - {fileID: 3831849688423007641, guid: 12542d7671e0c9449b245a4b08507541, type: 3}
