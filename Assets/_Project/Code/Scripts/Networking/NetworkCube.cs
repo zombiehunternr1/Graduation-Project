@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class NetworkCube : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
+    [SerializeField] private NetworkCubeManager _networkCubeManager;
     [SerializeField] private ButtonSO _buttonSO;
     [SerializeField] private UpdatePressedNetworkCubeEvent _cubePressed;
     [SerializeField] private GameObject _cubePrefab;
@@ -58,7 +59,7 @@ public class NetworkCube : NetworkBehaviour
                 if(hit.collider.gameObject == _cubeInstance && _allowPress)
                 {
                     _allowPress = false;
-                    CmdChangeColor(_buttonSO.NewCubeColor);
+                    _networkCubeManager.CmdChangeColor(_buttonSO.NewCubeColor);
                     _cubePressed.Invoke(_trackerName);
                 }
             }
@@ -69,11 +70,11 @@ public class NetworkCube : NetworkBehaviour
         _isReset = true;
         if(_buttonSO != null)
         {
-            CmdChangeColor(_buttonSO.OriginalColor);
+            _networkCubeManager.CmdChangeColor(_buttonSO.OriginalColor);
         }
         _allowPress = true;
     }
-    private void ChangeColor(Color32 color)
+    public void ChangeColor(Color32 color)
     {
         if (_isReset)
         {
@@ -89,15 +90,5 @@ public class NetworkCube : NetworkBehaviour
                 _cubeRenderer.material.color = _cubeColor;
             }
         }
-    }
-    [ClientRpc]
-    private void RpcChangeColor(Color32 color)
-    {
-        ChangeColor(color);
-    }
-    [Command(requiresAuthority = false)]
-    private void CmdChangeColor(Color32 color)
-    {
-        RpcChangeColor(color);
     }
 }

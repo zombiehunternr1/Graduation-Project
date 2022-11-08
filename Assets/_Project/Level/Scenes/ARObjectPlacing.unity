@@ -582,8 +582,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Once you've pressed on a cube you got 10 seconds to press on the other
-    one!
+  m_text: Once you've pressed on a cube you got 3 seconds to press on the other one!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -610,7 +609,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55.2
+  m_fontSize: 56.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -806,6 +805,7 @@ GameObject:
   - component: {fileID: 751613373}
   - component: {fileID: 751613376}
   - component: {fileID: 751613374}
+  - component: {fileID: 751613377}
   - component: {fileID: 751613375}
   m_Layer: 0
   m_Name: PuzzleManager
@@ -844,11 +844,12 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
+  _networkButtonTestManager: {fileID: 751613377}
   _buttonListSO: {fileID: 11400000, guid: 820182c0195a0314abc1888b96376f0f, type: 2}
   _updateResultEvent: {fileID: 11400000, guid: 2687d9fe9cec1604c908b6b8414a90c0, type: 2}
   _updateTimerEvent: {fileID: 11400000, guid: 165c345e20c0dca40a0a79ff5e8c66d9, type: 2}
   _resetCubeColorEvent: {fileID: 11400000, guid: c5e636963c85f514ea4988d4665c4872, type: 2}
-  _startTime: 10
+  _startTime: 3
   _speed: 1
 --- !u!114 &751613375
 MonoBehaviour:
@@ -895,6 +896,21 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &751613377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751613372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 293ae54838f87b94cafd47bb092694c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  _buttonTestManager: {fileID: 751613374}
 --- !u!1 &782628375
 GameObject:
   m_ObjectHideFlags: 0
@@ -1406,7 +1422,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _TrackableObjectReference: {fileID: 1933408091}
   _aRTrackedImageManager: {fileID: 223974228}
   _objectsToSpawn:
@@ -1505,7 +1520,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Time remaining: 10 seconds'
+  m_text: 'Time remaining: 3 seconds'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7542668605362104889}
   - component: {fileID: 8756165707989884507}
   - component: {fileID: -4477279008849819980}
+  - component: {fileID: -6449941212548964864}
   - component: {fileID: -5211219975040053164}
   - component: {fileID: -1894387591183576334}
   m_Layer: 0
@@ -67,10 +68,26 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _debugEvent: {fileID: 0}
+  _networkCubeManager: {fileID: -6449941212548964864}
   _buttonSO: {fileID: 0}
   _cubePressed: {fileID: 11400000, guid: 6f7dc120a8af4cc4597d3fef1bfb468e, type: 2}
   _cubePrefab: {fileID: 8853623610238404252, guid: f6778a65fb6fef144b6fd0065961cf55, type: 3}
   _trackerName: 
+--- !u!114 &-6449941212548964864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3831849688423007641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906b3e4680c9d944ab314f28f6726408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  _networkCube: {fileID: -4477279008849819980}
 --- !u!114 &-5211219975040053164
 MonoBehaviour:
   m_ObjectHideFlags: 0

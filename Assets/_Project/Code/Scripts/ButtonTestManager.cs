@@ -5,6 +5,7 @@ using UnityEngine;
 public class ButtonTestManager : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
+    [SerializeField] private NetworkButtonTestManager _networkButtonTestManager;
     [SerializeField] private ButtonsListSO _buttonListSO;
     [SerializeField] private UpdateResultEvent _updateResultEvent;
     [SerializeField] private UpdateTimerEvent _updateTimerEvent;
@@ -43,26 +44,26 @@ public class ButtonTestManager : NetworkBehaviour
                 if (_buttonListSO.Buttons[i].CubeReference.name == cube)
                 {
                     _buttonListSO.Buttons[i].SetSelected = true;
-                    CmdUpdateButtonStatus(i, true);
-                    CmdCheckButtonsPressed();
+                    _networkButtonTestManager.CmdUpdateButtonStatus(i, true);
+                    _networkButtonTestManager.CmdCheckButtonsPressed();
                     return;
                 }
             }
         }
     }
-    private void CheckButtonsPressed()
+    public void CheckButtonsPressed()
     {
         if (_isTimerStarted)
         {
             if (AllButtonsPressed)
             {
-                CmdSetTimerStatus(false);
-                CmdTaskCompleted();
+                _networkButtonTestManager.CmdSetTimerStatus(false);
+                _networkButtonTestManager.CmdTaskCompleted();
             }
         }
         else
         {
-            CmdSetTimerStatus(true);
+            _networkButtonTestManager.CmdSetTimerStatus(true);
             StartCoroutine(Timer());
         }
     }
@@ -83,18 +84,18 @@ public class ButtonTestManager : NetworkBehaviour
             }
             yield return _currentTime;
         }
-        CmdAllowPressStatus(false);
-        CmdSetTimerStatus(false);
+        _networkButtonTestManager.CmdAllowPressStatus(false);
+        _networkButtonTestManager.CmdSetTimerStatus(false);
         _updateTimerEvent.Invoke("Time remaining: " + 0 + " Seconds");
         _updateResultEvent.Invoke("You didn't press them in time!");
         StartCoroutine(ResetTime());
     }
-    private void TaskCompleted()
+    public void TaskCompleted()
     {
         StopAllCoroutines();
         StartCoroutine(ResetTime());
     }
-    private void ResetButtons()
+    public void ResetButtons()
     {
         StopAllCoroutines();
         _updateTimerEvent.Invoke("Time remaining: " + _startTime.ToString() + " Seconds");
@@ -104,17 +105,17 @@ public class ButtonTestManager : NetworkBehaviour
         {
             _buttonListSO.Buttons[i].SetSelected = false;
         }
-        CmdAllowPressStatus(true);
+        _networkButtonTestManager.CmdAllowPressStatus(true);
     }
-    private void UpdateButtonStatus(int buttonIndex, bool isSelected)
+    public void UpdateButtonStatus(int buttonIndex, bool isSelected)
     {
         _buttonListSO.Buttons[buttonIndex].SetSelected = isSelected;
     }
-    private void AllowPressStatus(bool allowPress)
+    public void AllowPressStatus(bool allowPress)
     {
         _allowPress = allowPress;
     }
-    private void SetTimerStatus(bool timerStarted)
+    public void SetTimerStatus(bool timerStarted)
     {
         _isTimerStarted = timerStarted;
     }
@@ -125,66 +126,6 @@ public class ButtonTestManager : NetworkBehaviour
             _updateResultEvent.Invoke("Pressed both buttons within the time limit!");
         }
         yield return new WaitForSeconds(3);
-        CmdResetButtons();
-    }
-    [ClientRpc]
-    private void RpcUpdateButtonStatus(int buttonIndex, bool isSelected)
-    {
-        UpdateButtonStatus(buttonIndex, isSelected);
-    }
-    [Command(requiresAuthority = false)]
-    private void CmdUpdateButtonStatus(int buttonIndex, bool isSelected)
-    {
-        RpcUpdateButtonStatus(buttonIndex, isSelected);
-    }
-    [ClientRpc]
-    private void RpcResetButtons()
-    {
-        ResetButtons();
-    }
-    [Command(requiresAuthority = false)]
-    private void CmdResetButtons()
-    {
-        RpcResetButtons();
-    }
-    [ClientRpc]
-    private void RpcAllowPressStatus(bool allowPress)
-    {
-        AllowPressStatus(allowPress);
-    }
-    [Command(requiresAuthority = false)]
-    private void CmdAllowPressStatus(bool allowPress)
-    {
-        RpcAllowPressStatus(allowPress);
-    }
-    [ClientRpc]
-    private void RpcSetTimerStatus(bool timerStarted)
-    {
-        SetTimerStatus(timerStarted);
-    }
-    [Command(requiresAuthority = false)]
-    private void CmdSetTimerStatus(bool timerStarted)
-    {
-        RpcSetTimerStatus(timerStarted);
-    }
-    [ClientRpc]
-    private void RpcCheckButtonsPressed()
-    {
-        CheckButtonsPressed();
-    }
-    [Command(requiresAuthority = false)]
-    private void CmdCheckButtonsPressed()
-    {
-        RpcCheckButtonsPressed();
-    }
-    [ClientRpc]
-    private void RpcTaskCompleted()
-    {
-        TaskCompleted();
-    }
-    [Command(requiresAuthority = false)]
-    private void CmdTaskCompleted()
-    {
-        RpcTaskCompleted();
+        _networkButtonTestManager.CmdResetButtons();
     }
 }
