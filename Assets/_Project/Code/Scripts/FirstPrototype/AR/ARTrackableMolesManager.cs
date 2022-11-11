@@ -2,23 +2,27 @@ using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 public class ARTrackableMolesManager : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
+    [SerializeField] private Transform _parentTransform;
     [SerializeField] private ARTrackedImageManager _aRTrackedImageManager;
     [SerializeField] private List<GameObject> _moleObjects = new List<GameObject>();
-    private List<NetworkMoles> _spawnedNetworkMoles = new List<NetworkMoles>();
+    private List<NetworkMole> _spawnedNetworkMoles = new List<NetworkMole>();
     private void Start()
     {
         if (isServer)
         {
-            foreach (GameObject spawnableObject in _moleObjects)
+            foreach (GameObject moleObject in _moleObjects)
             {
-                NetworkServer.Spawn(spawnableObject);
+                GameObject spawnedMoleObject = Instantiate(moleObject, Vector3.zero, Quaternion.identity);
+                spawnedMoleObject.transform.SetParent(_parentTransform);
+                NetworkServer.Spawn(spawnedMoleObject);
             }
         }
-        _spawnedNetworkMoles.AddRange(FindObjectsOfType<NetworkMoles>());
+        _spawnedNetworkMoles.AddRange(FindObjectsOfType<NetworkMole>());
     }
     private void OnEnable()
     {
@@ -41,18 +45,19 @@ public class ARTrackableMolesManager : NetworkBehaviour
     }
     private void UpdateImage(ARTrackedImage trackedImage)
     {
-        foreach(NetworkMoles networkmole in _spawnedNetworkMoles)
+        foreach(NetworkMole networkmole in _spawnedNetworkMoles)
         {
-            _debugEvent.Invoke(networkmole.trackername);
             if (networkmole.trackername == trackedImage.referenceImage.name)
             {
-                if (trackedImage.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Limited)
+                if (trackedImage.trackingState == TrackingState.Limited)
                 {
                     networkmole.Show(false);
-                    return;
                 }
-                networkmole.SetPositionAndRotation(trackedImage.transform.position, transform.transform.rotation);
-                networkmole.Show(true);
+                else
+                {
+                    networkmole.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
+                    networkmole.Show(true);
+                }
             }
         }
     }

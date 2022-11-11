@@ -23,11 +23,11 @@ public class NetworkCube : NetworkBehaviour
         _cubeInstance.name = _cubeInstance.name.Replace("(Clone)", "");
         _trackerName = _cubeInstance.name;
         _cubeRenderer = _cubeInstance.GetComponent<Renderer>();
-        if(_buttonSO != null)
+        _cubeRenderer.enabled = false;
+        if (_buttonSO != null)
         {
             _cubeOriginalColor = _buttonSO.originalColor;
         }
-        _cubeRenderer.enabled = false;
         if (isServer)
         {
             _cubeColor = _cubeOriginalColor;
