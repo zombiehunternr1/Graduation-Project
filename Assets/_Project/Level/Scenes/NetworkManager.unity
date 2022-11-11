@@ -322,20 +322,16 @@ MonoBehaviour:
   autoStartServerBuild: 1
   serverTickRate: 30
   offlineScene: Assets/_Project/Level/Scenes/NetworkManager.unity
-  onlineScene: Assets/_Project/Level/Scenes/ButtonsPressTest.unity
+  onlineScene: Assets/_Project/Level/Scenes/WackAMole.unity
   transport: {fileID: 688765625}
   networkAddress: localhost
   maxConnections: 100
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 17594209521950092, guid: 0c0f145e6374cae48b7821f4b62185a3, type: 3}
+  playerPrefab: {fileID: 17594209521950092, guid: c31e780f853969d47a7c5450592e57b2, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
-  - {fileID: 3831849688423007641, guid: ada839c011c0955478e047c3c936f703, type: 3}
-  - {fileID: 3831849688423007641, guid: 12542d7671e0c9449b245a4b08507541, type: 3}
-  - {fileID: 3831849688423007641, guid: fee15933fb1de7542bfc01a452ff49e5, type: 3}
-  - {fileID: 3831849688423007641, guid: 57b5901ed80fe2049999d779627ce777, type: 3}
-  - {fileID: 3831849688423007641, guid: 66b31eb31e205b74ab2f0f0688f5ad84, type: 3}
+  - {fileID: 3831849688423007641, guid: 1faf60e0147331547ab2d1bc51c551d5, type: 3}
 --- !u!4 &688765627
 Transform:
   m_ObjectHideFlags: 0
