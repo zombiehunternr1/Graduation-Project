@@ -16,24 +16,14 @@ public class NetworkButtonTestManager : NetworkBehaviour
         RpcUpdateButtonStatus(buttonIndex, isSelected);
     }
     [ClientRpc]
-    private void RpcResetButtons()
+    private void RpcResetButtons(bool isReset)
     {
-        _buttonTestManager.ResetButtons();
+        _buttonTestManager.ResetButtons(isReset);
     }
     [Command(requiresAuthority = false)]
-    public void CmdResetButtons()
+    public void CmdResetButtons(bool isReset)
     {
-        RpcResetButtons();
-    }
-    [ClientRpc]
-    private void RpcAllowPressStatus(bool allowPress)
-    {
-        _buttonTestManager.AllowPressStatus(allowPress);
-    }
-    [Command(requiresAuthority = false)]
-    public void CmdAllowPressStatus(bool allowPress)
-    {
-        RpcAllowPressStatus(allowPress);
+        RpcResetButtons(isReset);
     }
     [ClientRpc]
     private void RpcSetTimerStatus(bool timerStarted)
@@ -48,7 +38,7 @@ public class NetworkButtonTestManager : NetworkBehaviour
     [ClientRpc]
     private void RpcCheckButtonsPressed()
     {
-        _buttonTestManager.CheckButtonsPressed();
+        _buttonTestManager.CheckAllButtonsPressed();
     }
     [Command(requiresAuthority = false)]
     public void CmdCheckButtonsPressed()

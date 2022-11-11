@@ -12,6 +12,12 @@ GameObject:
   - component: {fileID: 696136681111319452}
   - component: {fileID: 8989152355582646555}
   - component: {fileID: 50141835791151486}
+  - component: {fileID: -5737261576791503173}
+  - component: {fileID: -2215933443312050209}
+  - component: {fileID: 1346536736014706593}
+  - component: {fileID: -4828459833286629682}
+  - component: {fileID: 2860898887625547781}
+  - component: {fileID: 2350155299624960630}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -79,7 +85,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: 3c155e9334fc9be448d54b073acb44d5, type: 2}
-        m_TargetAssemblyTypeName: GameEventGeneric`1[[UnityEngine.InputSystem.InputAction+CallbackContext,
+        m_TargetAssemblyTypeName: BaseEventSingleGenericType`1[[UnityEngine.InputSystem.InputAction+CallbackContext,
           Unity.InputSystem
         m_MethodName: Invoke
         m_Mode: 0
@@ -96,7 +102,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: 3c155e9334fc9be448d54b073acb44d5, type: 2}
-        m_TargetAssemblyTypeName: GameEventGeneric`1[[UnityEngine.InputSystem.InputAction+CallbackContext,
+        m_TargetAssemblyTypeName: BaseEventSingleGenericType`1[[UnityEngine.InputSystem.InputAction+CallbackContext,
           Unity.InputSystem
         m_MethodName: Invoke
         m_Mode: 0
@@ -131,3 +137,164 @@ MonoBehaviour:
   syncInterval: 0.1
   _localPlayerComponents:
   - {fileID: 8989152355582646555}
+--- !u!114 &-5737261576791503173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17594209521950092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82be154febadf0646931a87a5a333baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
+  _rpcCubePressedEvent: {fileID: 11400000, guid: 6f7dc120a8af4cc4597d3fef1bfb468e, type: 2}
+  _rpcCheckAllButtonsStatusEvent: {fileID: 11400000, guid: 3826f773f227d984aa559f0b5ebe5af1, type: 2}
+  _rpcUpdatePressedNetworkCubeEvent: {fileID: 11400000, guid: e82459f2635dba34497c0a5806c6e142, type: 2}
+  _rpcUpdateCubeResetStatusEvent: {fileID: 11400000, guid: 5a91651f82d25c6489f09997f63024f3, type: 2}
+  _rpcTaskCompleteEvent: {fileID: 11400000, guid: 9cb6c8e9b490e6e4691786f4dd6f6a0c, type: 2}
+  _rpcTimerStartedEvent: {fileID: 11400000, guid: f10c588ba0d323249ac32e8c389fbc7f, type: 2}
+--- !u!114 &-2215933443312050209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17594209521950092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 033769d420dcde043bb6febb0ff4db28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: ea14647f06d32cc498f0a2ebb8b66405, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5737261576791503173}
+        m_TargetAssemblyTypeName: PlayerNetwork, Assembly-CSharp
+        m_MethodName: CmdUpdateButtonStatus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1346536736014706593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17594209521950092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3bf70201e4840468845e806216af0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 9245ab2c02ad091418a7e60284535b2d, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5737261576791503173}
+        m_TargetAssemblyTypeName: PlayerNetwork, Assembly-CSharp
+        m_MethodName: CmdSetTimerStatus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-4828459833286629682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17594209521950092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703cf94f88b9d8d44956762820d64073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 7de0800f795563846933bce596586a23, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5737261576791503173}
+        m_TargetAssemblyTypeName: PlayerNetwork, Assembly-CSharp
+        m_MethodName: CmdTaskCompleted
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2860898887625547781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17594209521950092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7d0f8e437b01c40afcc15b312be656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 3c155e9334fc9be448d54b073acb44d5, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5737261576791503173}
+        m_TargetAssemblyTypeName: PlayerNetwork, Assembly-CSharp
+        m_MethodName: OnScreenTapped
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2350155299624960630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17594209521950092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93ffa8bc888fb4348a57cdefddf6f7db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: ccd0a79ff4093074a94a24a8aef765d9, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5737261576791503173}
+        m_TargetAssemblyTypeName: PlayerNetwork, Assembly-CSharp
+        m_MethodName: CmdResetCubes
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

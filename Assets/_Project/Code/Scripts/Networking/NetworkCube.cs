@@ -1,19 +1,14 @@
 using Mirror;
+using System.Drawing;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 public class NetworkCube : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
-    [SerializeField] private NetworkCubeManager _networkCubeManager;
     [SerializeField] private ButtonSO _buttonSO;
-    [SerializeField] private UpdatePressedNetworkCubeEvent _cubePressed;
     [SerializeField] private GameObject _cubePrefab;
-    [SyncVar] [SerializeField] private string _trackerName;
-    private bool _isReset = false;
-    private bool _allowPress = true;
     private GameObject _cubeInstance;
     private Renderer _cubeRenderer;
+    [SyncVar][SerializeField] private string _trackerName;
     [SyncVar] private Color32 _cubeColor;
     [SyncVar] private Color32 _cubeOriginalColor;
     public string TrackerName
@@ -31,7 +26,7 @@ public class NetworkCube : NetworkBehaviour
         _cubeRenderer = _cubeInstance.GetComponent<Renderer>();
         if(_buttonSO != null)
         {
-            _cubeOriginalColor = _buttonSO.OriginalColor;
+            _cubeOriginalColor = _buttonSO.originalColor;
         }
         _cubeRenderer.enabled = false;
         if (isServer)
@@ -48,45 +43,18 @@ public class NetworkCube : NetworkBehaviour
     {
         _cubeRenderer.enabled = shown;
     }
-    public void OnScreenTapped(InputAction.CallbackContext context)
+    public void UpdateColor(bool isReset)
     {
-        if (context.performed)
-        {
-            Vector2 postion = context.ReadValue<Vector2>();
-            Ray ray = Camera.main.ScreenPointToRay(postion);
-            if(Physics.Raycast(ray, out RaycastHit hit, 200))
-            {
-                if(hit.collider.gameObject == _cubeInstance && _allowPress)
-                {
-                    _allowPress = false;
-                    _networkCubeManager.CmdChangeColor(_buttonSO.NewCubeColor);
-                    _cubePressed.Invoke(_trackerName);
-                }
-            }
-        }
-    }
-    public void ResetColor()
-    {
-        _isReset = true;
         if(_buttonSO != null)
         {
-            _networkCubeManager.CmdChangeColor(_buttonSO.OriginalColor);
-        }
-        _allowPress = true;
-    }
-    public void ChangeColor(Color32 color)
-    {
-        if (_isReset)
-        {
-            _isReset = false;
-            _cubeOriginalColor = color;
-            _cubeRenderer.material.color = _cubeOriginalColor;
-        }
-        else
-        {
-            if(_buttonSO != null)
+            if (isReset)
             {
-                _cubeColor = color;
+                _cubeOriginalColor = _buttonSO.originalColor;
+                _cubeRenderer.material.color = _cubeOriginalColor;
+            }
+            else if(_buttonSO.isSelected)
+            {
+                _cubeColor = _buttonSO.newCubeColor;
                 _cubeRenderer.material.color = _cubeColor;
             }
         }

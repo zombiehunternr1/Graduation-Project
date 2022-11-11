@@ -11,9 +11,7 @@ GameObject:
   - component: {fileID: 7542668605362104889}
   - component: {fileID: 8756165707989884507}
   - component: {fileID: -4477279008849819980}
-  - component: {fileID: 8566859409381265627}
-  - component: {fileID: 2744719321789722359}
-  - component: {fileID: 9014356302454870681}
+  - component: {fileID: -3637392263999479661}
   m_Layer: 0
   m_Name: NetworkCubeGreen
   m_TagString: Untagged
@@ -68,12 +66,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _debugEvent: {fileID: 0}
-  _networkCubeManager: {fileID: 8566859409381265627}
   _buttonSO: {fileID: 0}
-  _cubePressed: {fileID: 11400000, guid: 6f7dc120a8af4cc4597d3fef1bfb468e, type: 2}
   _cubePrefab: {fileID: 8853623610238404252, guid: 7de58583427b14e4bbb88916e11d85f8, type: 3}
   _trackerName: 
---- !u!114 &8566859409381265627
+--- !u!114 &-3637392263999479661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -82,60 +78,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 3831849688423007641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 906b3e4680c9d944ab314f28f6726408, type: 3}
+  m_Script: {fileID: 11500000, guid: c50f3fb391344b34697570cd95d5ad8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  _networkCube: {fileID: -4477279008849819980}
---- !u!114 &2744719321789722359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3831849688423007641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7d0f8e437b01c40afcc15b312be656, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _baseEvent: {fileID: 11400000, guid: 3c155e9334fc9be448d54b073acb44d5, type: 2}
+  _baseEvent: {fileID: 11400000, guid: 5a91651f82d25c6489f09997f63024f3, type: 2}
   _unityEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -4477279008849819980}
         m_TargetAssemblyTypeName: NetworkCube, Assembly-CSharp
-        m_MethodName: OnScreenTapped
+        m_MethodName: UpdateColor
         m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &9014356302454870681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3831849688423007641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9632c2f4baa41154ba63b14941b63447, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _baseEvent: {fileID: 11400000, guid: c5e636963c85f514ea4988d4665c4872, type: 2}
-  _unityEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -4477279008849819980}
-        m_TargetAssemblyTypeName: NetworkCube, Assembly-CSharp
-        m_MethodName: ResetColor
-        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

@@ -5,29 +5,30 @@ using UnityEngine;
 public class ButtonTestManager : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
-    [SerializeField] private NetworkButtonTestManager _networkButtonTestManager;
     [SerializeField] private ButtonsListSO _buttonListSO;
+    [SerializeField] private CmdTimerStartStatusEvent _commandTimerStartStatusEvent;
+    [SerializeField] private CmdTaskCompleteEvent _commandTaskCompleteEvent;
+    [SerializeField] private CmdUpdateCubeResetStatusEvent _commandCubeResetStatusEvent;
+    [SerializeField] private CmdUpdateButtonStatusEvent _commandUpdateButtonStatusEvent;
     [SerializeField] private UpdateResultEvent _updateResultEvent;
     [SerializeField] private UpdateTimerEvent _updateTimerEvent;
-    [SerializeField] private ResetCubeColorEvent _resetCubeColorEvent;
     [SerializeField] private float _startTime = 10f;
     [SerializeField] private float _speed = 1f;
     private float _currentTime = 0f;
     private float _seconds;
     private bool _isTimerStarted = false;
-    private bool _allowPress = true;
     private bool AllButtonsPressed
     {
         get
         {
             int i = 0;
-            foreach (ButtonSO button in _buttonListSO.Buttons)
+            foreach (ButtonSO button in _buttonListSO.buttonList)
             {
-                if (button.IsSelected)
+                if (button.isSelected)
                 {
                     i++;
                 }
-                if (i >= _buttonListSO.Buttons.Count)
+                if (i >= _buttonListSO.buttonList.Count)
                 {
                     return true;
                 }
@@ -37,33 +38,33 @@ public class ButtonTestManager : NetworkBehaviour
     }
     public void OnCubePressed(string cube)
     {
-        if (_allowPress)
+        for (int i = 0; i < _buttonListSO.buttonList.Count; i++)
         {
-            for(int i = 0; i < _buttonListSO.Buttons.Count; i++)
+            if (_buttonListSO.buttonList[i].cubeReference.name == cube)
             {
-                if (_buttonListSO.Buttons[i].CubeReference.name == cube)
+                if (_buttonListSO.buttonList[i].isAllowPress)
                 {
-                    _buttonListSO.Buttons[i].SetSelected = true;
-                    _networkButtonTestManager.CmdUpdateButtonStatus(i, true);
-                    _networkButtonTestManager.CmdCheckButtonsPressed();
+                    _buttonListSO.buttonList[i].setAllowPress = false;
+                    _commandUpdateButtonStatusEvent.Invoke(i, true);
+                    _commandCubeResetStatusEvent.Invoke(false);
                     return;
                 }
             }
         }
     }
-    public void CheckButtonsPressed()
+    public void CheckAllButtonsPressed()
     {
         if (_isTimerStarted)
         {
             if (AllButtonsPressed)
             {
-                _networkButtonTestManager.CmdSetTimerStatus(false);
-                _networkButtonTestManager.CmdTaskCompleted();
+                _commandTimerStartStatusEvent.Invoke(false);
+                _commandTaskCompleteEvent.Invoke();
             }
         }
         else
         {
-            _networkButtonTestManager.CmdSetTimerStatus(true);
+            _commandTimerStartStatusEvent.Invoke(true);
             StartCoroutine(Timer());
         }
     }
@@ -84,8 +85,7 @@ public class ButtonTestManager : NetworkBehaviour
             }
             yield return _currentTime;
         }
-        _networkButtonTestManager.CmdAllowPressStatus(false);
-        _networkButtonTestManager.CmdSetTimerStatus(false);
+        _commandTimerStartStatusEvent.Invoke(false);
         _updateTimerEvent.Invoke("Time remaining: " + 0 + " Seconds");
         _updateResultEvent.Invoke("You didn't press them in time!");
         StartCoroutine(ResetTime());
@@ -95,25 +95,24 @@ public class ButtonTestManager : NetworkBehaviour
         StopAllCoroutines();
         StartCoroutine(ResetTime());
     }
-    public void ResetButtons()
+    public void ResetButtons(bool isReset)
     {
-        StopAllCoroutines();
-        _updateTimerEvent.Invoke("Time remaining: " + _startTime.ToString() + " Seconds");
-        _updateResultEvent.Invoke(null);
-        _resetCubeColorEvent.Invoke();
-        for(int i = 0; i < _buttonListSO.Buttons.Count; i++)
+        if (isReset)
         {
-            _buttonListSO.Buttons[i].SetSelected = false;
+            StopAllCoroutines();
+            _updateTimerEvent.Invoke("Time remaining: " + _startTime.ToString() + " Seconds");
+            _updateResultEvent.Invoke(null);
+            _isTimerStarted = false;
+            for (int i = 0; i < _buttonListSO.buttonList.Count; i++)
+            {
+                _buttonListSO.buttonList[i].setSelected = false;
+                _buttonListSO.buttonList[i].setAllowPress = true;
+            }
         }
-        _networkButtonTestManager.CmdAllowPressStatus(true);
     }
     public void UpdateButtonStatus(int buttonIndex, bool isSelected)
     {
-        _buttonListSO.Buttons[buttonIndex].SetSelected = isSelected;
-    }
-    public void AllowPressStatus(bool allowPress)
-    {
-        _allowPress = allowPress;
+        _buttonListSO.buttonList[buttonIndex].setSelected = isSelected;
     }
     public void SetTimerStatus(bool timerStarted)
     {
@@ -126,6 +125,6 @@ public class ButtonTestManager : NetworkBehaviour
             _updateResultEvent.Invoke("Pressed both buttons within the time limit!");
         }
         yield return new WaitForSeconds(3);
-        _networkButtonTestManager.CmdResetButtons();
+        _commandCubeResetStatusEvent.Invoke(true);
     }
 }

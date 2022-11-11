@@ -805,8 +805,12 @@ GameObject:
   - component: {fileID: 751613373}
   - component: {fileID: 751613376}
   - component: {fileID: 751613374}
-  - component: {fileID: 751613377}
   - component: {fileID: 751613375}
+  - component: {fileID: 751613377}
+  - component: {fileID: 751613378}
+  - component: {fileID: 751613380}
+  - component: {fileID: 751613382}
+  - component: {fileID: 751613383}
   m_Layer: 0
   m_Name: PuzzleManager
   m_TagString: Untagged
@@ -844,11 +848,13 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
-  _networkButtonTestManager: {fileID: 751613377}
   _buttonListSO: {fileID: 11400000, guid: 820182c0195a0314abc1888b96376f0f, type: 2}
+  _commandTimerStartStatusEvent: {fileID: 11400000, guid: 9245ab2c02ad091418a7e60284535b2d, type: 2}
+  _commandTaskCompleteEvent: {fileID: 11400000, guid: 7de0800f795563846933bce596586a23, type: 2}
+  _commandCubeResetStatusEvent: {fileID: 11400000, guid: ccd0a79ff4093074a94a24a8aef765d9, type: 2}
+  _commandUpdateButtonStatusEvent: {fileID: 11400000, guid: ea14647f06d32cc498f0a2ebb8b66405, type: 2}
   _updateResultEvent: {fileID: 11400000, guid: 2687d9fe9cec1604c908b6b8414a90c0, type: 2}
   _updateTimerEvent: {fileID: 11400000, guid: 165c345e20c0dca40a0a79ff5e8c66d9, type: 2}
-  _resetCubeColorEvent: {fileID: 11400000, guid: c5e636963c85f514ea4988d4665c4872, type: 2}
   _startTime: 3
   _speed: 1
 --- !u!114 &751613375
@@ -905,12 +911,137 @@ MonoBehaviour:
   m_GameObject: {fileID: 751613372}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293ae54838f87b94cafd47bb092694c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 00e989b9b96ed364d8e250782cb4617e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  _buttonTestManager: {fileID: 751613374}
+  _baseEvent: {fileID: 11400000, guid: 3826f773f227d984aa559f0b5ebe5af1, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 751613374}
+        m_TargetAssemblyTypeName: ButtonTestManager, Assembly-CSharp
+        m_MethodName: CheckAllButtonsPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &751613378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751613372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3784ad3d84336d04fac3e9ef309abcaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: e82459f2635dba34497c0a5806c6e142, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 751613374}
+        m_TargetAssemblyTypeName: ButtonTestManager, Assembly-CSharp
+        m_MethodName: UpdateButtonStatus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &751613380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751613372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d37cced76b7f964da8e23bfab975636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 9cb6c8e9b490e6e4691786f4dd6f6a0c, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 751613374}
+        m_TargetAssemblyTypeName: ButtonTestManager, Assembly-CSharp
+        m_MethodName: TaskCompleted
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &751613382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751613372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b33e9eedc1e61dd4bbca42e4b8b8a5b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: f10c588ba0d323249ac32e8c389fbc7f, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 751613374}
+        m_TargetAssemblyTypeName: ButtonTestManager, Assembly-CSharp
+        m_MethodName: SetTimerStatus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &751613383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751613372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c50f3fb391344b34697570cd95d5ad8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 5a91651f82d25c6489f09997f63024f3, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 751613374}
+        m_TargetAssemblyTypeName: ButtonTestManager, Assembly-CSharp
+        m_MethodName: ResetButtons
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &782628375
 GameObject:
   m_ObjectHideFlags: 0

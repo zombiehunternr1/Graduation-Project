@@ -5,7 +5,7 @@ using UnityEngine;
 public class ButtonsListSO : ScriptableObject
 {
     [SerializeField] private List<ButtonSO> _buttons;
-    public List<ButtonSO> Buttons
+    public List<ButtonSO> buttonList
     {
         get
         {
