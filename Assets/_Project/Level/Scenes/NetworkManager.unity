@@ -322,7 +322,7 @@ MonoBehaviour:
   autoStartServerBuild: 1
   serverTickRate: 30
   offlineScene: Assets/_Project/Level/Scenes/NetworkManager.unity
-  onlineScene: Assets/_Project/Level/Scenes/ARObjectPlacing.unity
+  onlineScene: Assets/_Project/Level/Scenes/ButtonsPressTest.unity
   transport: {fileID: 688765625}
   networkAddress: localhost
   maxConnections: 100
