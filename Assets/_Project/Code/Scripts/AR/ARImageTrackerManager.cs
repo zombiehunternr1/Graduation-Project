@@ -5,7 +5,7 @@ using UnityEngine.XR.ARSubsystems;
 using Mirror;
 
 
-public class ARImageTrackingVersion2 : NetworkBehaviour
+public class ARImageTrackerManager : NetworkBehaviour
 {
     [SerializeField] private Transform _TrackableObjectReference;
     [SerializeField] private ARTrackedImageManager _aRTrackedImageManager;

@@ -1,5 +1,4 @@
 using Mirror;
-using System.Drawing;
 using UnityEngine;
 public class NetworkCube : NetworkBehaviour
 {

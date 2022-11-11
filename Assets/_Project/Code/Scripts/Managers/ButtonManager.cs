@@ -2,7 +2,7 @@ using Mirror;
 using System.Collections;
 using UnityEngine;
 
-public class ButtonTestManager : NetworkBehaviour
+public class ButtonManager : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
     [SerializeField] private ButtonsListSO _buttonListSO;
