@@ -1,7 +1,7 @@
 using Mirror;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Button", menuName = "Scriptable Objects/Testing/Button Test")]
+[CreateAssetMenu(fileName = "Button", menuName = "Scriptable Objects/Buttons/Button")]
 public class ButtonSO : ScriptableObject
 {
     [SerializeField] private GameObject _cubeReference;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -457,11 +457,7 @@ MonoBehaviour:
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _parentTransform: {fileID: 1600684022}
   _aRTrackedImageManager: {fileID: 1702995779}
-  _moleObjects:
-  - {fileID: 3831849688423007641, guid: 5d8ea31700b47d046b66f7141406b871, type: 3}
-  - {fileID: 3831849688423007641, guid: 87a74c18556e2164f860ce89a352f76b, type: 3}
-  - {fileID: 3831849688423007641, guid: 7e1862c7119c2fc4694822e57635fbbe, type: 3}
-  - {fileID: 3831849688423007641, guid: 1faf60e0147331547ab2d1bc51c551d5, type: 3}
+  _networkMoleManagerPrefab: {fileID: 5015764663996761432, guid: 4287584351ed70a4f90949836bfb4bc7, type: 3}
 --- !u!114 &1600684024
 MonoBehaviour:
   m_ObjectHideFlags: 0

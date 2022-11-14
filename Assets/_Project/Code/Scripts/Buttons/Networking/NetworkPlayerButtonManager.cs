@@ -2,7 +2,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class NetworkPlayerManager : NetworkBehaviour
+public class NetworkPlayerButtonManager : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
     [SerializeField] private RpcUpdatePressedNetworkCubeEvent _rpcCubePressedEvent;

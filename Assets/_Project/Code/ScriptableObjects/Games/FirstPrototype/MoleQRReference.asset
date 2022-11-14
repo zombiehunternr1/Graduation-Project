@@ -21,9 +21,9 @@ MonoBehaviour:
       m_GuidLow: 4648104228188468752
       m_GuidHigh: 5840973068723403164
     m_SerializedTextureGuid:
-      m_GuidLow: 1473895913614420595
-      m_GuidHigh: 4329008289121714680
+      m_GuidLow: 3027691593300468582
+      m_GuidHigh: 9284025621874831755
     m_Size: {x: 0.2, y: 0.2}
     m_SpecifySize: 1
-    m_Name: MoleDummy
+    m_Name: NetworkMoleManager
     m_Texture: {fileID: 0}
