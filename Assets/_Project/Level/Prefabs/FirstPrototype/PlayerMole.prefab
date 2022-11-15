@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 50141835791151486}
   - component: {fileID: -5178148027063014056}
   - component: {fileID: 6382029471691693004}
+  - component: {fileID: 8172475262818499142}
   m_Layer: 0
   m_Name: PlayerMole
   m_TagString: Untagged
@@ -149,6 +150,7 @@ MonoBehaviour:
   syncInterval: 0.1
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _rpcMolePressedEvent: {fileID: 11400000, guid: 181e5d4e5c5b49a428d4b27bd691890e, type: 2}
+  _rpcMoleUpdateColorEvent: {fileID: 11400000, guid: 60a6461d53c83384c8882eef6691c5f8, type: 2}
 --- !u!114 &6382029471691693004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +170,34 @@ MonoBehaviour:
       - m_Target: {fileID: -5178148027063014056}
         m_TargetAssemblyTypeName: NetworkPlayerMoleManager, Assembly-CSharp
         m_MethodName: OnScreenTapped
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8172475262818499142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17594209521950092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe0fb490541ec849b2897459ddf2107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 468e730a2d2a460469288ca6e706a984, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5178148027063014056}
+        m_TargetAssemblyTypeName: NetworkPlayerMoleManager, Assembly-CSharp
+        m_MethodName: CmdUpdateMoleColor
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

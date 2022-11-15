@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7763297422101987110}
   - component: {fileID: 3220954023474955775}
   - component: {fileID: 1414598279927313621}
+  - component: {fileID: 1613712395225719771}
   m_Layer: 0
   m_Name: Mole6
   m_TagString: Untagged
@@ -133,6 +134,34 @@ MonoBehaviour:
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _moleSO: {fileID: 11400000, guid: db261c5ab10bef14b8d01dbc49d5ec01, type: 2}
   _trackerName: 
+--- !u!114 &1613712395225719771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289233902487214671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88d70cf46c41ed45bab170286de7553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 60a6461d53c83384c8882eef6691c5f8, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1414598279927313621}
+        m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
+        m_MethodName: UpdateColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &641463714049312967
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,6 +176,7 @@ GameObject:
   - component: {fileID: 7447188747146128814}
   - component: {fileID: 6765631550474210353}
   - component: {fileID: 8639520883203335130}
+  - component: {fileID: 6888215573000931560}
   m_Layer: 0
   m_Name: Mole1
   m_TagString: Untagged
@@ -266,6 +296,34 @@ MonoBehaviour:
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _moleSO: {fileID: 11400000, guid: 915d786dca93dc248a5321f8d3f89ce8, type: 2}
   _trackerName: 
+--- !u!114 &6888215573000931560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641463714049312967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88d70cf46c41ed45bab170286de7553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 60a6461d53c83384c8882eef6691c5f8, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8639520883203335130}
+        m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
+        m_MethodName: UpdateColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &683979048514411278
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +338,7 @@ GameObject:
   - component: {fileID: 7404672319070338663}
   - component: {fileID: 3742582848243597369}
   - component: {fileID: 7094834711343021715}
+  - component: {fileID: 5188930304716005195}
   m_Layer: 0
   m_Name: Mole7
   m_TagString: Untagged
@@ -399,6 +458,34 @@ MonoBehaviour:
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _moleSO: {fileID: 11400000, guid: fe665831df2c4e44093450399cdf0f8d, type: 2}
   _trackerName: 
+--- !u!114 &5188930304716005195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683979048514411278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88d70cf46c41ed45bab170286de7553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 60a6461d53c83384c8882eef6691c5f8, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7094834711343021715}
+        m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
+        m_MethodName: UpdateColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &898397154212212118
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +500,7 @@ GameObject:
   - component: {fileID: 7190254226794236159}
   - component: {fileID: 5659659206355753162}
   - component: {fileID: 9005742785285544306}
+  - component: {fileID: 3239464408853067416}
   m_Layer: 0
   m_Name: Mole2
   m_TagString: Untagged
@@ -532,6 +620,34 @@ MonoBehaviour:
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _moleSO: {fileID: 11400000, guid: c21eb801126e8e14abc1f0b262f1fe50, type: 2}
   _trackerName: 
+--- !u!114 &3239464408853067416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898397154212212118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88d70cf46c41ed45bab170286de7553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 60a6461d53c83384c8882eef6691c5f8, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9005742785285544306}
+        m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
+        m_MethodName: UpdateColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3644465809647758401
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,6 +662,7 @@ GameObject:
   - component: {fileID: 6713999754025781544}
   - component: {fileID: 4966662363985700855}
   - component: {fileID: 5316231889097449905}
+  - component: {fileID: 501779146767764039}
   m_Layer: 0
   m_Name: Mole8
   m_TagString: Untagged
@@ -665,6 +782,34 @@ MonoBehaviour:
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _moleSO: {fileID: 11400000, guid: 1c7aa894d41793546bf7fe2f95951f2f, type: 2}
   _trackerName: 
+--- !u!114 &501779146767764039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3644465809647758401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88d70cf46c41ed45bab170286de7553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 60a6461d53c83384c8882eef6691c5f8, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5316231889097449905}
+        m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
+        m_MethodName: UpdateColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4052373637797852846
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +824,7 @@ GameObject:
   - component: {fileID: 6306087546686346183}
   - component: {fileID: 5450033618942861096}
   - component: {fileID: 7030321646100293964}
+  - component: {fileID: 593622373867104098}
   m_Layer: 0
   m_Name: Mole5
   m_TagString: Untagged
@@ -798,6 +944,34 @@ MonoBehaviour:
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _moleSO: {fileID: 11400000, guid: 7d191669450b3f343958445216d8a73a, type: 2}
   _trackerName: 
+--- !u!114 &593622373867104098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052373637797852846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88d70cf46c41ed45bab170286de7553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 60a6461d53c83384c8882eef6691c5f8, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7030321646100293964}
+        m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
+        m_MethodName: UpdateColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5015764663996761432
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,6 +1047,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
+  _cmdMoleUpdateEvent: {fileID: 11400000, guid: 468e730a2d2a460469288ca6e706a984, type: 2}
   _networkMoles:
   - {fileID: 8639520883203335130}
   - {fileID: 9005742785285544306}
@@ -926,6 +1101,7 @@ GameObject:
   - component: {fileID: 4138021370199434830}
   - component: {fileID: 4522759747651298817}
   - component: {fileID: 5172712049132178467}
+  - component: {fileID: 4145934812630819297}
   m_Layer: 0
   m_Name: Mole4
   m_TagString: Untagged
@@ -1045,6 +1221,34 @@ MonoBehaviour:
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _moleSO: {fileID: 11400000, guid: 55d2ffb24b07a0c4e871fc395723b844, type: 2}
   _trackerName: 
+--- !u!114 &4145934812630819297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256170511889220391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88d70cf46c41ed45bab170286de7553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 60a6461d53c83384c8882eef6691c5f8, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5172712049132178467}
+        m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
+        m_MethodName: UpdateColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7250615733525376414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,6 +1263,7 @@ GameObject:
   - component: {fileID: 801651677709682935}
   - component: {fileID: 5789294638103739076}
   - component: {fileID: 5653527167508168052}
+  - component: {fileID: 657282949509276959}
   m_Layer: 0
   m_Name: Mole3
   m_TagString: Untagged
@@ -1178,6 +1383,34 @@ MonoBehaviour:
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _moleSO: {fileID: 11400000, guid: 21c2e20ebd3ee9b438e9a4b04690b554, type: 2}
   _trackerName: 
+--- !u!114 &657282949509276959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7250615733525376414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88d70cf46c41ed45bab170286de7553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 60a6461d53c83384c8882eef6691c5f8, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5653527167508168052}
+        m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
+        m_MethodName: UpdateColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9119758410291540094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1192,6 +1425,7 @@ GameObject:
   - component: {fileID: 1238690664264684823}
   - component: {fileID: 2344665648086561730}
   - component: {fileID: 1049869201975531120}
+  - component: {fileID: 7553348257524603246}
   m_Layer: 0
   m_Name: Mole9
   m_TagString: Untagged
@@ -1311,3 +1545,31 @@ MonoBehaviour:
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _moleSO: {fileID: 11400000, guid: c31b9a66529bdf540ad8dc44b66ccbbe, type: 2}
   _trackerName: 
+--- !u!114 &7553348257524603246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9119758410291540094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88d70cf46c41ed45bab170286de7553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 60a6461d53c83384c8882eef6691c5f8, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1049869201975531120}
+        m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
+        m_MethodName: UpdateColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

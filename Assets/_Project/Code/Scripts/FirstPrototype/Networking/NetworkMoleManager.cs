@@ -5,6 +5,7 @@ using UnityEngine;
 public class NetworkMoleManager : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
+    [SerializeField] private CmdMoleUpdateColorEvent _cmdMoleUpdateEvent;
     [SerializeField] private List<NetworkMole> _networkMoles;
     [SerializeField] private MoleListSO _moleList;
     private void Start()
@@ -27,11 +28,12 @@ public class NetworkMoleManager : NetworkBehaviour
     {
         for(int i = 0; i < _networkMoles.Count; i++)
         {
-            _debugEvent.Invoke("Before if statement: " + _networkMoles[i].trackername + "\n" + "Name of passed through mole: " + mole);
             if (_networkMoles[i].trackername == mole)
             {
                 MoleSO moleSO = _moleList.molesList[i];
+                moleSO.isSelected = true;
                 _debugEvent.Invoke("Mole SO name is: " + moleSO.moleObjectReference.name);
+                _cmdMoleUpdateEvent.Invoke(true);
                 return;
             }
         }

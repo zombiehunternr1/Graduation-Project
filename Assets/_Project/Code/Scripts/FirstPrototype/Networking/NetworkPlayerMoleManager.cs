@@ -6,6 +6,7 @@ public class NetworkPlayerMoleManager : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
     [SerializeField] private RpcMolePressedEvent _rpcMolePressedEvent;
+    [SerializeField] private RpcMoleUpdateColorEvent _rpcMoleUpdateColorEvent;
     public void OnScreenTapped(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -24,6 +25,15 @@ public class NetworkPlayerMoleManager : NetworkBehaviour
         }
     }
     #region MoleManager
-
+    [ClientRpc]
+    private void RpcUpdateMoleColor(bool value)
+    {
+        _rpcMoleUpdateColorEvent.Invoke(value);
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdUpdateMoleColor(bool value)
+    {
+        RpcUpdateMoleColor(value);
+    }
     #endregion
 }
