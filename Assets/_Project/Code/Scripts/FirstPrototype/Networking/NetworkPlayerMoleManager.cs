@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class NetworkPlayerMoleManager : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
+    [SerializeField] private RpcMolePressedEvent _rpcMolePressedEvent;
     public void OnScreenTapped(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -16,6 +17,7 @@ public class NetworkPlayerMoleManager : NetworkBehaviour
                 if (hit.collider.gameObject != null)
                 {
                     _debugEvent.Invoke("I've pressed: " + hit.collider.name);
+                    _rpcMolePressedEvent.Invoke(hit.collider.name);
                     return;
                 }
             }

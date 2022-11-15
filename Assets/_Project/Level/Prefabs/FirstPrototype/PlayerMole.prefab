@@ -148,6 +148,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
+  _rpcMolePressedEvent: {fileID: 11400000, guid: 181e5d4e5c5b49a428d4b27bd691890e, type: 2}
 --- !u!114 &6382029471691693004
 MonoBehaviour:
   m_ObjectHideFlags: 0

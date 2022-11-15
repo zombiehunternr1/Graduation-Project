@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e9cfc8b4e9e6458bf9acd76f4032b, type: 3}
+  m_Name: MoleListSO
+  m_EditorClassIdentifier: 
+  _molesList:
+  - {fileID: 11400000, guid: 915d786dca93dc248a5321f8d3f89ce8, type: 2}
+  - {fileID: 11400000, guid: c21eb801126e8e14abc1f0b262f1fe50, type: 2}
+  - {fileID: 11400000, guid: 21c2e20ebd3ee9b438e9a4b04690b554, type: 2}
+  - {fileID: 11400000, guid: 55d2ffb24b07a0c4e871fc395723b844, type: 2}
+  - {fileID: 11400000, guid: 7d191669450b3f343958445216d8a73a, type: 2}
+  - {fileID: 11400000, guid: db261c5ab10bef14b8d01dbc49d5ec01, type: 2}
+  - {fileID: 11400000, guid: fe665831df2c4e44093450399cdf0f8d, type: 2}
+  - {fileID: 11400000, guid: 1c7aa894d41793546bf7fe2f95951f2f, type: 2}
+  - {fileID: 11400000, guid: c31b9a66529bdf540ad8dc44b66ccbbe, type: 2}

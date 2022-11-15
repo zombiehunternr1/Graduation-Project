@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48efab53c79fdbe43bb14a361761f460, type: 3}
+  m_Name: Mole4
+  m_EditorClassIdentifier: 
+  _moleObjectReference: {fileID: 6322341166398430481, guid: 9caa7f4a3aa4eb649a95126777f476ff, type: 3}
+  _isSelected: 0
+  _allowPress: 0
+  _moleNewColor:
+    serializedVersion: 2
+    rgba: 14810880
+  _MoleOriginalColor:
+    serializedVersion: 2
+    rgba: 28589
