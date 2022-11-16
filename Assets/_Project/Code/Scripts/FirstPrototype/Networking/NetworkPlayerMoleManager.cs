@@ -17,7 +17,6 @@ public class NetworkPlayerMoleManager : NetworkBehaviour
             {
                 if (hit.collider.gameObject != null)
                 {
-                    _debugEvent.Invoke("I've pressed: " + hit.collider.name);
                     _rpcMolePressedEvent.Invoke(hit.collider.name);
                     return;
                 }

@@ -15,7 +15,21 @@ public class NetworkMoleManager : NetworkBehaviour
     {
         get
         {
-            return Random.Range(0, _networkMoles.Count - 1);
+            return Random.Range(0, _networkMoles.Count);
+        }
+    }
+    private bool allMolesWacked
+    {
+        get
+        {
+            foreach(MoleSO moleSO in _moleListSO.molesList)
+            {
+                if (!moleSO.isWacked)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
     private void Start()
@@ -44,14 +58,16 @@ public class NetworkMoleManager : NetworkBehaviour
                 MoleSO moleSO = _moleListSO.molesList[i];
                 if (moleSO.allowPress)
                 {
-                    _debugEvent.Invoke(moleSO.moleObjectReference.name + " is allowed to be pressed");
                     moleSO.isCooldownFinished = false;
                     moleSO.allowPress = false;
+                    moleSO.isWacked = true;
                     _cmdMoleUpdateEvent.Invoke();
-                }
-                else
-                {
-                    _debugEvent.Invoke(moleSO.moleObjectReference.name + " is not allowed to be pressed");
+                    if (allMolesWacked)
+                    {
+                        StopAllCoroutines();
+                        _debugEvent.Invoke("All moles have been wacked!");
+                        StartCoroutine(ResetMoles());
+                    }
                 }
                 return;
             }
@@ -63,17 +79,20 @@ public class NetworkMoleManager : NetworkBehaviour
         {
             _previousIndex = _moleIndex;
             _moleIndex = randomMoleIndex;
-            if (_moleListSO.molesList[_moleIndex].isCooldownFinished)
+            if (!_moleListSO.molesList[_moleIndex].isWacked)
             {
-                _moleListSO.molesList[_moleIndex].isCooldownFinished = false;
-                _cmdMoleUpdateEvent.Invoke();
-                yield return null;
-            }
-            else
-            {
-                _networkMoles[_moleIndex].StartCooldown();
-                _cmdMoleUpdateEvent.Invoke();
-                yield return new WaitForSeconds(1.5f);
+                if (_moleListSO.molesList[_moleIndex].isCooldownFinished)
+                {
+                    _moleListSO.molesList[_moleIndex].isCooldownFinished = false;
+                    _cmdMoleUpdateEvent.Invoke();
+                    yield return null;
+                }
+                else
+                {
+                    _networkMoles[_moleIndex].StartCooldown();
+                    _cmdMoleUpdateEvent.Invoke();
+                    yield return new WaitForSeconds(1.5f);
+                }
             }
         }
         _moleListSO.molesList[_previousIndex].allowPress = false;
@@ -81,6 +100,18 @@ public class NetworkMoleManager : NetworkBehaviour
         yield return null;
         _previousIndex = -1;
         yield return new WaitForSeconds(3);
+        StartCoroutine(RandomMoleCooldown());
+    }
+    private IEnumerator ResetMoles()
+    {
+        yield return new WaitForSeconds(3);
+        foreach (MoleSO moleSO in _moleListSO.molesList)
+        {
+            moleSO.allowPress = false;
+            moleSO.isCooldownFinished = false;
+            moleSO.isWacked = false;
+        }
+        _cmdMoleUpdateEvent.Invoke();
         StartCoroutine(RandomMoleCooldown());
     }
 }

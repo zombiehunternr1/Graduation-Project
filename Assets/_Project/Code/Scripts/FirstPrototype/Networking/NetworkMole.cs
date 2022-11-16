@@ -62,6 +62,12 @@ public class NetworkMole : NetworkBehaviour
     {
         if (_moleSO != null)
         {
+            if (_moleSO.isWacked)
+            {
+                _moleColor = _moleSO.moleWackedColor;
+                _moleRenderer.material.color = _moleColor;
+                return;
+            }
             if (_moleSO.allowPress)
             {
                 _moleOriginalColor = _moleSO.newColor;
