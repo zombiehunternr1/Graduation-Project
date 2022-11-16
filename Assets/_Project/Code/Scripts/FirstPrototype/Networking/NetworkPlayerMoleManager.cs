@@ -26,14 +26,14 @@ public class NetworkPlayerMoleManager : NetworkBehaviour
     }
     #region MoleManager
     [ClientRpc]
-    private void RpcUpdateMoleColor(bool value)
+    private void RpcUpdateMoleColor()
     {
-        _rpcMoleUpdateColorEvent.Invoke(value);
+        _rpcMoleUpdateColorEvent.Invoke();
     }
     [Command(requiresAuthority = false)]
-    public void CmdUpdateMoleColor(bool value)
+    public void CmdUpdateMoleColor()
     {
-        RpcUpdateMoleColor(value);
+        RpcUpdateMoleColor();
     }
     #endregion
 }

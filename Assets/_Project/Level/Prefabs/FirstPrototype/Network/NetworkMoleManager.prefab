@@ -1058,7 +1058,7 @@ MonoBehaviour:
   - {fileID: 7094834711343021715}
   - {fileID: 5316231889097449905}
   - {fileID: 1049869201975531120}
-  _moleList: {fileID: 11400000, guid: efb3ac1ac1b68634f9854bf1d0a71b45, type: 2}
+  _moleListSO: {fileID: 11400000, guid: efb3ac1ac1b68634f9854bf1d0a71b45, type: 2}
 --- !u!114 &8127118776052560523
 MonoBehaviour:
   m_ObjectHideFlags: 0

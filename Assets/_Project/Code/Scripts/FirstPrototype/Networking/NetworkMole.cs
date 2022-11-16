@@ -57,11 +57,11 @@ public class NetworkMole : NetworkBehaviour
             _moleRenderer.material.color = _moleColor;
         }
     }
-    public void UpdateColor(bool isSelected)
+    public void UpdateColor()
     {
         if (_moleSO != null)
         {
-            if (_moleSO.isSelected == isSelected)
+            if (_moleSO.allowPress)
             {
                 _moleOriginalColor = _moleSO.newColor;
                 _moleRenderer.material.color = _moleOriginalColor;

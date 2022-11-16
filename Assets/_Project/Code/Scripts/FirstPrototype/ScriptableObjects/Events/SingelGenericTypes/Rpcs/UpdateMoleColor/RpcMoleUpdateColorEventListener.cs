@@ -1,3 +1,3 @@
-public class RpcMoleUpdateColorEventListener : BaseEventSingleGenericTypeListener<bool>
+public class RpcMoleUpdateColorEventListener : BaseEventEmptyListener
 {
 }
