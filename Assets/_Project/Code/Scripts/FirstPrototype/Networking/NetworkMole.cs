@@ -1,4 +1,5 @@
 using Mirror;
+using System.Collections;
 using UnityEngine;
 
 public class NetworkMole : NetworkBehaviour
@@ -72,5 +73,17 @@ public class NetworkMole : NetworkBehaviour
                 _moleRenderer.material.color = _moleColor;
             }
         }
+    }
+    public void StartCooldown()
+    {
+        StartCoroutine(CoolDownRoutine());
+    }
+    private IEnumerator CoolDownRoutine()
+    {
+        _moleSO.allowPress = true;
+        _moleSO.isCooldownFinished = false;
+        yield return new WaitForSeconds(3);
+        _moleSO.isCooldownFinished = true;
+        _moleSO.allowPress = false;
     }
 }

@@ -45,6 +45,7 @@ public class NetworkMoleManager : NetworkBehaviour
                 if (moleSO.allowPress)
                 {
                     _debugEvent.Invoke(moleSO.moleObjectReference.name + " is allowed to be pressed");
+                    moleSO.isCooldownFinished = false;
                     moleSO.allowPress = false;
                     _cmdMoleUpdateEvent.Invoke();
                 }
@@ -62,28 +63,22 @@ public class NetworkMoleManager : NetworkBehaviour
         {
             _previousIndex = _moleIndex;
             _moleIndex = randomMoleIndex;
-            if(_moleIndex == _previousIndex)
+            if (_moleListSO.molesList[_moleIndex].isCooldownFinished)
             {
-                if (_moleListSO.molesList[_moleIndex].allowPress)
-                {
-                    _moleListSO.molesList[_moleIndex].allowPress = false;
-                    _cmdMoleUpdateEvent.Invoke();
-                    yield return null;
-                }
-                else
-                {
-                    _moleListSO.molesList[_moleIndex].allowPress = true;
-                    _cmdMoleUpdateEvent.Invoke();
-                    yield return new WaitForSeconds(1.5f);
-                }
-            }
-            else
-            {
-                _moleListSO.molesList[_previousIndex].allowPress = false;
+                _moleListSO.molesList[_moleIndex].isCooldownFinished = false;
                 _cmdMoleUpdateEvent.Invoke();
                 yield return null;
             }
+            else
+            {
+                _networkMoles[_moleIndex].StartCooldown();
+                _cmdMoleUpdateEvent.Invoke();
+                yield return new WaitForSeconds(1.5f);
+            }
         }
+        _moleListSO.molesList[_previousIndex].allowPress = false;
+        _cmdMoleUpdateEvent.Invoke();
+        yield return null;
         _previousIndex = -1;
         yield return new WaitForSeconds(3);
         StartCoroutine(RandomMoleCooldown());

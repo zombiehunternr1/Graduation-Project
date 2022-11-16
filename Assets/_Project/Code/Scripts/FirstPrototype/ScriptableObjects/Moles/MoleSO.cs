@@ -1,4 +1,5 @@
 using Mirror;
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MoleSO", menuName ="Scriptable Objects/Moles/Mole")]
@@ -6,7 +7,7 @@ public class MoleSO : ScriptableObject
 {
     //Put in info about moles like with buttons
     [SerializeField] private GameObject _moleObjectReference;
-    [SyncVar][SerializeField] private bool _isSelected;
+    [SyncVar][SerializeField] private bool _isCooldownFinished;
     [SyncVar][SerializeField] private bool _allowPress;
     [SerializeField] private Color32 _moleNewColor;
     [SerializeField] private Color32 _MoleOriginalColor;
@@ -17,15 +18,15 @@ public class MoleSO : ScriptableObject
             return _moleObjectReference;
         }
     }
-    public bool isSelected
+    public bool isCooldownFinished
     {
         get
         {
-            return _isSelected;
+            return _isCooldownFinished;
         }
         set
         {
-            _isSelected = value;
+            _isCooldownFinished = value;
         }
     }
     public bool allowPress
