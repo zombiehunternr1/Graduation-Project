@@ -105,6 +105,7 @@ public class NetworkMoleManager : NetworkBehaviour
     private IEnumerator ResetMoles()
     {
         yield return new WaitForSeconds(3);
+        _debugEvent.Invoke(null);
         foreach (MoleSO moleSO in _moleListSO.molesList)
         {
             moleSO.allowPress = false;
