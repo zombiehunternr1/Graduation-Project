@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4035826317417642104}
   - component: {fileID: 4587765194186258487}
   - component: {fileID: 5090822502272700949}
+  - component: {fileID: 7688523100855007535}
   m_Layer: 0
   m_Name: Mole4
   m_TagString: Untagged
@@ -29,8 +30,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6322341166398430481}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.2}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -114,7 +115,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 4287584351ed70a4f90949836bfb4bc7
+  m_AssetId: 9caa7f4a3aa4eb649a95126777f476ff
   hasSpawned: 0
 --- !u!114 &5090822502272700949
 MonoBehaviour:
@@ -133,3 +134,31 @@ MonoBehaviour:
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
   _moleSO: {fileID: 11400000, guid: 55d2ffb24b07a0c4e871fc395723b844, type: 2}
   _trackerName: 
+--- !u!114 &7688523100855007535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6322341166398430481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4387193da78a76499345603456d0c8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 60a6461d53c83384c8882eef6691c5f8, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5090822502272700949}
+        m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
+        m_MethodName: UpdateColor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

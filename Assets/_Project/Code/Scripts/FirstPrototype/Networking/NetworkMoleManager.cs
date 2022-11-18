@@ -1,20 +1,35 @@
-using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkMoleManager : NetworkBehaviour
+public class NetworkMoleManager : MonoBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
     [SerializeField] private CmdMoleUpdateColorEvent _cmdMoleUpdateEvent;
     [SerializeField] private List<NetworkMole> _networkMoles;
+    [SerializeField] private List<Transform> _spawnPositions;
     [SerializeField] private MoleListSO _moleListSO;
     private int _moleIndex;
     private int _previousIndex = -1;
+    public List<NetworkMole> networkMoles
+    {
+        get
+        {
+            return _networkMoles;
+        }
+    }
+    public List<Transform> spawnPositions
+    {
+        get
+        {
+            return _spawnPositions;
+        }
+    }
     private int randomMoleIndex
     {
         get
         {
+            //Improve by removing all the moles that have been wacked and use the amount of onwacked
             return Random.Range(0, _networkMoles.Count);
         }
     }
@@ -34,19 +49,26 @@ public class NetworkMoleManager : NetworkBehaviour
     }
     private void Start()
     {
-        StartCoroutine(RandomMoleCooldown());
         Show(false);
+    }
+    public void StartGame()
+    {
+        StartCoroutine(RandomMoleCooldown());
     }
     public void SetPositionAndRotation(Vector3 pos, Quaternion rot)
     {
         transform.SetPositionAndRotation(pos, rot);
+        for(int i = 0; i < _networkMoles.Count; i++)
+        {
+            _networkMoles[i].transform.SetPositionAndRotation(transform.position + _moleListSO.molesList[i].molePosition, Quaternion.identity);
+        }
     }
     public void Show(bool show)
     {
-        foreach(NetworkMole mole in _networkMoles)
+        for(int i = 0; i < _networkMoles.Count; i++)
         {
-            mole.moleRenderer.enabled = show;
-            mole.moleCollider.enabled = show;
+            _networkMoles[i].moleRenderer.enabled = show;
+            _networkMoles[i].moleCollider.enabled = show;
         }
     }
     public void OnMolePressed(string mole)

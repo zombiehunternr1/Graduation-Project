@@ -44,18 +44,17 @@ public class NetworkMole : NetworkBehaviour
     {
         _moleRenderer = GetComponent<Renderer>();
         _moleCollider = GetComponent<Collider>();
-        _trackerName = gameObject.name;
+        _trackerName = _moleSO.moleObjectReference.name;
     }
     private void Start()
     {
-        if(_moleSO != null)
+        transform.SetPositionAndRotation(transform.parent.position, Quaternion.identity);
+        if (_moleSO != null)
         {
             _moleOriginalColor = _moleSO.originalColor;
-        }
-        if (isServer)
-        {
             _moleColor = _moleOriginalColor;
             _moleRenderer.material.color = _moleColor;
+            _moleSO.molePosition = transform.position;
         }
     }
     public void UpdateColor()

@@ -4,8 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MoleSO", menuName ="Scriptable Objects/Moles/Mole")]
 public class MoleSO : ScriptableObject
 {
-    //Put in info about moles like with buttons
     [SerializeField] private GameObject _moleObjectReference;
+    [SyncVar][SerializeField] Vector3 _position;
     [SyncVar][SerializeField] private bool _isCooldownFinished;
     [SyncVar][SerializeField] private bool _allowPress;
     [SyncVar][SerializeField] private bool _isWacked;
@@ -18,6 +18,17 @@ public class MoleSO : ScriptableObject
         get
         {
             return _moleObjectReference;
+        }
+    }
+    public Vector3 molePosition
+    {
+        get
+        {
+            return _position;
+        }
+        set
+        {
+            _position = value;
         }
     }
     public bool isCooldownFinished

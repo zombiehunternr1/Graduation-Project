@@ -1,4 +1,5 @@
 using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
@@ -8,15 +9,22 @@ public class ARTrackableMolesManager : NetworkBehaviour
     [SerializeField] private DebugEvent _debugEvent;
     [SerializeField] private Transform _parentTransform;
     [SerializeField] private ARTrackedImageManager _aRTrackedImageManager;
-    [SerializeField] private GameObject _networkMoleManagerPrefab;
-    private NetworkMoleManager _networkMoleManager;
+    [SerializeField] private NetworkMoleManager _networkMoleManager;
+    [SerializeField] private List<GameObject> _molesToSpawn;
     private void Start()
     {
         if (isServer)
         {
-            GameObject networkMoleManager = Instantiate(_networkMoleManagerPrefab, Vector3.zero, Quaternion.identity);
-            networkMoleManager.name = networkMoleManager.name.Replace("(Clone)", "");
-            NetworkServer.Spawn(networkMoleManager);
+            for(int i = 0; i < _molesToSpawn.Count; i++)
+            {
+                GameObject instantiatedMole = Instantiate(_molesToSpawn[i]);
+                instantiatedMole.transform.SetParent(_networkMoleManager.spawnPositions[i]);
+                instantiatedMole.name = instantiatedMole.name.Replace("(Clone)", "");
+                NetworkServer.Spawn(instantiatedMole);
+                NetworkMole networkMole = instantiatedMole.GetComponent<NetworkMole>();
+                _networkMoleManager.networkMoles.Add(networkMole);
+            }
+            _networkMoleManager.StartGame();
         }
         _networkMoleManager = FindObjectOfType<NetworkMoleManager>();
     }

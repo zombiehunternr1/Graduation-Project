@@ -330,7 +330,16 @@ MonoBehaviour:
   playerPrefab: {fileID: 17594209521950092, guid: c31e780f853969d47a7c5450592e57b2, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 1975931581657764733, guid: 0db30f3692bebd04993a7f4d1eeafc8e, type: 3}
+  - {fileID: 6610746777056697993, guid: ee8fcfe7ed1729043b21e9a673e94954, type: 3}
+  - {fileID: 3052050254417148200, guid: 02f83bb5c9d0f7a4c98406009ce38047, type: 3}
+  - {fileID: 6322341166398430481, guid: 9caa7f4a3aa4eb649a95126777f476ff, type: 3}
+  - {fileID: 8985843940093696639, guid: 43cca6e26d5be4a4eafc685275b6c063, type: 3}
+  - {fileID: 914523923397569682, guid: e66befb2f9fa1054f9945cb9f165250d, type: 3}
+  - {fileID: 6819504147985335022, guid: 842fa0d505dc3f04ea22d5ba06c0ecbd, type: 3}
+  - {fileID: 8023701650125175783, guid: 6000a04fe2cda5245a608a4d3275983f, type: 3}
+  - {fileID: 7384732955485348247, guid: 0f48cca6e1ca3d54fb13c89b7c0fcb5b, type: 3}
 --- !u!4 &688765627
 Transform:
   m_ObjectHideFlags: 0
