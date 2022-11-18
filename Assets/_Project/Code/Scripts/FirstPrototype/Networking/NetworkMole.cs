@@ -44,6 +44,7 @@ public class NetworkMole : NetworkBehaviour
     {
         _moleRenderer = GetComponent<Renderer>();
         _moleCollider = GetComponent<Collider>();
+        _moleRenderer.enabled = false;
         _trackerName = _moleSO.moleObjectReference.name;
     }
     private void Start()
