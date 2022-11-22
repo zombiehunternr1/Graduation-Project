@@ -1,34 +1,28 @@
-using Mirror;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MoleSO", menuName ="Scriptable Objects/Moles/Mole")]
 public class MoleSO : ScriptableObject
 {
+    [UniqueIdentifier][SerializeField] private string _moleId;
     [SerializeField] private GameObject _moleObjectReference;
-    [SyncVar][SerializeField] Vector3 _position;
-    [SyncVar][SerializeField] private bool _isCooldownFinished;
-    [SyncVar][SerializeField] private bool _allowPress;
-    [SyncVar][SerializeField] private bool _isWacked;
+    [SerializeField] private bool _isCooldownFinished;
+    [SerializeField] private bool _allowPress;
+    [SerializeField] private bool _isWacked;
     [SerializeField] private Color32 _moleNewColor;
     [SerializeField] private Color32 _MoleOriginalColor;
     [SerializeField] private Color32 _moleWackedColor;
-
+    public string moleId
+    {
+        get
+        {
+            return _moleId;
+        }
+    }
     public GameObject moleObjectReference
     {
         get
         {
             return _moleObjectReference;
-        }
-    }
-    public Vector3 molePosition
-    {
-        get
-        {
-            return _position;
-        }
-        set
-        {
-            _position = value;
         }
     }
     public bool isCooldownFinished
@@ -37,20 +31,12 @@ public class MoleSO : ScriptableObject
         {
             return _isCooldownFinished;
         }
-        set
-        {
-            _isCooldownFinished = value;
-        }
     }
     public bool allowPress
     {
         get
         {
             return _allowPress;
-        }
-        set
-        {
-            _allowPress = value;
         }
     }
     public bool isWacked
@@ -59,19 +45,15 @@ public class MoleSO : ScriptableObject
         {
             return _isWacked;
         }
-        set
-        {
-            _isWacked = value;
-        }
     }
-    public Color32 newColor
+    public Color32 moleNewColor
     {
         get
         {
             return _moleNewColor;
         }
     }
-    public Color32 originalColor
+    public Color32 moleOriginalColor
     {
         get
         {

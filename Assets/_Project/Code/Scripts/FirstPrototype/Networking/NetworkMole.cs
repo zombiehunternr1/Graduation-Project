@@ -5,17 +5,75 @@ using UnityEngine;
 public class NetworkMole : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
+    [SerializeField] private CmdCheckAllMolesWackedEvent _cmdCheckAllMolesWackedEvent;
     [SerializeField] private MoleSO _moleSO;
     private Renderer _moleRenderer;
     private Collider _moleCollider;
-    [SyncVar][SerializeField] private string _trackerName;
+    [SyncVar] private string _moleId;
+    [SyncVar] private string _trackerName;
     [SyncVar] private Color32 _moleColor;
+    [SyncVar] private Color32 _molePopOutColor;
     [SyncVar] private Color32 _moleOriginalColor;
+    [SyncVar] private Color32 _moleWackedColor;
+    [SyncVar] private bool _isCooldownFinished;
+    [SyncVar] private bool _allowPress;
+    [SyncVar] private bool _isWacked;
+    public string moleId
+    {
+        get
+        {
+            return _moleId;
+        }
+    }
     public string trackername
     {
         get
         {
             return _trackerName;
+        }
+    }
+    public Color32 moleColor
+    {
+        get
+        {
+            return _moleColor;
+        }
+        private set
+        {
+            _moleColor = value;
+        }
+    }
+    public Color32 moleOriginalColor
+    {
+        get
+        {
+            return _moleOriginalColor;
+        }
+        private set
+        {
+            _moleOriginalColor = value;
+        }
+    }
+    public Color32 molePopOutColor
+    {
+        get
+        {
+            return _molePopOutColor;
+        }
+        private set
+        {
+            _molePopOutColor = value;
+        }
+    }
+    public Color32 moleWackedColor
+    {
+        get
+        {
+            return _moleWackedColor;
+        }
+        private set
+        {
+            _moleWackedColor = value;
         }
     }
     public Renderer moleRenderer
@@ -40,43 +98,103 @@ public class NetworkMole : NetworkBehaviour
             _moleCollider = value;
         }
     }
+    public bool isWacked
+    {
+        get
+        {
+            return _isWacked;
+        }
+        private set
+        {
+            _isWacked = value;
+        }
+    }
+    public bool isCooldownFinished
+    {
+        get
+        {
+            return _isCooldownFinished;
+        }
+        private set
+        {
+            _isCooldownFinished = value;
+        }
+    }
+    public bool isAllowedPress
+    {
+        get
+        {
+            return _allowPress;
+        }
+        private set
+        {
+            _allowPress = value;
+        }
+    }
     private void OnEnable()
     {
         _moleRenderer = GetComponent<Renderer>();
         _moleCollider = GetComponent<Collider>();
         _moleRenderer.enabled = false;
-        _trackerName = _moleSO.moleObjectReference.name;
+        _moleCollider.enabled = false;
+        if(_moleSO != null)
+        {
+            _moleId = _moleSO.moleId;
+            _trackerName = _moleSO.moleObjectReference.name;
+        }
     }
     private void Start()
     {
-        transform.SetPositionAndRotation(transform.parent.position, Quaternion.identity);
+        transform.SetPositionAndRotation(transform.parent.position, transform.parent.rotation);
         if (_moleSO != null)
         {
-            _moleOriginalColor = _moleSO.originalColor;
-            _moleColor = _moleOriginalColor;
-            _moleRenderer.material.color = _moleColor;
-            _moleSO.molePosition = transform.position;
+            SetDefaultSettings();
         }
     }
-    public void UpdateColor()
+    public void WackedMole(string moleName)
+    {
+        if(moleName == _trackerName)
+        {
+            StopAllCoroutines();
+            isWacked = true;
+            _cmdCheckAllMolesWackedEvent.Invoke();
+        }
+    }
+    public void ResetMole()
     {
         if (_moleSO != null)
         {
-            if (_moleSO.isWacked)
+            SetDefaultSettings();
+        }
+    }
+    public void UpdateColor(string moleName, Color32 moleColor)
+    {
+        if (_trackerName == moleName)
+        {
+            if (isAllowedPress)
             {
-                _moleColor = _moleSO.moleWackedColor;
+                isAllowedPress = false;
+            }
+            if (isWacked)
+            {
+                StopAllCoroutines();
+                isCooldownFinished = false;
+                _moleColor = moleColor;
                 _moleRenderer.material.color = _moleColor;
                 return;
             }
-            if (_moleSO.allowPress)
+            if (isCooldownFinished)
             {
-                _moleOriginalColor = _moleSO.newColor;
-                _moleRenderer.material.color = _moleOriginalColor;
+                isCooldownFinished = false;
+                _moleColor = moleColor;
+                _moleRenderer.material.color = _moleColor;
+                return;
             }
             else
             {
-                _moleColor = _moleSO.originalColor;
+                _moleColor = moleColor;
                 _moleRenderer.material.color = _moleColor;
+                StartCooldown();
             }
         }
     }
@@ -84,12 +202,24 @@ public class NetworkMole : NetworkBehaviour
     {
         StartCoroutine(CoolDownRoutine());
     }
+    private void SetDefaultSettings()
+    {
+        moleWackedColor = _moleSO.moleWackedColor;
+        molePopOutColor = _moleSO.moleNewColor;
+        moleOriginalColor = _moleSO.moleOriginalColor;
+        moleColor = _moleOriginalColor;
+        moleRenderer.material.color = _moleSO.moleOriginalColor;
+        isAllowedPress = _moleSO.allowPress;
+        isCooldownFinished = _moleSO.isCooldownFinished;
+        isWacked = _moleSO.isWacked;
+    }
     private IEnumerator CoolDownRoutine()
     {
-        _moleSO.allowPress = true;
-        _moleSO.isCooldownFinished = false;
+        isAllowedPress = true;
+        isCooldownFinished = false;
         yield return new WaitForSeconds(3);
-        _moleSO.isCooldownFinished = true;
-        _moleSO.allowPress = false;
+        _moleRenderer.material.color = _moleOriginalColor;
+        isCooldownFinished = true;
+        _allowPress = false;
     }
 }

@@ -26,7 +26,27 @@ public class ARTrackableMolesManager : NetworkBehaviour
             }
             _networkMoleManager.StartGame();
         }
-        _networkMoleManager = FindObjectOfType<NetworkMoleManager>();
+        if (_networkMoleManager.networkMoles.Count != 0)
+        {
+            return;
+        }
+        NetworkMole[] networkMoles = FindObjectsOfType<NetworkMole>();
+        foreach (NetworkMole networkMole in networkMoles)
+        {
+            _networkMoleManager.networkMoles.Add(networkMole);
+        }
+        foreach (NetworkMole networkMole in _networkMoleManager.networkMoles)
+        {
+            string moleId = networkMole.moleId;
+            for(int j = 0; j < _networkMoleManager.spawnPositions.Count; j++)
+            {
+                NetworkMole childNetworkMole = _networkMoleManager.spawnPositions[j].GetChild(0).GetComponent<NetworkMole>();
+                if (childNetworkMole.moleId == moleId)
+                {
+                    networkMole.transform.SetParent(_networkMoleManager.spawnPositions[j]);
+                }
+            }
+        }
     }
     private void OnEnable()
     {
@@ -60,6 +80,17 @@ public class ARTrackableMolesManager : NetworkBehaviour
                 _networkMoleManager.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
                 _networkMoleManager.Show(true);
             }
+        }
+    }
+    public void RestartGame()
+    {
+        _networkMoleManager.ResetMoles();
+    }
+    public void CheckAllMolesWacked()
+    {
+        if (isServer)
+        {
+            _networkMoleManager.CheckAllMolesWacked();
         }
     }
 }

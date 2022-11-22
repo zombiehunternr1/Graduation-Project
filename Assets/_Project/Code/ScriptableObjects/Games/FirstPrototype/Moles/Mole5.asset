@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48efab53c79fdbe43bb14a361761f460, type: 3}
   m_Name: Mole5
   m_EditorClassIdentifier: 
+  _moleId: 7d191669450b3f343958445216d8a73a
   _moleObjectReference: {fileID: 8985843940093696639, guid: 43cca6e26d5be4a4eafc685275b6c063, type: 3}
-  _isSelected: 0
+  _isCooldownFinished: 0
   _allowPress: 0
+  _isWacked: 0
   _moleNewColor:
     serializedVersion: 2
     rgba: 14810880
   _MoleOriginalColor:
     serializedVersion: 2
     rgba: 28589
+  _moleWackedColor:
+    serializedVersion: 2
+    rgba: 0

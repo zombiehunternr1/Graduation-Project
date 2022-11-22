@@ -15,6 +15,11 @@ GameObject:
   - component: {fileID: -5178148027063014056}
   - component: {fileID: 6382029471691693004}
   - component: {fileID: 9129663502077794552}
+  - component: {fileID: 2683697295424182097}
+  - component: {fileID: 4383414705827140766}
+  - component: {fileID: 7142953115285864074}
+  - component: {fileID: 1913308297075516150}
+  - component: {fileID: 6951911303656076690}
   m_Layer: 0
   m_Name: PlayerMole
   m_TagString: Untagged
@@ -149,8 +154,13 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
+  _rpcUpdateUITextEvent: {fileID: 11400000, guid: f3675b2298ee6684ca2b657bf0b61ea1, type: 2}
   _rpcMolePressedEvent: {fileID: 11400000, guid: 181e5d4e5c5b49a428d4b27bd691890e, type: 2}
   _rpcMoleUpdateColorEvent: {fileID: 11400000, guid: 60a6461d53c83384c8882eef6691c5f8, type: 2}
+  _rpcMoleWackedEvent: {fileID: 11400000, guid: caed87697c86bb34d88c9715bb6badf2, type: 2}
+  _rpcCheckAllMolesWackedEvent: {fileID: 11400000, guid: 3ab34d78ae1a02041976b55e50168818, type: 2}
+  _rpcResetAllMolesEvent: {fileID: 11400000, guid: d5f10db96d51de54391bcaa5f1e5bdd6, type: 2}
+  _rpcRestartMoleGameEvent: {fileID: 11400000, guid: 0fb529a45412b9c4eaa9a58e03aeeb4d, type: 2}
 --- !u!114 &6382029471691693004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,7 +208,147 @@ MonoBehaviour:
       - m_Target: {fileID: -5178148027063014056}
         m_TargetAssemblyTypeName: NetworkPlayerMoleManager, Assembly-CSharp
         m_MethodName: CmdUpdateMoleColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2683697295424182097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17594209521950092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 835c2933988e10f4bb3f2d1d07b564ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: ce74c24aa693dfe488bca905eb1d3950, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5178148027063014056}
+        m_TargetAssemblyTypeName: NetworkPlayerMoleManager, Assembly-CSharp
+        m_MethodName: CmdMoleWacked
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4383414705827140766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17594209521950092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea8903f9d36400f4baad03332272b2b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 373f8b82ffd099a4f82493c009decac6, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5178148027063014056}
+        m_TargetAssemblyTypeName: NetworkPlayerMoleManager, Assembly-CSharp
+        m_MethodName: CmdResetAllMoles
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7142953115285864074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17594209521950092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19869fc434fcaf4fbd1a362d944a69e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 15d2f79d3ce510e42816169b7b92b9d4, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5178148027063014056}
+        m_TargetAssemblyTypeName: NetworkPlayerMoleManager, Assembly-CSharp
+        m_MethodName: CmdRestartMoleGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1913308297075516150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17594209521950092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f81c0e50526c094caf25d7470841eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: f39626e37912d444496761f5ed6136a7, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5178148027063014056}
+        m_TargetAssemblyTypeName: NetworkPlayerMoleManager, Assembly-CSharp
+        m_MethodName: CmdCheckAllMolesWacked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6951911303656076690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17594209521950092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17d9f399d2acde4989cceb354f179d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 26c0360fc10c1114cacbc5517e52bacd, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5178148027063014056}
+        m_TargetAssemblyTypeName: NetworkPlayerMoleManager, Assembly-CSharp
+        m_MethodName: CmdUpdateUIDisplay
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

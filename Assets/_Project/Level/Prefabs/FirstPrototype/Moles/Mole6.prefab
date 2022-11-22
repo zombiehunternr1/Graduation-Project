@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 2594559938074407714}
   - component: {fileID: 1950959954995659272}
   - component: {fileID: -6853594187133027453}
+  - component: {fileID: 1313930780340886770}
+  - component: {fileID: -7601104046245844880}
   m_Layer: 0
   m_Name: Mole6
   m_TagString: Untagged
@@ -96,7 +98,7 @@ BoxCollider:
   m_GameObject: {fileID: 914523923397569682}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -132,6 +134,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
+  _cmdCheckAllMolesWackedEvent: {fileID: 11400000, guid: f39626e37912d444496761f5ed6136a7, type: 2}
   _moleSO: {fileID: 11400000, guid: db261c5ab10bef14b8d01dbc49d5ec01, type: 2}
   _trackerName: 
 --- !u!114 &-6853594187133027453
@@ -153,6 +156,62 @@ MonoBehaviour:
       - m_Target: {fileID: 1950959954995659272}
         m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
         m_MethodName: UpdateColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1313930780340886770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914523923397569682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4157fdf8b3b6942abbfaaaad94c82a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: caed87697c86bb34d88c9715bb6badf2, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1950959954995659272}
+        m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
+        m_MethodName: WackedMole
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-7601104046245844880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914523923397569682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f2209966e8e8de44a877f79a8e45b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: d5f10db96d51de54391bcaa5f1e5bdd6, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1950959954995659272}
+        m_TargetAssemblyTypeName: NetworkMole, Assembly-CSharp
+        m_MethodName: ResetMole
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -5,7 +5,11 @@ using UnityEngine;
 public class NetworkMoleManager : MonoBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
+    [SerializeField] private CmdUpdateUITextEvent _cmdUpdateUITextEvent;
+    [SerializeField] private CmdResetAllMolesEvent _cmdResetAllMolesEvent;
+    [SerializeField] private CmdMoleWackedEvent _cmdMoleWackedEvent;
     [SerializeField] private CmdMoleUpdateColorEvent _cmdMoleUpdateEvent;
+    [SerializeField] private CmdRestartMoleGameEvent _cmdRestartMoleGameEvent;
     [SerializeField] private List<NetworkMole> _networkMoles;
     [SerializeField] private List<Transform> _spawnPositions;
     [SerializeField] private MoleListSO _moleListSO;
@@ -29,7 +33,6 @@ public class NetworkMoleManager : MonoBehaviour
     {
         get
         {
-            //Improve by removing all the moles that have been wacked and use the amount of onwacked
             return Random.Range(0, _networkMoles.Count);
         }
     }
@@ -37,9 +40,9 @@ public class NetworkMoleManager : MonoBehaviour
     {
         get
         {
-            foreach(MoleSO moleSO in _moleListSO.molesList)
+            foreach(NetworkMole mole in _networkMoles)
             {
-                if (!moleSO.isWacked)
+                if (!mole.isWacked)
                 {
                     return false;
                 }
@@ -53,6 +56,10 @@ public class NetworkMoleManager : MonoBehaviour
     }
     public void StartGame()
     {
+        foreach(NetworkMole networkMole in _networkMoles)
+        {
+            networkMole.moleRenderer.material.color = networkMole.moleOriginalColor;
+        }
         StartCoroutine(RandomMoleCooldown());
     }
     public void SetPositionAndRotation(Vector3 pos, Quaternion rot)
@@ -60,16 +67,21 @@ public class NetworkMoleManager : MonoBehaviour
         transform.SetPositionAndRotation(pos, rot);
         for(int i = 0; i < _networkMoles.Count; i++)
         {
-            _networkMoles[i].transform.SetPositionAndRotation(transform.position + _moleListSO.molesList[i].molePosition, Quaternion.identity);
+            _networkMoles[i].transform.SetPositionAndRotation(_spawnPositions[i].position, rot);
         }
     }
     public void Show(bool show)
     {
         for(int i = 0; i < _networkMoles.Count; i++)
         {
-            _networkMoles[i].moleRenderer.enabled = show;
             _networkMoles[i].moleCollider.enabled = show;
+            _networkMoles[i].moleRenderer.enabled = show;
         }
+    }
+    public void ResetMoles()
+    {
+        _previousIndex = -1;
+        StartCoroutine(WaitBeforeReset());
     }
     public void OnMolePressed(string mole)
     {
@@ -77,23 +89,27 @@ public class NetworkMoleManager : MonoBehaviour
         {
             if (_networkMoles[i].trackername == mole)
             {
-                MoleSO moleSO = _moleListSO.molesList[i];
-                if (moleSO.allowPress)
+                if (_networkMoles[i].isAllowedPress)
                 {
-                    moleSO.isCooldownFinished = false;
-                    moleSO.allowPress = false;
-                    moleSO.isWacked = true;
-                    _cmdMoleUpdateEvent.Invoke();
-                    if (allMolesWacked)
-                    {
-                        StopAllCoroutines();
-                        _debugEvent.Invoke("All moles have been wacked!");
-                        StartCoroutine(ResetMoles());
-                    }
+                    _cmdMoleWackedEvent.Invoke(_networkMoles[i].trackername);
+                    _cmdMoleUpdateEvent.Invoke(_networkMoles[i].trackername, _networkMoles[i].moleWackedColor);
                 }
                 return;
             }
         }
+    }
+    public void CheckAllMolesWacked()
+    {
+        if (allMolesWacked)
+        {
+            _cmdUpdateUITextEvent.Invoke("All moles have been wacked!");
+            StartCoroutine(WaitTillRestartGame()); 
+        }
+    }
+    private IEnumerator WaitTillRestartGame()
+    {
+        yield return new WaitForSeconds(3);
+        _cmdRestartMoleGameEvent.Invoke();
     }
     private IEnumerator RandomMoleCooldown()
     {
@@ -101,40 +117,36 @@ public class NetworkMoleManager : MonoBehaviour
         {
             _previousIndex = _moleIndex;
             _moleIndex = randomMoleIndex;
-            if (!_moleListSO.molesList[_moleIndex].isWacked)
+            if (!_networkMoles[_moleIndex].isWacked)
             {
-                if (_moleListSO.molesList[_moleIndex].isCooldownFinished)
+                if (_networkMoles[_moleIndex].isCooldownFinished)
                 {
-                    _moleListSO.molesList[_moleIndex].isCooldownFinished = false;
-                    _cmdMoleUpdateEvent.Invoke();
-                    yield return null;
+                    _cmdMoleUpdateEvent.Invoke(_networkMoles[_moleIndex].trackername, _networkMoles[_moleIndex].moleOriginalColor);
+                    yield return new WaitForSeconds(1.5f);
                 }
                 else
                 {
-                    _networkMoles[_moleIndex].StartCooldown();
-                    _cmdMoleUpdateEvent.Invoke();
+                    _cmdMoleUpdateEvent.Invoke(_networkMoles[_moleIndex].trackername, _networkMoles[_moleIndex].molePopOutColor);
                     yield return new WaitForSeconds(1.5f);
                 }
             }
         }
-        _moleListSO.molesList[_previousIndex].allowPress = false;
-        _cmdMoleUpdateEvent.Invoke();
-        yield return null;
+        if (!_networkMoles[_previousIndex].isWacked)
+        {
+            if (_networkMoles[_previousIndex].isCooldownFinished)
+            {
+                _cmdMoleUpdateEvent.Invoke(_networkMoles[_previousIndex].trackername, _networkMoles[_previousIndex].moleOriginalColor);
+            }
+        }
         _previousIndex = -1;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
         StartCoroutine(RandomMoleCooldown());
     }
-    private IEnumerator ResetMoles()
+    private IEnumerator WaitBeforeReset()
     {
         yield return new WaitForSeconds(3);
-        _debugEvent.Invoke(null);
-        foreach (MoleSO moleSO in _moleListSO.molesList)
-        {
-            moleSO.allowPress = false;
-            moleSO.isCooldownFinished = false;
-            moleSO.isWacked = false;
-        }
-        _cmdMoleUpdateEvent.Invoke();
-        StartCoroutine(RandomMoleCooldown());
+        _cmdResetAllMolesEvent.Invoke();
+        _cmdUpdateUITextEvent.Invoke(null);
+        yield return new WaitForSeconds(1);
     }
 }
