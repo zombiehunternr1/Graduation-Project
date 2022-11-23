@@ -56,10 +56,12 @@ public class NetworkMoleManager : MonoBehaviour
     }
     public void StartGame()
     {
+        /*
         foreach(NetworkMole networkMole in _networkMoles)
         {
             networkMole.moleRenderer.material.color = networkMole.moleOriginalColor;
         }
+        */
         StartCoroutine(RandomMoleCooldown());
     }
     public void SetPositionAndRotation(Vector3 pos, Quaternion rot)
@@ -74,7 +76,7 @@ public class NetworkMoleManager : MonoBehaviour
     {
         for(int i = 0; i < _networkMoles.Count; i++)
         {
-            _networkMoles[i].moleCollider.enabled = show;
+            //_networkMoles[i].moleCollider.enabled = show;
             _networkMoles[i].moleRenderer.enabled = show;
         }
     }
@@ -113,34 +115,39 @@ public class NetworkMoleManager : MonoBehaviour
     }
     private IEnumerator RandomMoleCooldown()
     {
-        while (_moleIndex != _previousIndex)
+        while (!allMolesWacked)
         {
-            _previousIndex = _moleIndex;
-            _moleIndex = randomMoleIndex;
-            if (!_networkMoles[_moleIndex].isWacked)
+            if (_moleIndex != _previousIndex)
             {
-                if (_networkMoles[_moleIndex].isCooldownFinished)
+                _previousIndex = _moleIndex;
+                _moleIndex = randomMoleIndex;
+                while(_previousIndex == _moleIndex)
                 {
-                    _cmdMoleUpdateEvent.Invoke(_networkMoles[_moleIndex].trackername, _networkMoles[_moleIndex].moleOriginalColor);
-                    yield return new WaitForSeconds(1.5f);
+                    _moleIndex = randomMoleIndex;
                 }
-                else
+                if (!_networkMoles[_moleIndex].isWacked)
                 {
-                    _cmdMoleUpdateEvent.Invoke(_networkMoles[_moleIndex].trackername, _networkMoles[_moleIndex].molePopOutColor);
-                    yield return new WaitForSeconds(1.5f);
+                    if (_networkMoles[_moleIndex].isCooldownFinished)
+                    {
+                        _cmdMoleUpdateEvent.Invoke(_networkMoles[_moleIndex].trackername, _networkMoles[_moleIndex].moleOriginalColor);
+                        yield return new WaitForSeconds(1.5f);
+                    }
+                    else
+                    {
+                        _cmdMoleUpdateEvent.Invoke(_networkMoles[_moleIndex].trackername, _networkMoles[_moleIndex].molePopOutColor);
+                        yield return new WaitForSeconds(1.5f);
+                    }
                 }
             }
-        }
-        if (!_networkMoles[_previousIndex].isWacked)
-        {
-            if (_networkMoles[_previousIndex].isCooldownFinished)
+            else if (!_networkMoles[_previousIndex].isWacked)
             {
-                _cmdMoleUpdateEvent.Invoke(_networkMoles[_previousIndex].trackername, _networkMoles[_previousIndex].moleOriginalColor);
+                if (_networkMoles[_previousIndex].isCooldownFinished)
+                {
+                    _cmdMoleUpdateEvent.Invoke(_networkMoles[_previousIndex].trackername, _networkMoles[_previousIndex].moleOriginalColor);
+                }
             }
-        }
-        _previousIndex = -1;
-        yield return new WaitForSeconds(1.5f);
-        StartCoroutine(RandomMoleCooldown());
+            _previousIndex = -1;
+        }      
     }
     private IEnumerator WaitBeforeReset()
     {
@@ -148,5 +155,6 @@ public class NetworkMoleManager : MonoBehaviour
         _cmdResetAllMolesEvent.Invoke();
         _cmdUpdateUITextEvent.Invoke(null);
         yield return new WaitForSeconds(1);
+        StartGame();
     }
 }

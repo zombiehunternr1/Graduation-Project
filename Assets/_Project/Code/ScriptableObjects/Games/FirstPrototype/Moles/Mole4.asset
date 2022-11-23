@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mole4
   m_EditorClassIdentifier: 
   _moleId: 55d2ffb24b07a0c4e871fc395723b844
-  _moleObjectReference: {fileID: 6322341166398430481, guid: 9caa7f4a3aa4eb649a95126777f476ff, type: 3}
+  _moleObjectReference: {fileID: 1975931581657764733, guid: bf55bb911cb47cd479f857925a782366, type: 3}
   _isCooldownFinished: 0
   _allowPress: 0
   _isWacked: 0
