@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/_Project/Level/Scenes/NetworkManager.unity
     guid: fae6c4732d62ce4469f6f4d100dc5bec
   - enabled: 1
+    path: Assets/_Project/Level/Scenes/FirstARPuzzle.unity
+    guid: 20c0130ac734cf247b2c7c22ff3e3d45
+  - enabled: 0
     path: Assets/_Project/Level/Scenes/WackAMole.unity
     guid: bc1c4915615be964aaf44a0fc0f6c958
   - enabled: 0

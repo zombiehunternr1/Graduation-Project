@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 8768777410885119340}
   - component: {fileID: 8768777410885119341}
   - component: {fileID: 8768777410885119338}
-  - component: {fileID: 8768777410885119342}
+  - component: {fileID: 2862971703502745328}
   - component: {fileID: 8768777410885119329}
   - component: {fileID: 8768777410885119328}
   - component: {fileID: 8768777410885119331}
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8768777410885119342
+--- !u!114 &2862971703502745328
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8768777410885119339}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 516e341e161519044a2507bedc7af260, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f01662bf78b5fd478d6590e95f487da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _debugField: {fileID: 8768777411233047607}
@@ -272,8 +272,8 @@ MonoBehaviour:
   _unityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8768777410885119342}
-        m_TargetAssemblyTypeName: DebugLogger, Assembly-CSharp
+      - m_Target: {fileID: 2862971703502745328}
+        m_TargetAssemblyTypeName: DebugUIManager, Assembly-CSharp
         m_MethodName: DisplayDebug
         m_Mode: 0
         m_Arguments:
@@ -300,8 +300,8 @@ MonoBehaviour:
   _unityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8768777410885119342}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2862971703502745328}
+        m_TargetAssemblyTypeName: DebugUIManager, Assembly-CSharp
         m_MethodName: DisplayTimer
         m_Mode: 0
         m_Arguments:
@@ -328,8 +328,8 @@ MonoBehaviour:
   _unityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8768777410885119342}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2862971703502745328}
+        m_TargetAssemblyTypeName: DebugUIManager, Assembly-CSharp
         m_MethodName: DisplayResult
         m_Mode: 0
         m_Arguments:

@@ -322,24 +322,17 @@ MonoBehaviour:
   autoStartServerBuild: 1
   serverTickRate: 30
   offlineScene: Assets/_Project/Level/Scenes/NetworkManager.unity
-  onlineScene: Assets/_Project/Level/Scenes/WackAMole.unity
+  onlineScene: Assets/_Project/Level/Scenes/FirstARPuzzle.unity
   transport: {fileID: 688765625}
   networkAddress: localhost
   maxConnections: 100
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 17594209521950092, guid: c31e780f853969d47a7c5450592e57b2, type: 3}
+  playerPrefab: {fileID: 1351934403286103218, guid: 8438824a3b6009545b9d4f76bd831463, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
-  - {fileID: 1975931581657764733, guid: 0db30f3692bebd04993a7f4d1eeafc8e, type: 3}
-  - {fileID: 1975931581657764733, guid: debe30eea13be0a48b9febaa4be8539f, type: 3}
-  - {fileID: 1975931581657764733, guid: 9a2fbb3fa6a978a48b4036e3adf7bcfb, type: 3}
-  - {fileID: 1975931581657764733, guid: bf55bb911cb47cd479f857925a782366, type: 3}
-  - {fileID: 1975931581657764733, guid: 704768b20b7cbe6429e73b9d272874bf, type: 3}
-  - {fileID: 1975931581657764733, guid: a8dcfb129be1b724c85836bb6f223b2e, type: 3}
-  - {fileID: 1975931581657764733, guid: a1f06fa9543a26d40b8b88e36001d13a, type: 3}
-  - {fileID: 1975931581657764733, guid: 7ca8961d13352f442b1736f7ae3ce354, type: 3}
-  - {fileID: 1975931581657764733, guid: 4ac50e4e037bbbb438643d9606ba251b, type: 3}
+  - {fileID: 2295235994193141132, guid: 70f5915936b24504f9a563efbc0bc98a, type: 3}
+  - {fileID: 7821172993929690832, guid: 318a1b6ed6d85b74baa74748cd9f0c96, type: 3}
 --- !u!4 &688765627
 Transform:
   m_ObjectHideFlags: 0
