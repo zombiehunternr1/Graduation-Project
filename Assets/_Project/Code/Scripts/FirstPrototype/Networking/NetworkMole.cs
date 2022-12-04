@@ -7,8 +7,9 @@ public class NetworkMole : NetworkBehaviour
     [SerializeField] private DebugEvent _debugEvent;
     [SerializeField] private CmdCheckAllMolesWackedEvent _cmdCheckAllMolesWackedEvent;
     [SerializeField] private MoleSO _moleSO;
-    private Renderer _moleRenderer;
-    private Collider _moleCollider;
+    [SerializeField] private Animator _moleAnimator;
+    [SerializeField] private Renderer _moleRenderer;
+    [SerializeField] private float _crossAnimSpeed;
     [SyncVar] private string _moleId;
     [SyncVar] private string _trackerName;
     [SyncVar] private Color32 _moleColor;
@@ -87,17 +88,6 @@ public class NetworkMole : NetworkBehaviour
             _moleRenderer = value;
         }
     }
-    public Collider moleCollider
-    {
-        get
-        {
-            return _moleCollider;
-        }
-        set
-        {
-            _moleCollider = value;
-        }
-    }
     public bool isWacked
     {
         get
@@ -133,11 +123,7 @@ public class NetworkMole : NetworkBehaviour
     }
     private void OnEnable()
     {
-        _moleRenderer = GetComponent<Renderer>();
-        _moleCollider = GetComponent<Collider>();
-        _moleRenderer.enabled = false;
-        _moleCollider.enabled = false;
-        if(_moleSO != null)
+        if (_moleSO != null)
         {
             _moleId = _moleSO.moleId;
             _trackerName = _moleSO.moleObjectReference.name;
@@ -157,6 +143,8 @@ public class NetworkMole : NetworkBehaviour
         {
             StopAllCoroutines();
             isWacked = true;
+            _moleAnimator.StopPlayback();
+            _moleAnimator.CrossFade("Wacked", _crossAnimSpeed);
             _cmdCheckAllMolesWackedEvent.Invoke();
         }
     }
@@ -180,20 +168,24 @@ public class NetworkMole : NetworkBehaviour
                 StopAllCoroutines();
                 isCooldownFinished = false;
                 _moleColor = moleColor;
-                _moleRenderer.material.color = _moleColor;
+                //_moleRenderer.material.color = _moleColor;
                 return;
             }
             if (isCooldownFinished)
             {
                 isCooldownFinished = false;
                 _moleColor = moleColor;
-                _moleRenderer.material.color = _moleColor;
+                //_moleRenderer.material.color = _moleColor;
+                //_moleAnimator.StopPlayback();
+                //_moleAnimator.CrossFade("PoppingIn", _crossAnimSpeed);
                 return;
             }
             else
             {
                 _moleColor = moleColor;
-                _moleRenderer.material.color = _moleColor;
+                //_moleRenderer.material.color = _moleColor;
+                _moleAnimator.StopPlayback();
+                _moleAnimator.CrossFade("DigUp", _crossAnimSpeed);
                 StartCooldown();
             }
         }
@@ -204,11 +196,13 @@ public class NetworkMole : NetworkBehaviour
     }
     private void SetDefaultSettings()
     {
+        _moleAnimator.StopPlayback();
+        _moleAnimator.CrossFade("Idle", _crossAnimSpeed);
         moleWackedColor = _moleSO.moleWackedColor;
         molePopOutColor = _moleSO.moleNewColor;
         moleOriginalColor = _moleSO.moleOriginalColor;
         moleColor = _moleOriginalColor;
-        moleRenderer.material.color = _moleSO.moleOriginalColor;
+        //moleRenderer.material.color = _moleSO.moleOriginalColor;
         isAllowedPress = _moleSO.allowPress;
         isCooldownFinished = _moleSO.isCooldownFinished;
         isWacked = _moleSO.isWacked;
@@ -221,5 +215,7 @@ public class NetworkMole : NetworkBehaviour
         _moleRenderer.material.color = _moleOriginalColor;
         isCooldownFinished = true;
         _allowPress = false;
+        _moleAnimator.StopPlayback();
+        _moleAnimator.CrossFade("PoppingIn", _crossAnimSpeed);
     }
 }
