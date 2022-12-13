@@ -7,7 +7,7 @@ public class NetworkFirstARPuzzlePlayer : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
     [SerializeField] private CmdShapeSelectedStatusEvent _CmdShapeSelectedStatusEvent;
-    [SerializeField] private List<StarInfoSO> _allStarInfoSOList;
+    [SyncVar][SerializeField] private List<StarInfoSO> _allStarInfoSOList;
     public void OnScreenTapped(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -27,6 +27,7 @@ public class NetworkFirstARPuzzlePlayer : NetworkBehaviour
                         return;
                     }
                     starShape.starInfo.isSelected = true;
+                    starShape.transform.SetParent(transform);
                     _debugEvent.Invoke("Pressed the star");
                     string shapeName = hit.collider.GetComponent<NetworkStarShape>().trackerName;
                     _CmdShapeSelectedStatusEvent.Invoke(shapeName, starShape.starInfo.isSelected);
@@ -43,7 +44,10 @@ public class NetworkFirstARPuzzlePlayer : NetworkBehaviour
         {
             if(starInfoSO.name == shapeName)
             {
-                starInfoSO.isSelected = value;
+                if (!starInfoSO.isSelected)
+                {
+                    starInfoSO.isSelected = value;
+                }
                 return;
             }
         }

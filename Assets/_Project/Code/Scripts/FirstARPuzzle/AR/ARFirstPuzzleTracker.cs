@@ -59,13 +59,20 @@ public class ARFirstPuzzleTracker : NetworkBehaviour
             {
                 if (trackedImage.trackingState == TrackingState.Limited)
                 {
-                    starShape.Show(false);
+                    if (!starShape.starInfo.isSelected)
+                    {
+                        starShape.Show(false);
+                    }
                     return;
                 }
                 else
                 {
-                    starShape.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
-                    starShape.Show(true);
+                    if (!starShape.starInfo.isSelected)
+                    {
+                        starShape.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
+                        starShape.Show(true);
+                    }
+                    return;
                 }
             }
         }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3708984, g: 0.37837017, b: 0.35722524, a: 1}
+  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -322,7 +322,7 @@ MonoBehaviour:
   autoStartServerBuild: 1
   serverTickRate: 30
   offlineScene: Assets/_Project/Level/Scenes/NetworkManager.unity
-  onlineScene: Assets/_Project/Level/Scenes/FirstARPuzzle.unity
+  onlineScene: Assets/_Project/Level/Scenes/FindTheMatch.unity
   transport: {fileID: 688765625}
   networkAddress: localhost
   maxConnections: 100
