@@ -327,12 +327,11 @@ MonoBehaviour:
   networkAddress: localhost
   maxConnections: 100
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 1351934403286103218, guid: 8438824a3b6009545b9d4f76bd831463, type: 3}
+  playerPrefab: {fileID: 5826950998073158966, guid: 8332efb76de1aa248919e3043840300d, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
-  - {fileID: 2295235994193141132, guid: 70f5915936b24504f9a563efbc0bc98a, type: 3}
-  - {fileID: 7821172993929690832, guid: 318a1b6ed6d85b74baa74748cd9f0c96, type: 3}
+  - {fileID: 8149738235890543229, guid: 7b439ec62fd254f438a1bd5ca015f033, type: 3}
 --- !u!4 &688765627
 Transform:
   m_ObjectHideFlags: 0
