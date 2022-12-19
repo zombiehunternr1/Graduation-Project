@@ -165,10 +165,10 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     {
         _answerModelReference.GetComponent<Animator>().SetFloat("ShowResult", value);
         _answerModelReference.GetComponent<Animator>().CrossFade("Result", _crossFadingSpeed);
-        foreach (GameObject model in _optionModelReferences)
+        for(int i = 0; i < _optionModelReferences.Count; i++)
         {
-            model.GetComponent<Animator>().SetFloat("ShowResult", value);
-            model.GetComponent<Animator>().CrossFade("Result", _crossFadingSpeed);
+            _optionModelReferences[i].GetComponent<Animator>().SetFloat("ShowResult", value);
+            _optionModelReferences[i].GetComponent<Animator>().CrossFade("Result", _crossFadingSpeed);
         }
     }
     private void DisplayOptions()

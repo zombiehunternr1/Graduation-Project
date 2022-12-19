@@ -14219,6 +14219,7 @@ MonoBehaviour:
   _answerModelReference: {fileID: 9121746659687168055}
   _optionModelRenderers: []
   _answerModelRenderers: []
+  _crossFadingSpeed: 0.1
 --- !u!114 &3039629388998945669
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using Mirror;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class FindTheMatchPlayerNetwork : NetworkBehaviour
 {
@@ -20,14 +21,18 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private CmdDisplayResultEvent _cmdDisplayResultEvent;
     [SerializeField] private float _startTime = 10;
     [SerializeField] private float _timeSpeed = 1;
+    [SerializeField] private EventReference _backgroundMusic;
     [SerializeField] private EventReference _countdownSFX;
     [SerializeField] private EventReference _successSFX;
     [SerializeField] private EventReference _failedSFX;
+    private EventInstance _backgroundInstance;
     private EventInstance _soundEffectInstance;
     private float _currentTime = 0;
     private float _seconds;
-    [SyncVar]private bool _timePassed;
+    [SyncVar] private bool _timePassed;
+    [SyncVar] private bool _backgroundMusicStarted;
     private string _correctAnswer;
+
     public void OnScreenTapped(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -51,6 +56,12 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         {
             StartCoroutine(CountDown());
         }
+        if (_backgroundMusicStarted)
+        {
+            return;
+        }
+        _backgroundMusicStarted = true;
+        RpcStartBackgroundMusic(_backgroundMusic);
     }
     private IEnumerator CountDown()
     {
@@ -69,7 +80,6 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         RpcStartPuzzle();
         yield return new WaitForSeconds(1);
         RpcStartTimerStatus();
-
     }
     private void CheckAnswer(string answer)
     {
@@ -138,6 +148,14 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         RuntimeManager.AttachInstanceToGameObject(_soundEffectInstance, transform);
         _soundEffectInstance.start();
         _soundEffectInstance.release();
+    }
+    [ClientRpc]
+    private void RpcStartBackgroundMusic(EventReference backgroundMusic)
+    {
+        _backgroundInstance = RuntimeManager.CreateInstance(backgroundMusic);
+        RuntimeManager.AttachInstanceToGameObject(_backgroundInstance, transform);
+        _backgroundInstance.start();
+        _backgroundInstance.release();
     }
     [ClientRpc]
     private void RpcStopGame()

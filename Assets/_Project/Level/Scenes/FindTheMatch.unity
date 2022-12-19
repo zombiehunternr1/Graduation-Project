@@ -265,9 +265,7 @@ GameObject:
   - component: {fileID: 675063336}
   - component: {fileID: 675063335}
   - component: {fileID: 675063334}
-  - component: {fileID: 675063338}
   - component: {fileID: 675063337}
-  - component: {fileID: 675063339}
   m_Layer: 0
   m_Name: AR Session
   m_TagString: Untagged
@@ -335,49 +333,6 @@ MonoBehaviour:
   - Master
   CollisionTag: 
   PreloadSamples: 1
---- !u!114 &675063338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 675063333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attenuationObject: {fileID: 0}
---- !u!114 &675063339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 675063333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 460209550
-      Data2: 1161583654
-      Data3: 154992037
-      Data4: -1254215159
-    Path: event:/Background Music
-  Event: 
-  PlayEvent: 11
-  StopEvent: 12
-  AllowFadeout: 1
-  TriggerOnce: 1
-  Preload: 1
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1 &709167919
 GameObject:
   m_ObjectHideFlags: 0
