@@ -2,6 +2,7 @@ using Mirror;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
 
 public class FindTheMatchPlayerNetwork : NetworkBehaviour
 {
@@ -19,7 +20,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private float _timeSpeed = 1;
     private float _currentTime = 0;
     private float _seconds;
-    private bool _timePassed;
+    [SyncVar]private bool _timePassed;
     private string _correctAnswer;
     public void OnScreenTapped(InputAction.CallbackContext context)
     {
@@ -38,64 +39,98 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         }
     }
     #region FindTheMatchManager
-    public void StartGame()
+    public void StartCountDown()
     {
-        RpcStartTimerStatus();
+        if (isServer)
+        {
+            StartCoroutine(CountDown());
+        }
+    }
+    private IEnumerator CountDown()
+    {
+        RpcUpdateTimer("Get ready!");
+        yield return new WaitForSeconds(3);
+        RpcUpdateTimer("3");
+        yield return new WaitForSeconds(1);
+        RpcUpdateTimer("2");
+        yield return new WaitForSeconds(1);
+        RpcUpdateTimer("1");
+        yield return new WaitForSeconds(1);
+        RpcUpdateTimer("GO!");
+        yield return new WaitForSeconds(1.5f);
+        RpcUpdateTimer(_startTime.ToString());
         RpcStartPuzzle();
+        yield return new WaitForSeconds(1);
+        RpcStartTimerStatus();
+
     }
     private void CheckAnswer(string answer)
     {
-        if (_timePassed)
+        if (isServer)
         {
-            return;
-        }
-        if(answer == _correctAnswer)
-        {
-            _updateResultEvent.Invoke("You've pressed the correct answer in time!");
-            StopAllCoroutines();
-            if (isServer)
+            if (_timePassed)
             {
-                StartCoroutine(WaitBeforeRetry());
+                RpcUpdateResult("You didn't press the correct answer in time!");
             }
+            else if (answer == _correctAnswer)
+            {
+                RpcUpdateResult("You've pressed the correct answer in time!");
+            }
+            StopAllCoroutines();
+            StartCoroutine(WaitBeforeRetry());
         }
     }
     private IEnumerator WaitBeforeRetry()
     {
         yield return new WaitForSeconds(3);
         RpcStopGame();
-        _enableStartBtnEvent.Invoke();
+        if (isServer)
+        {
+            _enableStartBtnEvent.Invoke();
+        }
     }
     private IEnumerator Timer()
     {
-        _updateResultEvent.Invoke(null);
-        _currentTime = _startTime;
-        while (_currentTime > 0)
+        if (isServer)
         {
+            RpcUpdateResult(null);
+            _currentTime = _startTime;
             _timePassed = false;
-            _currentTime -= Time.deltaTime * _timeSpeed;
-            _seconds = Mathf.FloorToInt(_currentTime % 60);
-            if (_seconds == 1)
+            while (_currentTime > 0)
             {
-                _updateTimerEvent.Invoke("Time remaining: " + _seconds.ToString() + " Second");
+                _currentTime -= Time.deltaTime * _timeSpeed;
+                _seconds = Mathf.FloorToInt(_currentTime % 60);
+                if (_seconds == 1)
+                {
+                    RpcUpdateTimer(_seconds.ToString());
+                }
+                else if (_seconds! > 0)
+                {
+                    RpcUpdateTimer(_seconds.ToString());
+                }
+                yield return _currentTime;
             }
-            else if (_seconds! > 0)
-            {
-                _updateTimerEvent.Invoke("Time remaining: " + _seconds.ToString() + " Seconds");
-            }
-            yield return _currentTime;
+            _timePassed = true;
+            RpcUpdateTimer("0");
+            RpcAnswerSelected(null);
         }
-        _timePassed = true;
-        _updateTimerEvent.Invoke("Time remaining: " + 0 + " Seconds");
-        _updateResultEvent.Invoke("You didn't press the correct answer in time!");
-        yield return new WaitForSeconds(3);
-        _updateTimerEvent.Invoke("Time remaining: " + _startTime + " Seconds");
-        yield return new WaitForSeconds(1);
-        StartCoroutine(Timer());
     }
     [ClientRpc]
     private void RpcStopGame()
     {
+        _updateTimerEvent.Invoke(null);
+        _updateResultEvent.Invoke(null);
         _cmdStopPuzzleEvent.Invoke();
+    }
+    [ClientRpc]
+    private void RpcUpdateTimer(string time)
+    {
+        _updateTimerEvent.Invoke(time);
+    }
+    [ClientRpc]
+    private void RpcUpdateResult(string text)
+    {
+        _updateResultEvent.Invoke(text);
     }
     [ClientRpc]
     private void RpcAnswerSelected(string answer)
@@ -110,8 +145,11 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void RpcStartTimerStatus()
     {
-        _cmdDisableBtnEvent.Invoke();
-        StartCoroutine(Timer());
+        if (isServer)
+        {
+            _cmdDisableBtnEvent.Invoke();
+            StartCoroutine(Timer());
+        }
     }
     [ClientRpc]
     private void RpcRequestAnswer()
