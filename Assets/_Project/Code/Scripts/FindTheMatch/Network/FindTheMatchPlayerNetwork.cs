@@ -1,8 +1,9 @@
+using FMOD.Studio;
+using FMODUnity;
 using Mirror;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.HID;
 
 public class FindTheMatchPlayerNetwork : NetworkBehaviour
 {
@@ -18,6 +19,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private CmdUpdateAnswerEvent _cmdUpdateAnswerEvent;
     [SerializeField] private float _startTime = 10;
     [SerializeField] private float _timeSpeed = 1;
+    [SerializeField] private EventReference _CountdownSFX;
     private float _currentTime = 0;
     private float _seconds;
     [SyncVar]private bool _timePassed;
@@ -50,6 +52,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     {
         RpcUpdateTimer("Get ready!");
         yield return new WaitForSeconds(3);
+        RpcStartCountdownSFX();
         RpcUpdateTimer("3");
         yield return new WaitForSeconds(1);
         RpcUpdateTimer("2");
@@ -114,6 +117,14 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
             RpcUpdateTimer("0");
             RpcAnswerSelected(null);
         }
+    }
+    [ClientRpc]
+    private void RpcStartCountdownSFX()
+    {
+        EventInstance countDownEvent = RuntimeManager.CreateInstance(_CountdownSFX);
+        RuntimeManager.AttachInstanceToGameObject(countDownEvent, transform);
+        countDownEvent.start();
+        countDownEvent.release();
     }
     [ClientRpc]
     private void RpcStopGame()
