@@ -14,6 +14,7 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     [SerializeField] private GameObject _answerModelReference;
     [HideInInspector][SerializeField] private List<Renderer> _optionModelRenderers;
     [HideInInspector][SerializeField] private List<Renderer> _answerModelRenderers;
+    [SerializeField] private float _crossFadingSpeed = 0.1f;
     private List<int> _wrongOptionsList;
     private bool _gameStarted = false;
     private int _currentAnswer;
@@ -159,6 +160,16 @@ public class FindTheMatchNetworkObject : MonoBehaviour
             }
         }
         DisplayOptions();
+    }
+    public void DisplayResult(float value)
+    {
+        _answerModelReference.GetComponent<Animator>().SetFloat("ShowResult", value);
+        _answerModelReference.GetComponent<Animator>().CrossFade("Result", _crossFadingSpeed);
+        foreach (GameObject model in _optionModelReferences)
+        {
+            model.GetComponent<Animator>().SetFloat("ShowResult", value);
+            model.GetComponent<Animator>().CrossFade("Result", _crossFadingSpeed);
+        }
     }
     private void DisplayOptions()
     {

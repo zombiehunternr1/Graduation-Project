@@ -14158,6 +14158,7 @@ GameObject:
   - component: {fileID: 9086746266070244080}
   - component: {fileID: 2672804792138113504}
   - component: {fileID: 2790983527289197105}
+  - component: {fileID: 6301270798466457088}
   m_Layer: 0
   m_Name: PuzzleOne
   m_TagString: Untagged
@@ -14322,6 +14323,34 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: FindTheMatchNetworkObject, Assembly-CSharp
         m_MethodName: StopGame
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6301270798466457088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8149738236978697887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e008eb9a6ba9a6429b480bc337f6e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 39f1d63c122c31d48ad5992440c7d756, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8149738236978697876}
+        m_TargetAssemblyTypeName: FindTheMatchNetworkObject, Assembly-CSharp
+        m_MethodName: DisplayResult
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

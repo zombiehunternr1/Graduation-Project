@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 5430671551676384125}
   - component: {fileID: 1975980537082167921}
   - component: {fileID: 6435389884894060988}
-  - component: {fileID: 5113753622620553101}
   m_Layer: 0
   m_Name: PlayerFindTheMatch
   m_TagString: Untagged
@@ -162,15 +161,37 @@ MonoBehaviour:
   _cmdStopPuzzleEvent: {fileID: 11400000, guid: 072a7fa4bf94ea1498eccdfb77fb1ec4, type: 2}
   _cmdGetAnswerFromServerEvent: {fileID: 11400000, guid: 140f48e1af96da643a7ba1157fa5b57d, type: 2}
   _cmdUpdateAnswerEvent: {fileID: 11400000, guid: 614293e1aec4816449ef3d300011ac2d, type: 2}
+  _cmdDisplayResultEvent: {fileID: 11400000, guid: 39f1d63c122c31d48ad5992440c7d756, type: 2}
   _startTime: 5
   _timeSpeed: 1
-  _CountdownSFX:
+  _countdownSFX:
     Guid:
       Data1: 982680362
       Data2: 1166320392
       Data3: 1231668364
       Data4: -1200840820
     Path: event:/Arcade countdown
+  _successSFX:
+    Guid:
+      Data1: -2021505436
+      Data2: 1153467989
+      Data3: 675434644
+      Data4: 905968151
+    Path: event:/Success
+  _failedSFX:
+    Guid:
+      Data1: 880718537
+      Data2: 1208812993
+      Data3: -1208681841
+      Data4: -1818169044
+    Path: event:/Failed
+  _backgroundMusic:
+    Guid:
+      Data1: 460209550
+      Data2: 1161583654
+      Data3: 154992037
+      Data4: -1254215159
+    Path: event:/Background Music
 --- !u!114 &2395896324849173937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,33 +332,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5113753622620553101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5826950998073158966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 460209550
-      Data2: 1161583654
-      Data3: 154992037
-      Data4: -1254215159
-    Path: event:/Background Music
-  Event: 
-  PlayEvent: 11
-  StopEvent: 12
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20

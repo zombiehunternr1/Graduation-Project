@@ -17,9 +17,13 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private CmdStopPuzzleEvent _cmdStopPuzzleEvent;
     [SerializeField] private CmdGetAnswerFromServerEvent _cmdGetAnswerFromServerEvent;
     [SerializeField] private CmdUpdateAnswerEvent _cmdUpdateAnswerEvent;
+    [SerializeField] private CmdDisplayResultEvent _cmdDisplayResultEvent;
     [SerializeField] private float _startTime = 10;
     [SerializeField] private float _timeSpeed = 1;
-    [SerializeField] private EventReference _CountdownSFX;
+    [SerializeField] private EventReference _countdownSFX;
+    [SerializeField] private EventReference _successSFX;
+    [SerializeField] private EventReference _failedSFX;
+    private EventInstance _soundEffectInstance;
     private float _currentTime = 0;
     private float _seconds;
     [SyncVar]private bool _timePassed;
@@ -52,7 +56,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     {
         RpcUpdateTimer("Get ready!");
         yield return new WaitForSeconds(3);
-        RpcStartCountdownSFX();
+        RpcStartSoundEffect(_countdownSFX);
         RpcUpdateTimer("3");
         yield return new WaitForSeconds(1);
         RpcUpdateTimer("2");
@@ -73,10 +77,14 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         {
             if (_timePassed)
             {
+                RpcDisplayResult(0);
+                RpcStartSoundEffect(_failedSFX);
                 RpcUpdateResult("You didn't press the correct answer in time!");
             }
             else if (answer == _correctAnswer)
             {
+                RpcDisplayResult(1);
+                RpcStartSoundEffect(_successSFX);
                 RpcUpdateResult("You've pressed the correct answer in time!");
             }
             StopAllCoroutines();
@@ -85,7 +93,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     }
     private IEnumerator WaitBeforeRetry()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         RpcStopGame();
         if (isServer)
         {
@@ -119,12 +127,17 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         }
     }
     [ClientRpc]
-    private void RpcStartCountdownSFX()
+    private void RpcDisplayResult(float result)
     {
-        EventInstance countDownEvent = RuntimeManager.CreateInstance(_CountdownSFX);
-        RuntimeManager.AttachInstanceToGameObject(countDownEvent, transform);
-        countDownEvent.start();
-        countDownEvent.release();
+        _cmdDisplayResultEvent.Invoke(result);
+    }
+    [ClientRpc]
+    private void RpcStartSoundEffect(EventReference soundEffect)
+    {
+        _soundEffectInstance = RuntimeManager.CreateInstance(soundEffect);
+        RuntimeManager.AttachInstanceToGameObject(_soundEffectInstance, transform);
+        _soundEffectInstance.start();
+        _soundEffectInstance.release();
     }
     [ClientRpc]
     private void RpcStopGame()
