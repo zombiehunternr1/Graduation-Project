@@ -119,14 +119,10 @@ public class FindTheMatchNetworkObject : MonoBehaviour
         if (isServer)
         {
             _isServer = isServer;
-            _currentAnswer = pickRandomAnswer;
             if(_answerModelRenderers.Count == 0)
             {
                 _answerModelRenderers.AddRange(_answerModelReference.GetComponentsInChildren<Renderer>());
             }
-            _answerModelReference.GetComponent<Animator>().SetFloat("ShowAnswer", _currentAnswer);
-            _answerModelReference.GetComponent<Animator>().Play("Answer");
-
         }
         if(_optionModelRenderers.Count == 0)
         {
@@ -135,10 +131,22 @@ public class FindTheMatchNetworkObject : MonoBehaviour
                 _optionModelRenderers.AddRange(optionModel.GetComponentsInChildren<Renderer>());
             }
         }
+        SetupRound();
         if (!isServer)
         {
             _cmdRequestAnswerFromServerEvent.Invoke();
         }
+    }
+    private void SetupRound()
+    {
+        if (!_isServer)
+        {
+            return;
+        }
+        _currentAnswer = pickRandomAnswer;
+        _answerModelReference.GetComponent<Animator>().SetFloat("ShowAnswer", _currentAnswer);
+        _answerModelReference.GetComponent<Animator>().Play("Answer");
+        _cmdSendAnswerEvent.Invoke(_currentAnswer, _optionModelReferences[_currentAnswer].transform.parent.name);
     }
     public void GetAnswerFromServer()
     {

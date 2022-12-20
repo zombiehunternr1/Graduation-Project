@@ -21,6 +21,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private float _startingCountDown = 5;
     [SerializeField] private float _countDownSpeed = 1;
     [SerializeField] private float _volumeFadingSpeed = 0.2f;
+    [SerializeField] private int _roundsTotal = 3;
     [SerializeField] private EventReference _backgroundMusic;
     [SerializeField] private EventReference _countdownSFX;
     [SerializeField] private EventReference _successSFX;
@@ -33,7 +34,10 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     private bool _timePassed;
     private bool _backgroundMusicCreated;
     private bool _soundEffectCreated;
+    private bool _hasAnswered;
     private string _correctAnswer;
+    private int _currentRound = 1;
+    private int _correctlyAnswered = 0;
 
     public void OnScreenTapped(InputAction.CallbackContext context)
     {
@@ -52,10 +56,15 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         }
     }
     #region FindTheMatchManager
-    public void StartCountDown()
+    public void StartGame()
+    {
+        RpcSetupGame();
+    }
+    private void StartCountDown()
     {
         if (isServer)
         {
+            _hasAnswered = false;
             StartCoroutine(CountDown());
         }
         if (_backgroundMusicCreated)
@@ -67,6 +76,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     }
     private IEnumerator CountDown()
     {
+        RpcUpdateResult("Round " + _currentRound + " / " + _roundsTotal);
         RpcUpdateTimer("Get ready!");
         yield return new WaitForSeconds(3);
         RpcStartSoundEffect(_countdownSFX);
@@ -78,6 +88,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         yield return new WaitForSeconds(1);
         RpcUpdateTimer("GO!");
         yield return new WaitForSeconds(1.5f);
+        RpcUpdateResult(null);
         RpcUpdateTimer(_startingCountDown.ToString());
         RpcStartPuzzle();
         yield return new WaitForSeconds(1);
@@ -89,18 +100,22 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         {
             if (_timePassed)
             {
-                EndResult(false); 
+                EndResult(false);
+                return;
             }
-            else if (answer == _correctAnswer)
+            else if (answer == _correctAnswer && !_hasAnswered)
             {
+                _hasAnswered = true;
+                _correctlyAnswered++;
                 EndResult(true);
+                return;
             }
         }
     }
-    private void EndResult(bool hasWon)
+    private void EndResult(bool wasCorrect)
     {
         StopAllCoroutines();
-        if (hasWon)
+        if (wasCorrect)
         {
             RpcDisplayResult(1);
             RpcStartSoundEffect(_successSFX);
@@ -112,12 +127,28 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
             RpcStartSoundEffect(_failedSFX);
             RpcUpdateResult("You didn't press the correct answer in time!");
         }
-        StartCoroutine(WaitBeforeRetry());
+        if(_currentRound == _roundsTotal)
+        {
+            RpcUpdateResult("Congratulations! You've guessed " + _correctlyAnswered + " out of " + _roundsTotal + " Correctly!");
+            StartCoroutine(WaitBeforeRetry());
+        }
+        else
+        {
+            _currentRound++;
+            StartCoroutine(WaitBeforeNextRound());
+        }
+    }
+    private IEnumerator WaitBeforeNextRound()
+    {
+        yield return new WaitForSeconds(3);
+        RpcUpdateResult("Get Ready for the next round!");
+        yield return new WaitForSeconds(3);
+        RpcUpdateResult(null);
+        StartCountDown();
     }
     private IEnumerator WaitBeforeRetry()
     {
         yield return new WaitForSeconds(5);
-        RpcClearScreenInfo();
         RpcStopGame();
         if (isServer)
         {
@@ -202,11 +233,12 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         _backgroundInstance.release();
     }
     [ClientRpc]
-    private void RpcClearScreenInfo()
+    private void RpcSetupGame()
     {
+        _currentRound = 1;
+        _correctlyAnswered = 0;
         StartCoroutine(FadeOutVolume(false));
-        _updateTimerEvent.Invoke(null);
-        _updateResultEvent.Invoke(null);
+        StartCountDown();
     }
     [ClientRpc]
     private void RpcStopGame()
@@ -226,7 +258,10 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void RpcAnswerSelected(string answer)
     {
-        CheckAnswer(answer);
+        if (isServer)
+        {
+            CheckAnswer(answer);
+        }
     }
     [Command(requiresAuthority = false)]
     public void CmdAnswerSelected(string answer)

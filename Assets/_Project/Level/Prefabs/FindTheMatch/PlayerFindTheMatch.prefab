@@ -162,8 +162,10 @@ MonoBehaviour:
   _cmdGetAnswerFromServerEvent: {fileID: 11400000, guid: 140f48e1af96da643a7ba1157fa5b57d, type: 2}
   _cmdUpdateAnswerEvent: {fileID: 11400000, guid: 614293e1aec4816449ef3d300011ac2d, type: 2}
   _cmdDisplayResultEvent: {fileID: 11400000, guid: 39f1d63c122c31d48ad5992440c7d756, type: 2}
-  _startTime: 5
-  _timeSpeed: 1
+  _startingCountDown: 5
+  _countDownSpeed: 1
+  _volumeFadingSpeed: 0.2
+  _roundsTotal: 3
   _backgroundMusic:
     Guid:
       Data1: 460209550
@@ -266,7 +268,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5826950998073158961}
         m_TargetAssemblyTypeName: FindTheMatchPlayerNetwork, Assembly-CSharp
-        m_MethodName: StartCountDown
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
