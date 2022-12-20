@@ -91,11 +91,11 @@ public class FindTheMatchNetworkObject : MonoBehaviour
         {
             foreach (Collider collider in _colliderOptions)
             {
-                if (_gameStarted)
+                if (_gameStarted && !_gameFinished)
                 {
                     collider.enabled = value;
                 }
-                else if(_gameFinished)
+                else
                 {
                     collider.enabled = false;
                 }
@@ -165,6 +165,10 @@ public class FindTheMatchNetworkObject : MonoBehaviour
         _gameFinished = true;
         _answerModelReference.GetComponent<Animator>().SetFloat("ShowResult", value);
         _answerModelReference.GetComponent<Animator>().CrossFade("Result", _crossFadingSpeed);
+        for(int i = 0; i < _colliderOptions.Count; i++)
+        {
+            _colliderOptions[i].enabled = false;
+        }
         for(int i = 0; i < _optionModelReferences.Count; i++)
         {
             _optionModelReferences[i].GetComponent<Animator>().SetFloat("ShowResult", value);

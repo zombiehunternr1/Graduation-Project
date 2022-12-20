@@ -4,7 +4,6 @@ using Mirror;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class FindTheMatchPlayerNetwork : NetworkBehaviour
 {
@@ -19,15 +18,17 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private CmdGetAnswerFromServerEvent _cmdGetAnswerFromServerEvent;
     [SerializeField] private CmdUpdateAnswerEvent _cmdUpdateAnswerEvent;
     [SerializeField] private CmdDisplayResultEvent _cmdDisplayResultEvent;
-    [SerializeField] private float _startTime = 10;
-    [SerializeField] private float _timeSpeed = 1;
+    [SerializeField] private float _startingCountDown = 5;
+    [SerializeField] private float _countDownSpeed = 1;
+    [SerializeField] private float _volumeFadingSpeed = 0.2f;
     [SerializeField] private EventReference _backgroundMusic;
     [SerializeField] private EventReference _countdownSFX;
     [SerializeField] private EventReference _successSFX;
     [SerializeField] private EventReference _failedSFX;
     private EventInstance _backgroundInstance;
     private EventInstance _soundEffectInstance;
-    private float _currentTime = 0;
+    private float _currentBackgroundVolume = 1f;
+    private float _currentTime;
     private float _seconds;
     private bool _timePassed;
     private bool _backgroundMusicCreated;
@@ -59,6 +60,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         }
         if (_backgroundMusicCreated)
         {
+            StartCoroutine(FadeOutVolume(false));
             return;
         }
         RpcStartBackgroundMusic(_backgroundMusic);
@@ -76,7 +78,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         yield return new WaitForSeconds(1);
         RpcUpdateTimer("GO!");
         yield return new WaitForSeconds(1.5f);
-        RpcUpdateTimer(_startTime.ToString());
+        RpcUpdateTimer(_startingCountDown.ToString());
         RpcStartPuzzle();
         yield return new WaitForSeconds(1);
         RpcStartTimerStatus();
@@ -127,11 +129,11 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         if (isServer)
         {
             RpcUpdateResult(null);
-            _currentTime = _startTime;
+            _currentTime = _startingCountDown;
             _timePassed = false;
             while (_currentTime > 0)
             {
-                _currentTime -= Time.deltaTime * _timeSpeed;
+                _currentTime -= Time.deltaTime * _countDownSpeed;
                 _seconds = Mathf.FloorToInt(_currentTime % 60);
                 if (_seconds == 1)
                 {
@@ -148,9 +150,34 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
             RpcAnswerSelected(null);
         }
     }
+    private IEnumerator FadeOutVolume(bool isFadeOut)
+    {
+        if (isFadeOut)
+        {
+            while (_currentBackgroundVolume > 0.25f)
+            {
+                _currentBackgroundVolume -= Time.deltaTime * _volumeFadingSpeed;
+                _backgroundInstance.setVolume(_currentBackgroundVolume);
+                yield return _currentBackgroundVolume;
+            }
+            _currentBackgroundVolume = 0.25f;
+        }
+        else
+        {
+            while (_currentBackgroundVolume < 1f)
+            {
+                _currentBackgroundVolume += Time.deltaTime * _volumeFadingSpeed;
+                _backgroundInstance.setVolume(_currentBackgroundVolume);
+                yield return _currentBackgroundVolume;
+            }
+            _currentBackgroundVolume = 1f;
+        }
+        _backgroundInstance.setVolume(_currentBackgroundVolume);
+    }
     [ClientRpc]
     private void RpcDisplayResult(float result)
     {
+        StartCoroutine(FadeOutVolume(true));
         _cmdDisplayResultEvent.Invoke(result);
     }
     [ClientRpc]
@@ -163,7 +190,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         }
         _soundEffectInstance = RuntimeManager.CreateInstance(soundEffect);
         _soundEffectInstance.start();
-        _soundEffectInstance.release();       
+        _soundEffectInstance.release();
     }
     [ClientRpc]
     private void RpcStartBackgroundMusic(EventReference backgroundMusic)
@@ -177,6 +204,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void RpcClearScreenInfo()
     {
+        StartCoroutine(FadeOutVolume(false));
         _updateTimerEvent.Invoke(null);
         _updateResultEvent.Invoke(null);
     }
