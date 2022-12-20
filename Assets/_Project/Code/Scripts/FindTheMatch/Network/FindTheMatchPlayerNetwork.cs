@@ -29,8 +29,9 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     private EventInstance _soundEffectInstance;
     private float _currentTime = 0;
     private float _seconds;
-    [SyncVar] private bool _timePassed;
-    [SyncVar] private bool _backgroundMusicStarted;
+    private bool _timePassed;
+    private bool _backgroundMusicCreated;
+    private bool _soundEffectCreated;
     private string _correctAnswer;
 
     public void OnScreenTapped(InputAction.CallbackContext context)
@@ -56,11 +57,10 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         {
             StartCoroutine(CountDown());
         }
-        if (_backgroundMusicStarted)
+        if (_backgroundMusicCreated)
         {
             return;
         }
-        _backgroundMusicStarted = true;
         RpcStartBackgroundMusic(_backgroundMusic);
     }
     private IEnumerator CountDown()
@@ -87,23 +87,35 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         {
             if (_timePassed)
             {
-                RpcDisplayResult(0);
-                RpcStartSoundEffect(_failedSFX);
-                RpcUpdateResult("You didn't press the correct answer in time!");
+                EndResult(false); 
             }
             else if (answer == _correctAnswer)
             {
-                RpcDisplayResult(1);
-                RpcStartSoundEffect(_successSFX);
-                RpcUpdateResult("You've pressed the correct answer in time!");
+                EndResult(true);
             }
-            StopAllCoroutines();
-            StartCoroutine(WaitBeforeRetry());
         }
+    }
+    private void EndResult(bool hasWon)
+    {
+        StopAllCoroutines();
+        if (hasWon)
+        {
+            RpcDisplayResult(1);
+            RpcStartSoundEffect(_successSFX);
+            RpcUpdateResult("You've pressed the correct answer in time!");
+        }
+        else
+        {
+            RpcDisplayResult(0);
+            RpcStartSoundEffect(_failedSFX);
+            RpcUpdateResult("You didn't press the correct answer in time!");
+        }
+        StartCoroutine(WaitBeforeRetry());
     }
     private IEnumerator WaitBeforeRetry()
     {
         yield return new WaitForSeconds(5);
+        RpcClearScreenInfo();
         RpcStopGame();
         if (isServer)
         {
@@ -144,24 +156,33 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void RpcStartSoundEffect(EventReference soundEffect)
     {
+        if (!_soundEffectCreated)
+        {
+            _soundEffectCreated = true;
+            RuntimeManager.AttachInstanceToGameObject(_soundEffectInstance, transform);
+        }
         _soundEffectInstance = RuntimeManager.CreateInstance(soundEffect);
-        RuntimeManager.AttachInstanceToGameObject(_soundEffectInstance, transform);
         _soundEffectInstance.start();
-        _soundEffectInstance.release();
+        _soundEffectInstance.release();       
     }
     [ClientRpc]
     private void RpcStartBackgroundMusic(EventReference backgroundMusic)
     {
+        _backgroundMusicCreated = true;
         _backgroundInstance = RuntimeManager.CreateInstance(backgroundMusic);
         RuntimeManager.AttachInstanceToGameObject(_backgroundInstance, transform);
         _backgroundInstance.start();
         _backgroundInstance.release();
     }
     [ClientRpc]
-    private void RpcStopGame()
+    private void RpcClearScreenInfo()
     {
         _updateTimerEvent.Invoke(null);
         _updateResultEvent.Invoke(null);
+    }
+    [ClientRpc]
+    private void RpcStopGame()
+    {
         _cmdStopPuzzleEvent.Invoke();
     }
     [ClientRpc]

@@ -1,7 +1,4 @@
-using Mirror;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class FindTheMatchNetworkObject : MonoBehaviour
@@ -20,6 +17,7 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     private int _currentAnswer;
     private int _previousAnswer = -1;
     private bool _isServer;
+    private bool _gameFinished;
     private int randomValue
     {
         get
@@ -55,6 +53,7 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     }
     public void StartGame()
     {
+        _gameFinished = false;
         _gameStarted = true;
     }
     public void StopGame()
@@ -96,7 +95,7 @@ public class FindTheMatchNetworkObject : MonoBehaviour
                 {
                     collider.enabled = value;
                 }
-                else
+                else if(_gameFinished)
                 {
                     collider.enabled = false;
                 }
@@ -163,6 +162,7 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     }
     public void DisplayResult(float value)
     {
+        _gameFinished = true;
         _answerModelReference.GetComponent<Animator>().SetFloat("ShowResult", value);
         _answerModelReference.GetComponent<Animator>().CrossFade("Result", _crossFadingSpeed);
         for(int i = 0; i < _optionModelReferences.Count; i++)
