@@ -26,6 +26,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private EventReference _countdownSFX;
     [SerializeField] private EventReference _successSFX;
     [SerializeField] private EventReference _failedSFX;
+    [SerializeField] private EventReference _pressSFX;
     private EventInstance _backgroundInstance;
     private EventInstance _soundEffectInstance;
     private float _currentBackgroundVolume = 1f;
@@ -49,6 +50,9 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
             {
                 if (hit.collider.gameObject != null)
                 {
+                    _soundEffectInstance = RuntimeManager.CreateInstance(_pressSFX);
+                    _soundEffectInstance.start();
+                    _soundEffectInstance.release();
                     _cmdAnswerPressedEvent.Invoke(hit.collider.gameObject.name);
                     return;
                 }
@@ -98,35 +102,49 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     {
         if (isServer)
         {
-            if (_timePassed)
+            if (_timePassed || answer != _correctAnswer)
             {
-                EndResult(false);
-                return;
+                if (!_hasAnswered)
+                {
+                    _hasAnswered = true;
+                    EndResult(_timePassed, false);
+                    return;
+                }
             }
-            else if (answer == _correctAnswer && !_hasAnswered)
+            else
             {
-                _hasAnswered = true;
-                _correctlyAnswered++;
-                EndResult(true);
-                return;
+                if (!_hasAnswered)
+                {
+                    _hasAnswered = true;
+                    _correctlyAnswered++;
+                    EndResult(_timePassed, true);
+                    return;
+                }
             }
         }
     }
-    private void EndResult(bool wasCorrect)
+    private void EndResult(bool timePassed, bool wasCorrect)
     {
         StopAllCoroutines();
-        if (wasCorrect)
-        {
-            RpcDisplayResult(1);
-            RpcStartSoundEffect(_successSFX);
-            RpcUpdateResult("You've pressed the correct answer in time!");
-        }
-        else
+        if (timePassed || !wasCorrect)
         {
             RpcDisplayResult(0);
             RpcStartSoundEffect(_failedSFX);
-            RpcUpdateResult("You didn't press the correct answer in time!");
+            if (timePassed)
+            {
+                RpcUpdateResult("You didn't press in time!");
+            }
+            else
+            {
+                RpcUpdateResult("You've pressed the wrong answer!");
+            }
         }
+        else
+        {
+            RpcDisplayResult(1);
+            RpcStartSoundEffect(_successSFX);
+            RpcUpdateResult("You've pressed the correct answer!");
+        }       
         if(_currentRound == _roundsTotal)
         {
             RpcUpdateResult("Congratulations! You've guessed " + _correctlyAnswered + " out of " + _roundsTotal + " Correctly!");

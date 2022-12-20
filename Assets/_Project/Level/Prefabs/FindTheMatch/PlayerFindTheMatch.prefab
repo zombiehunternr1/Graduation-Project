@@ -194,6 +194,13 @@ MonoBehaviour:
       Data3: -1208681841
       Data4: -1818169044
     Path: event:/Failed
+  _pressSFX:
+    Guid:
+      Data1: -1157151606
+      Data2: 1258450056
+      Data3: 1716531354
+      Data4: 718189156
+    Path: event:/Press
 --- !u!114 &2395896324849173937
 MonoBehaviour:
   m_ObjectHideFlags: 0
