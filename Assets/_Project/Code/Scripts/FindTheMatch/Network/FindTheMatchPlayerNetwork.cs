@@ -101,7 +101,6 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         yield return new WaitForSeconds(1);
         RpcUpdateTimer("GO!");
         yield return new WaitForSeconds(1.5f);
-        RpcUpdateResult(null);
         RpcUpdateTimer(_startingCountDown.ToString());
         RpcStartPuzzle();
         yield return new WaitForSeconds(1);
@@ -156,7 +155,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         }       
         if(_currentRound == _roundsTotal)
         {
-            RpcUpdateResult("Congratulations! You've guessed " + _correctlyAnswered + " out of " + _roundsTotal + " Correctly!");
+            RpcUpdateResult("Congratulations! You've got the key to escape the escape room!");
             StartCoroutine(WaitBeforeRetry());
         }
         else
@@ -186,7 +185,6 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     {
         if (isServer)
         {
-            RpcUpdateResult(null);
             _currentTime = _startingCountDown;
             _timePassed = false;
             while (_currentTime > 0)

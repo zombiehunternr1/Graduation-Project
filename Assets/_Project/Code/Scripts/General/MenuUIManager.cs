@@ -8,6 +8,7 @@ public class MenuUIManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI _debugField;
     [SerializeField] private TextMeshProUGUI _resultField;
     [SerializeField] private TextMeshProUGUI _timerField;
+    [SerializeField] private TextMeshProUGUI _clientInformationField;
     [SerializeField] private Button _startBtn;
     [SerializeField] private RectTransform _menuUITransform;
     [SerializeField] private RpcStartGameEvent _cmdStartGameEvent;
@@ -46,6 +47,10 @@ public class MenuUIManager : NetworkBehaviour
         if (!isServer)
         {
             DisableStartBtn();
+        }
+        else
+        {
+            _clientInformationField.gameObject.SetActive(false);
         }
     }
 }
