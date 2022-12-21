@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69e6bba52b365e44f86e55e0ac846ee3, type: 3}
-  m_Name: CmdGetAnswerEvent
+  m_Script: {fileID: 11500000, guid: 2bb78d8693a08724da4fcd4e189d1024, type: 3}
+  m_Name: RpcDisplayResultEvent
   m_EditorClassIdentifier: 

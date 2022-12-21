@@ -3,13 +3,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DebugUIManager : NetworkBehaviour
+public class MenuUIManager : NetworkBehaviour
 {
     [SerializeField] private TextMeshProUGUI _debugField;
     [SerializeField] private TextMeshProUGUI _resultField;
     [SerializeField] private TextMeshProUGUI _timerField;
     [SerializeField] private Button _startBtn;
-    [SerializeField] private CmdStartGameEvent _cmdStartGameEvent;
+    [SerializeField] private RectTransform _menuUITransform;
+    [SerializeField] private RpcStartGameEvent _cmdStartGameEvent;
     public void DisplayDebug(string text)
     {
         _debugField.text = text;
@@ -26,6 +27,10 @@ public class DebugUIManager : NetworkBehaviour
     {
         _cmdStartGameEvent.Invoke();
         DisableStartBtn();
+    }
+    public void DisableMenuUI()
+    {
+        _menuUITransform.gameObject.SetActive(false);
     }
     public void DisableStartBtn()
     {

@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7590420e1b949d46b1a541faca55e51, type: 3}
-  m_Name: CmdStartPuzzleEvent
+  m_Script: {fileID: 11500000, guid: d68e932411b33ee4e8b3082287ee5cfc, type: 3}
+  m_Name: RpcDisableMenuUIEvent
   m_EditorClassIdentifier: 

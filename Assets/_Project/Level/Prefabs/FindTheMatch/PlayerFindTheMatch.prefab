@@ -156,12 +156,13 @@ MonoBehaviour:
   _updateTimerEvent: {fileID: 11400000, guid: 165c345e20c0dca40a0a79ff5e8c66d9, type: 2}
   _updateResultEvent: {fileID: 11400000, guid: 2687d9fe9cec1604c908b6b8414a90c0, type: 2}
   _cmdAnswerPressedEvent: {fileID: 11400000, guid: 61a83347992527f4081cfae058e44870, type: 2}
-  _cmdDisableBtnEvent: {fileID: 11400000, guid: 237226ab3be4986439ddff04e9dfcfc5, type: 2}
-  _cmdStartPuzzleEvent: {fileID: 11400000, guid: 41e2737d10214ac42878ec64dd3489d4, type: 2}
-  _cmdStopPuzzleEvent: {fileID: 11400000, guid: 072a7fa4bf94ea1498eccdfb77fb1ec4, type: 2}
-  _cmdGetAnswerFromServerEvent: {fileID: 11400000, guid: 140f48e1af96da643a7ba1157fa5b57d, type: 2}
-  _cmdUpdateAnswerEvent: {fileID: 11400000, guid: 614293e1aec4816449ef3d300011ac2d, type: 2}
-  _cmdDisplayResultEvent: {fileID: 11400000, guid: 39f1d63c122c31d48ad5992440c7d756, type: 2}
+  _rpcDisableBtnEvent: {fileID: 11400000, guid: 237226ab3be4986439ddff04e9dfcfc5, type: 2}
+  _rpcStartPuzzleEvent: {fileID: 11400000, guid: 41e2737d10214ac42878ec64dd3489d4, type: 2}
+  _rpcStopPuzzleEvent: {fileID: 11400000, guid: 072a7fa4bf94ea1498eccdfb77fb1ec4, type: 2}
+  _rpcGetAnswerFromServerEvent: {fileID: 11400000, guid: 140f48e1af96da643a7ba1157fa5b57d, type: 2}
+  _rpcUpdateAnswerEvent: {fileID: 11400000, guid: 614293e1aec4816449ef3d300011ac2d, type: 2}
+  _rpcDisplayResultEvent: {fileID: 11400000, guid: 39f1d63c122c31d48ad5992440c7d756, type: 2}
+  _rpcDisableMenuUIEvent: {fileID: 11400000, guid: fe3cbf6a9841ae54fb76bce2b9e37b96, type: 2}
   _startingCountDown: 5
   _countDownSpeed: 1
   _volumeFadingSpeed: 0.2

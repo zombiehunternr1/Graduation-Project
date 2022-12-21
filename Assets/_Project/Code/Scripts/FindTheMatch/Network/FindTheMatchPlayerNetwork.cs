@@ -12,12 +12,13 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private UpdateTimerEvent _updateTimerEvent;
     [SerializeField] private UpdateResultEvent _updateResultEvent;
     [SerializeField] private CmdAnswerPressedEvent _cmdAnswerPressedEvent;
-    [SerializeField] private CmdDisableBtnEvent _cmdDisableBtnEvent;
-    [SerializeField] private CmdStartPuzzleEvent _cmdStartPuzzleEvent;
-    [SerializeField] private CmdStopPuzzleEvent _cmdStopPuzzleEvent;
-    [SerializeField] private CmdGetAnswerFromServerEvent _cmdGetAnswerFromServerEvent;
-    [SerializeField] private CmdUpdateAnswerEvent _cmdUpdateAnswerEvent;
-    [SerializeField] private CmdDisplayResultEvent _cmdDisplayResultEvent;
+    [SerializeField] private RpcDisableBtnEvent _rpcDisableBtnEvent;
+    [SerializeField] private RpcStartPuzzleEvent _rpcStartPuzzleEvent;
+    [SerializeField] private RpcStopPuzzleEvent _rpcStopPuzzleEvent;
+    [SerializeField] private RpcGetAnswerFromServerEvent _rpcGetAnswerFromServerEvent;
+    [SerializeField] private RpcUpdateAnswerEvent _rpcUpdateAnswerEvent;
+    [SerializeField] private RpcDisplayResultEvent _rpcDisplayResultEvent;
+    [SerializeField] private RpcDisableMenuUIEvent _rpcDisableMenuUIEvent;
     [SerializeField] private float _startingCountDown = 5;
     [SerializeField] private float _countDownSpeed = 1;
     [SerializeField] private float _volumeFadingSpeed = 0.2f;
@@ -40,6 +41,14 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     private int _currentRound = 1;
     private int _correctlyAnswered = 0;
 
+    private void OnValidate()
+    {
+        if(_roundsTotal <= 0)
+        {
+            _roundsTotal = 1;
+            Debug.LogWarning("Can't have a total rounds count equal or less than zero!");
+        }
+    }
     public void OnScreenTapped(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -227,7 +236,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     private void RpcDisplayResult(float result)
     {
         StartCoroutine(FadeOutVolume(true));
-        _cmdDisplayResultEvent.Invoke(result);
+        _rpcDisplayResultEvent.Invoke(result);
     }
     [ClientRpc]
     private void RpcStartSoundEffect(EventReference soundEffect)
@@ -255,13 +264,14 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     {
         _currentRound = 1;
         _correctlyAnswered = 0;
+        _rpcDisableMenuUIEvent.Invoke();
         StartCoroutine(FadeOutVolume(false));
         StartCountDown();
     }
     [ClientRpc]
     private void RpcStopGame()
     {
-        _cmdStopPuzzleEvent.Invoke();
+        _rpcStopPuzzleEvent.Invoke();
     }
     [ClientRpc]
     private void RpcUpdateTimer(string time)
@@ -291,14 +301,14 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     {
         if (isServer)
         {
-            _cmdDisableBtnEvent.Invoke();
+            _rpcDisableBtnEvent.Invoke();
             StartCoroutine(Timer());
         }
     }
     [ClientRpc]
     private void RpcRequestAnswer()
     {
-        _cmdGetAnswerFromServerEvent.Invoke();
+        _rpcGetAnswerFromServerEvent.Invoke();
     }
     [Command(requiresAuthority = false)]
     public void CmdRequestAnswer()
@@ -309,7 +319,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     private void RpcSendAnswer(int value, string answer)
     {
         _correctAnswer = answer;
-        _cmdUpdateAnswerEvent.Invoke(value);
+        _rpcUpdateAnswerEvent.Invoke(value);
     }
     [Command(requiresAuthority =false)]
     public void CmdSendAnswer(int value, string answer)
@@ -319,7 +329,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void RpcStartPuzzle()
     {
-        _cmdStartPuzzleEvent.Invoke();
+        _rpcStartPuzzleEvent.Invoke();
     }
     #endregion
 }
