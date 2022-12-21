@@ -19,6 +19,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private RpcUpdateAnswerEvent _rpcUpdateAnswerEvent;
     [SerializeField] private RpcDisplayResultEvent _rpcDisplayResultEvent;
     [SerializeField] private RpcDisableMenuUIEvent _rpcDisableMenuUIEvent;
+    [SerializeField] private Animator _keyAnimator;
     [SerializeField] private float _startingCountDown = 10;
     [SerializeField] private float _countDownSpeed = 1;
     [SerializeField] private float _volumeFadingSpeed = 0.2f;
@@ -156,6 +157,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         if(_currentRound == _roundsTotal)
         {
             RpcUpdateResult("Congratulations! You've got the key to escape the escape room!");
+            RpcDisplayKeyCollected();
             StartCoroutine(WaitBeforeRetry());
         }
         else
@@ -239,6 +241,11 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         _backgroundInstance.setVolume(_currentBackgroundVolume);
     }
     [ClientRpc]
+    private void RpcDisplayKeyCollected()
+    {
+        _keyAnimator.Play("Showing");
+    }
+    [ClientRpc]
     private void RpcStopAllCoroutines(bool result)
     {
         StopAllCoroutines();
@@ -274,6 +281,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void RpcSetupGame()
     {
+        _keyAnimator.Play("Hidden");
         _currentTime = _startingCountDown;
         _decreasedTime = _startingCountDown;
         _currentRound = 1;
