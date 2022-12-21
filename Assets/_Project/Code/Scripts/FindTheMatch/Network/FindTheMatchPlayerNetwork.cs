@@ -19,7 +19,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private RpcUpdateAnswerEvent _rpcUpdateAnswerEvent;
     [SerializeField] private RpcDisplayResultEvent _rpcDisplayResultEvent;
     [SerializeField] private RpcDisableMenuUIEvent _rpcDisableMenuUIEvent;
-    [SerializeField] private float _startingCountDown = 5;
+    [SerializeField] private float _startingCountDown = 10;
     [SerializeField] private float _countDownSpeed = 1;
     [SerializeField] private float _volumeFadingSpeed = 0.2f;
     [SerializeField] private int _roundsTotal = 3;
@@ -31,6 +31,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     private EventInstance _backgroundInstance;
     private EventInstance _soundEffectInstance;
     private float _currentBackgroundVolume = 1f;
+    private float _decreasedTime;
     private float _currentTime;
     private float _seconds;
     private bool _timePassed;
@@ -39,7 +40,6 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     private bool _hasAnswered;
     private string _correctAnswer;
     private int _currentRound = 1;
-    private int _correctlyAnswered = 0;
 
     private void OnValidate()
     {
@@ -124,7 +124,6 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
                 if (!_hasAnswered)
                 {
                     _hasAnswered = true;
-                    _correctlyAnswered++;
                     EndResult(_timePassed, true);
                     return;
                 }
@@ -133,7 +132,6 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     }
     private void EndResult(bool timePassed, bool wasCorrect)
     {
-        StopAllCoroutines();
         if (timePassed || !wasCorrect)
         {
             RpcDisplayResult(0);
@@ -146,6 +144,8 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
             {
                 RpcUpdateResult("You've pressed the wrong answer!");
             }
+            RpcStopAllCoroutines(false);
+            return;
         }
         else
         {
@@ -160,17 +160,26 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         }
         else
         {
+            _decreasedTime = _currentTime - 2;
+            _currentTime = _decreasedTime;
             _currentRound++;
-            StartCoroutine(WaitBeforeNextRound());
+            RpcStopAllCoroutines(true);
         }
     }
-    private IEnumerator WaitBeforeNextRound()
+    private IEnumerator WaitBeforeNextRound(bool isSuccess)
     {
-        yield return new WaitForSeconds(3);
-        RpcUpdateResult("Get Ready for the next round!");
-        yield return new WaitForSeconds(3);
-        RpcUpdateResult(null);
-        StartCountDown();
+        if (isSuccess)
+        {
+            yield return new WaitForSeconds(3);
+            RpcUpdateResult("Get Ready for the next round!");
+            yield return new WaitForSeconds(3);
+            RpcUpdateResult(null);
+            StartCountDown();
+        }
+        else
+        {
+            StartCoroutine(WaitBeforeRetry());
+        }
     }
     private IEnumerator WaitBeforeRetry()
     {
@@ -185,7 +194,6 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     {
         if (isServer)
         {
-            _currentTime = _startingCountDown;
             _timePassed = false;
             while (_currentTime > 0)
             {
@@ -231,6 +239,12 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         _backgroundInstance.setVolume(_currentBackgroundVolume);
     }
     [ClientRpc]
+    private void RpcStopAllCoroutines(bool result)
+    {
+        StopAllCoroutines();
+        StartCoroutine(WaitBeforeNextRound(result));
+    }
+    [ClientRpc]
     private void RpcDisplayResult(float result)
     {
         StartCoroutine(FadeOutVolume(true));
@@ -260,8 +274,8 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void RpcSetupGame()
     {
+        _currentTime = _startingCountDown;
         _currentRound = 1;
-        _correctlyAnswered = 0;
         _rpcDisableMenuUIEvent.Invoke();
         StartCoroutine(FadeOutVolume(false));
         StartCountDown();
