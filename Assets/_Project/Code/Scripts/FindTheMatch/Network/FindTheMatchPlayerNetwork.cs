@@ -19,7 +19,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private RpcUpdateAnswerEvent _rpcUpdateAnswerEvent;
     [SerializeField] private RpcDisplayResultEvent _rpcDisplayResultEvent;
     [SerializeField] private RpcDisableMenuUIEvent _rpcDisableMenuUIEvent;
-    [SerializeField] private Animator _keyAnimator;
+    [SerializeField] private RpcDisplayKeyStatusEvent _rpcDisplayKeyStatusEvent;
     [SerializeField] private float _startingCountDown = 10;
     [SerializeField] private float _countDownSpeed = 1;
     [SerializeField] private float _volumeFadingSpeed = 0.2f;
@@ -29,6 +29,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private EventReference _successSFX;
     [SerializeField] private EventReference _failedSFX;
     [SerializeField] private EventReference _pressSFX;
+    [SerializeField] private EventReference _keyCollectedSFX;
     private EventInstance _backgroundInstance;
     private EventInstance _soundEffectInstance;
     private float _currentBackgroundVolume = 1f;
@@ -93,7 +94,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         RpcUpdateResult("Round " + _currentRound + " / " + _roundsTotal);
         RpcUpdateTimer("Get ready!");
         yield return new WaitForSeconds(3);
-        RpcStartSoundEffect(_countdownSFX);
+        RpcPlaySoundEffect(_countdownSFX);
         RpcUpdateTimer("3");
         yield return new WaitForSeconds(1);
         RpcUpdateTimer("2");
@@ -136,7 +137,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         if (timePassed || !wasCorrect)
         {
             RpcDisplayResult(0);
-            RpcStartSoundEffect(_failedSFX);
+            RpcPlaySoundEffect(_failedSFX);
             if (timePassed)
             {
                 RpcUpdateResult("You didn't press in time!");
@@ -151,12 +152,13 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         else
         {
             RpcDisplayResult(1);
-            RpcStartSoundEffect(_successSFX);
+            RpcPlaySoundEffect(_successSFX);
             RpcUpdateResult("You've pressed the correct answer!");
         }       
         if(_currentRound == _roundsTotal)
         {
             RpcUpdateResult("Congratulations! You've got the key to escape the escape room!");
+            RpcPlaySoundEffect(_keyCollectedSFX);
             RpcDisplayKeyCollected();
             StartCoroutine(WaitBeforeRetry());
         }
@@ -243,7 +245,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void RpcDisplayKeyCollected()
     {
-        _keyAnimator.Play("Showing");
+        _rpcDisplayKeyStatusEvent.Invoke("Showing");
     }
     [ClientRpc]
     private void RpcStopAllCoroutines(bool result)
@@ -258,7 +260,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         _rpcDisplayResultEvent.Invoke(result);
     }
     [ClientRpc]
-    private void RpcStartSoundEffect(EventReference soundEffect)
+    private void RpcPlaySoundEffect(EventReference soundEffect)
     {
         if (!_soundEffectCreated)
         {
@@ -281,7 +283,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void RpcSetupGame()
     {
-        _keyAnimator.Play("Hidden");
+        _rpcDisplayKeyStatusEvent.Invoke("Hidden");
         _currentTime = _startingCountDown;
         _decreasedTime = _startingCountDown;
         _currentRound = 1;
