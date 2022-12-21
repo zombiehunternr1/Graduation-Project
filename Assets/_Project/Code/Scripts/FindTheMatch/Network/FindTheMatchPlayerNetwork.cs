@@ -31,8 +31,8 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     private EventInstance _backgroundInstance;
     private EventInstance _soundEffectInstance;
     private float _currentBackgroundVolume = 1f;
-    private float _decreasedTime;
     private float _currentTime;
+    private float _decreasedTime;
     private float _seconds;
     private bool _timePassed;
     private bool _backgroundMusicCreated;
@@ -101,7 +101,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         yield return new WaitForSeconds(1);
         RpcUpdateTimer("GO!");
         yield return new WaitForSeconds(1.5f);
-        RpcUpdateTimer(_startingCountDown.ToString());
+        RpcUpdateTimer(_currentTime.ToString());
         RpcStartPuzzle();
         yield return new WaitForSeconds(1);
         RpcStartTimerStatus();
@@ -160,7 +160,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         }
         else
         {
-            _decreasedTime = _currentTime - 2;
+            _decreasedTime = _decreasedTime - 2;
             _currentTime = _decreasedTime;
             _currentRound++;
             RpcStopAllCoroutines(true);
@@ -275,6 +275,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     private void RpcSetupGame()
     {
         _currentTime = _startingCountDown;
+        _decreasedTime = _startingCountDown;
         _currentRound = 1;
         _rpcDisableMenuUIEvent.Invoke();
         StartCoroutine(FadeOutVolume(false));

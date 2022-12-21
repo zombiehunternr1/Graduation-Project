@@ -163,7 +163,7 @@ MonoBehaviour:
   _rpcUpdateAnswerEvent: {fileID: 11400000, guid: 614293e1aec4816449ef3d300011ac2d, type: 2}
   _rpcDisplayResultEvent: {fileID: 11400000, guid: 39f1d63c122c31d48ad5992440c7d756, type: 2}
   _rpcDisableMenuUIEvent: {fileID: 11400000, guid: fe3cbf6a9841ae54fb76bce2b9e37b96, type: 2}
-  _startingCountDown: 5
+  _startingCountDown: 10
   _countDownSpeed: 1
   _volumeFadingSpeed: 0.2
   _roundsTotal: 3
