@@ -99,9 +99,25 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3cdacca5-4bd6-464e-8f98-bcaf34594118
     m_ActionName: Player/TouchPosition
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5826950998073158961}
+        m_TargetAssemblyTypeName: FindTheMatchPlayerNetwork, Assembly-CSharp
+        m_MethodName: OnScreenSwipe
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 525911b9-60e4-441f-a82b-15347134fae2
+    m_ActionName: Menu/Swipe
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: Game
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &5826950998073158963
@@ -164,6 +180,7 @@ MonoBehaviour:
   _rpcDisplayResultEvent: {fileID: 11400000, guid: 39f1d63c122c31d48ad5992440c7d756, type: 2}
   _rpcDisableMenuUIEvent: {fileID: 11400000, guid: fe3cbf6a9841ae54fb76bce2b9e37b96, type: 2}
   _rpcDisplayKeyStatusEvent: {fileID: 11400000, guid: 20e86a4069c8a77499fe26959dd8be22, type: 2}
+  _displayNextInstructionEvent: {fileID: 11400000, guid: 56cf93ad41ef3ed46a734ddea94c4411, type: 2}
   _startingCountDown: 10
   _countDownSpeed: 1
   _volumeFadingSpeed: 0.2

@@ -12,6 +12,18 @@ public class MenuUIManager : NetworkBehaviour
     [SerializeField] private Button _startBtn;
     [SerializeField] private RectTransform _menuUITransform;
     [SerializeField] private RpcStartGameEvent _cmdStartGameEvent;
+    private int _currentInstructionIndex;
+    private void Start()
+    {
+        if (!isServer)
+        {
+            DisableStartBtn();
+        }
+        else
+        {
+            _clientInformationField.gameObject.SetActive(false);
+        }
+    }
     public void DisplayDebug(string text)
     {
         _debugField.text = text;
@@ -41,16 +53,5 @@ public class MenuUIManager : NetworkBehaviour
     {
         _startBtn.gameObject.SetActive(true);
         _startBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Try again?";
-    }
-    private void Start()
-    {
-        if (!isServer)
-        {
-            DisableStartBtn();
-        }
-        else
-        {
-            _clientInformationField.gameObject.SetActive(false);
-        }
-    }
+    }   
 }

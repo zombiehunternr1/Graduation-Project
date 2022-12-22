@@ -283,6 +283,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void RpcSetupGame()
     {
+        GetComponent<PlayerInput>().SwitchCurrentActionMap("Game");
         _rpcDisplayKeyStatusEvent.Invoke("Hidden");
         _currentTime = _startingCountDown;
         _decreasedTime = _startingCountDown;
