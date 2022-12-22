@@ -2,13 +2,13 @@
     "name": "Controls",
     "maps": [
         {
-            "name": "Game",
-            "id": "71c794b0-60a3-4ddb-9e98-490555c4780a",
+            "name": "Player",
+            "id": "ab6ce493-e56a-4b23-baa1-fa8c6422b2e2",
             "actions": [
                 {
                     "name": "TouchPress",
                     "type": "Button",
-                    "id": "9631bb43-1a9d-401e-95f7-7d7ae97728ee",
+                    "id": "f8ce8f79-8374-4411-8b7a-f408390c1136",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -17,7 +17,7 @@
                 {
                     "name": "TouchPosition",
                     "type": "Value",
-                    "id": "3cdacca5-4bd6-464e-8f98-bcaf34594118",
+                    "id": "bb949c4a-4941-4696-a2c8-9ce8402e8383",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -27,9 +27,9 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "8b314c00-5b39-40e4-9128-cf6709056db1",
+                    "id": "10df0e01-2260-4da8-96f5-9a04ac37b751",
                     "path": "<Touchscreen>/primaryTouch/press",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "TouchPress",
@@ -38,40 +38,12 @@
                 },
                 {
                     "name": "",
-                    "id": "683fdba5-35ca-4daf-989b-3d26c7b6c59f",
+                    "id": "1bf370f2-36a0-416a-9882-9ec366eccd3e",
                     "path": "<Touchscreen>/primaryTouch/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "TouchPosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Menu",
-            "id": "ac799a52-0f68-4569-8506-a2991d8c3be6",
-            "actions": [
-                {
-                    "name": "Swipe",
-                    "type": "PassThrough",
-                    "id": "525911b9-60e4-441f-a82b-15347134fae2",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "Hold",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "ef3a0fd1-cca9-4e56-b0f9-ef21212a3e3e",
-                    "path": "<Touchscreen>/primaryTouch/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Swipe",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

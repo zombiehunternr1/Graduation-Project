@@ -51,21 +51,25 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
             Debug.LogWarning("Can't have a total rounds count equal or less than zero!");
         }
     }
+    private bool test;
     public void OnScreenTapped(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            Vector2 postion = context.ReadValue<Vector2>();
-            Ray ray = Camera.main.ScreenPointToRay(postion);
-            if (Physics.Raycast(ray, out RaycastHit hit, 200))
+            if (test)
             {
-                if (hit.collider.gameObject != null)
+                Vector2 postion = context.ReadValue<Vector2>();
+                Ray ray = Camera.main.ScreenPointToRay(postion);
+                if (Physics.Raycast(ray, out RaycastHit hit, 200))
                 {
-                    _soundEffectInstance = RuntimeManager.CreateInstance(_pressSFX);
-                    _soundEffectInstance.start();
-                    _soundEffectInstance.release();
-                    _cmdAnswerPressedEvent.Invoke(hit.collider.gameObject.name);
-                    return;
+                    if (hit.collider.gameObject != null)
+                    {
+                        _soundEffectInstance = RuntimeManager.CreateInstance(_pressSFX);
+                        _soundEffectInstance.start();
+                        _soundEffectInstance.release();
+                        _cmdAnswerPressedEvent.Invoke(hit.collider.gameObject.name);
+                        return;
+                    }
                 }
             }
         }
@@ -283,7 +287,6 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [ClientRpc]
     private void RpcSetupGame()
     {
-        GetComponent<PlayerInput>().SwitchCurrentActionMap("Game");
         _rpcDisplayKeyStatusEvent.Invoke("Hidden");
         _currentTime = _startingCountDown;
         _decreasedTime = _startingCountDown;
