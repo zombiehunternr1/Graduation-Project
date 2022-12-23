@@ -51,25 +51,21 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
             Debug.LogWarning("Can't have a total rounds count equal or less than zero!");
         }
     }
-    private bool test;
     public void OnScreenTapped(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            if (test)
+            Vector2 postion = context.ReadValue<Vector2>();
+            Ray ray = Camera.main.ScreenPointToRay(postion);
+            if (Physics.Raycast(ray, out RaycastHit hit, 200))
             {
-                Vector2 postion = context.ReadValue<Vector2>();
-                Ray ray = Camera.main.ScreenPointToRay(postion);
-                if (Physics.Raycast(ray, out RaycastHit hit, 200))
+                if (hit.collider.gameObject != null)
                 {
-                    if (hit.collider.gameObject != null)
-                    {
-                        _soundEffectInstance = RuntimeManager.CreateInstance(_pressSFX);
-                        _soundEffectInstance.start();
-                        _soundEffectInstance.release();
-                        _cmdAnswerPressedEvent.Invoke(hit.collider.gameObject.name);
-                        return;
-                    }
+                    _soundEffectInstance = RuntimeManager.CreateInstance(_pressSFX);
+                    _soundEffectInstance.start();
+                    _soundEffectInstance.release();
+                    _cmdAnswerPressedEvent.Invoke(hit.collider.gameObject.name);
+                    return;
                 }
             }
         }
