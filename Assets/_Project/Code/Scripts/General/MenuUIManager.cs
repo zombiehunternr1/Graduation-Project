@@ -9,6 +9,10 @@ public class MenuUIManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI _resultField;
     [SerializeField] private TextMeshProUGUI _timerField;
     [SerializeField] private TextMeshProUGUI _clientInformationField;
+    [SerializeField] private TextMeshProUGUI _howToPlayInstructionText;
+    [SerializeField] private RawImage _howToPlayInstructionImgReference;
+    [SerializeField] private Texture2D _howToPlayMimicTexture;
+    [SerializeField] private Texture2D _howToPlayGuessTexture;
     [SerializeField] private Button _startBtn;
     [SerializeField] private RectTransform _menuUITransform;
     [SerializeField] private RpcStartGameEvent _rpcStartGameEvent;
@@ -16,10 +20,14 @@ public class MenuUIManager : NetworkBehaviour
     {
         if (!isServer)
         {
+            _howToPlayInstructionText.text = "Guess the correct answer your partner is mimicking!";
+            _howToPlayInstructionImgReference.texture = _howToPlayGuessTexture;
             DisableStartBtn();
         }
         else
         {
+            _howToPlayInstructionText.text = "Mimic the answer before the time runs out!";
+            _howToPlayInstructionImgReference.texture = _howToPlayMimicTexture;
             _clientInformationField.gameObject.SetActive(false);
         }
     }
