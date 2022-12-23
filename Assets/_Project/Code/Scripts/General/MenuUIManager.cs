@@ -11,8 +11,7 @@ public class MenuUIManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI _clientInformationField;
     [SerializeField] private Button _startBtn;
     [SerializeField] private RectTransform _menuUITransform;
-    [SerializeField] private RpcStartGameEvent _cmdStartGameEvent;
-    private int _currentInstructionIndex;
+    [SerializeField] private RpcStartGameEvent _rpcStartGameEvent;
     private void Start()
     {
         if (!isServer)
@@ -38,8 +37,9 @@ public class MenuUIManager : NetworkBehaviour
     }
     public void StartGame()
     {
-        _cmdStartGameEvent.Invoke();
+        _rpcStartGameEvent.Invoke();
         DisableStartBtn();
+        DisableMenuUI();
     }
     public void DisableMenuUI()
     {
