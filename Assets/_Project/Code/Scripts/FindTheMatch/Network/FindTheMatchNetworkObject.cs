@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class FindTheMatchNetworkObject : MonoBehaviour
@@ -6,6 +7,9 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     [SerializeField] private DebugEvent _debugEvent;
     [SerializeField] private CmdRequestAnswerFromServerEvent _cmdRequestAnswerFromServerEvent;
     [SerializeField] private CmdSendAnswerEvent _cmdSendAnswerEvent;
+    [SerializeField] private TextMeshPro _displayCountdownTimerText;
+    [SerializeField] private Renderer _displayStageRenderer;
+    [SerializeField] private List<Material> _displayAnswerOnStageMaterials;
     [SerializeField] private List<Collider> _colliderOptions;
     [SerializeField] private List<GameObject> _optionModelReferences;
     [SerializeField] private GameObject _answerModelReference;
@@ -53,6 +57,8 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     }
     public void StartGame()
     {
+        _displayStageRenderer.material = null;
+        _displayStageRenderer.enabled = false;
         _gameFinished = false;
         _gameStarted = true;
     }
@@ -115,6 +121,8 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     }
     public void SetupGame(bool isServer)
     {
+        _displayStageRenderer.enabled = false;
+        _displayStageRenderer.material = null;
         _wrongOptionsList = new List<int>();
         if (isServer)
         {
@@ -143,6 +151,8 @@ public class FindTheMatchNetworkObject : MonoBehaviour
         {
             return;
         }
+        _displayStageRenderer.enabled = false;
+        _displayStageRenderer.material = null;
         _currentAnswer = pickRandomAnswer;
         _answerModelReference.GetComponent<Animator>().SetFloat("ShowAnswer", _currentAnswer);
         _answerModelReference.GetComponent<Animator>().Play("Answer");
@@ -168,9 +178,15 @@ public class FindTheMatchNetworkObject : MonoBehaviour
         }
         DisplayOptions();
     }
+    public void UpdateStageTimerDisplay(string currentTime)
+    {
+        _displayCountdownTimerText.text = currentTime;
+    }
     public void DisplayResult(float value)
     {
         _gameFinished = true;
+        _displayStageRenderer.material = _displayAnswerOnStageMaterials[(int)value];
+        _displayStageRenderer.enabled = true;
         _answerModelReference.GetComponent<Animator>().SetFloat("ShowResult", value);
         _answerModelReference.GetComponent<Animator>().CrossFade("Result", _crossFadingSpeed);
         for(int i = 0; i < _colliderOptions.Count; i++)
