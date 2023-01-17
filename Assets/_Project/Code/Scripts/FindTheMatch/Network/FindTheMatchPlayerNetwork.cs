@@ -18,8 +18,9 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     [SerializeField] private RpcGetAnswerFromServerEvent _rpcGetAnswerFromServerEvent;
     [SerializeField] private RpcUpdateAnswerEvent _rpcUpdateAnswerEvent;
     [SerializeField] private RpcDisplayResultEvent _rpcDisplayResultEvent;
-    [SerializeField] private RpcDisableMenuUIEvent _rpcDisableMenuUIEvent;
+    [SerializeField] private RpcDisableUIElementEvent _rpcDisableUIElementEvent;
     [SerializeField] private RpcDisplayKeyStatusEvent _rpcDisplayKeyStatusEvent;
+    [SerializeField] private RpcDisplayConfettiParticlesEvent _rpcDisplayConfettiParticlesEvent;
     [SerializeField] private float _startingCountDown = 10;
     [SerializeField] private float _countDownSpeed = 1;
     [SerializeField] private float _volumeFadingSpeed = 0.2f;
@@ -80,6 +81,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         if (isServer)
         {
             _hasAnswered = false;
+            RpcDisableUIElement();
             StartCoroutine(CountDown());
         }
         if (_backgroundMusicCreated)
@@ -140,13 +142,14 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
             RpcPlaySoundEffect(_failedSFX);
             if (timePassed)
             {
-                RpcUpdateResult("You didn't press in time!");
+                RpcUpdateResult("You didn't press in time");
             }
             else
             {
-                RpcUpdateResult("You've pressed the wrong answer!");
+                RpcUpdateResult("You've pressed the wrong answer");
             }
-            RpcStopAllCoroutines(false);
+            RpcStopAllCoroutines();
+            RpcDisplayNextStep(false);
             return;
         }
         else
@@ -158,8 +161,11 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         if(_currentRound == _roundsTotal)
         {
             RpcUpdateResult("Congratulations! You've got the key to escape the escape room!");
+            RpcStopAllCoroutines();
+            RpcDisplayNextStep(false);
             RpcPlaySoundEffect(_keyCollectedSFX);
             RpcDisplayKeyCollected();
+            RpcDisplayConfettiParticles();
             StartCoroutine(WaitBeforeRetry());
         }
         else
@@ -167,10 +173,11 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
             _decreasedTime = _decreasedTime - 2;
             _currentTime = _decreasedTime;
             _currentRound++;
-            RpcStopAllCoroutines(true);
+            RpcStopAllCoroutines();
+            RpcDisplayNextStep(true);
         }
     }
-    private IEnumerator WaitBeforeNextRound(bool isSuccess)
+    private IEnumerator DisplayNextStep(bool isSuccess)
     {
         if (isSuccess)
         {
@@ -214,7 +221,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
                 yield return _currentTime;
             }
             _timePassed = true;
-            RpcUpdateTimer("0");
+            RpcUpdateTimer(null);
             RpcAnswerSelected(null);
         }
     }
@@ -243,15 +250,29 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         _backgroundInstance.setVolume(_currentBackgroundVolume);
     }
     [ClientRpc]
+    private void RpcDisplayConfettiParticles()
+    {
+        _rpcDisplayConfettiParticlesEvent.Invoke();
+    }
+    [ClientRpc]
     private void RpcDisplayKeyCollected()
     {
         _rpcDisplayKeyStatusEvent.Invoke("Showing");
     }
     [ClientRpc]
-    private void RpcStopAllCoroutines(bool result)
+    private void RpcDisableUIElement()
+    {
+        _rpcDisableUIElementEvent.Invoke();
+    }
+    [ClientRpc]
+    private void RpcStopAllCoroutines()
     {
         StopAllCoroutines();
-        StartCoroutine(WaitBeforeNextRound(result));
+    }
+    [ClientRpc]
+    private void RpcDisplayNextStep(bool result)
+    {
+        StartCoroutine(DisplayNextStep(result));
     }
     [ClientRpc]
     private void RpcDisplayResult(float result)
@@ -287,7 +308,7 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         _currentTime = _startingCountDown;
         _decreasedTime = _startingCountDown;
         _currentRound = 1;
-        _rpcDisableMenuUIEvent.Invoke();
+        RpcDisableUIElement();
         StartCoroutine(FadeOutVolume(false));
         StartCountDown();
     }

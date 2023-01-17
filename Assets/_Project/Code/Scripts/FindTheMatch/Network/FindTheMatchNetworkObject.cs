@@ -7,8 +7,10 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     [SerializeField] private DebugEvent _debugEvent;
     [SerializeField] private CmdRequestAnswerFromServerEvent _cmdRequestAnswerFromServerEvent;
     [SerializeField] private CmdSendAnswerEvent _cmdSendAnswerEvent;
-    [SerializeField] private TextMeshPro _displayCountdownTimerText;
-    [SerializeField] private Renderer _displayStageRenderer;
+    [SerializeField] private TextMeshPro _displayStageCountdownTimerText;
+    [SerializeField] private TextMeshPro _displayStageRoundText;
+    [SerializeField] private Renderer _displayStageResultRenderer;
+    [SerializeField] private List<ParticleSystem> _confettiParticles;
     [SerializeField] private List<Material> _displayAnswerOnStageMaterials;
     [SerializeField] private List<Collider> _colliderOptions;
     [SerializeField] private List<GameObject> _optionModelReferences;
@@ -17,11 +19,12 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     [HideInInspector][SerializeField] private List<Renderer> _answerModelRenderers;
     [SerializeField] private float _crossFadingSpeed = 0.1f;
     private List<int> _wrongOptionsList;
-    private bool _gameStarted = false;
+    private bool _isGameStarted = false;
+    private bool _isGameFinished = false;
+    private bool _isDisplayResult = false;
     private int _currentAnswer;
     private int _previousAnswer = -1;
     private bool _isServer;
-    private bool _gameFinished;
     private int randomValue
     {
         get
@@ -55,22 +58,39 @@ public class FindTheMatchNetworkObject : MonoBehaviour
             return chosenRandomValue;
         }
     }
+    public void UpdateStageResultDisplay(string result)
+    {
+        _displayStageRoundText.text = result;
+    }
+    public void UpdateStageTimerDisplay(string currentTime)
+    {
+        _displayStageCountdownTimerText.text = currentTime;
+    }
     public void StartGame()
     {
-        _displayStageRenderer.material = null;
-        _displayStageRenderer.enabled = false;
-        _gameFinished = false;
-        _gameStarted = true;
+        _isDisplayResult = false;
+        _isGameFinished = false;
+        _isGameStarted = true;
     }
     public void StopGame()
     {
-        _gameStarted = false;
+        _isGameStarted = false;
+        _isDisplayResult = true;
+    }
+    public void DisableResultUIDisplay()
+    {
+        _isDisplayResult = false;
+        _displayStageResultRenderer.enabled = false;
     }
     public void SetActiveState(bool value)
     {
+        if (_isDisplayResult)
+        {
+            _displayStageResultRenderer.enabled = value;
+        }
         if (_isServer)
         {
-            if (!_gameStarted)
+            if (!_isGameStarted && !_isGameFinished)
             {
                 foreach (Collider collider in _colliderOptions)
                 {
@@ -97,7 +117,7 @@ public class FindTheMatchNetworkObject : MonoBehaviour
         {
             foreach (Collider collider in _colliderOptions)
             {
-                if (_gameStarted && !_gameFinished)
+                if (_isGameStarted && !_isGameFinished)
                 {
                     collider.enabled = value;
                 }
@@ -108,7 +128,7 @@ public class FindTheMatchNetworkObject : MonoBehaviour
             }
             foreach (Renderer optionRenderer in _optionModelRenderers)
             {
-                if (_gameStarted)
+                if (_isGameStarted || _isGameFinished)
                 {
                     optionRenderer.enabled = value;
                 }
@@ -121,8 +141,9 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     }
     public void SetupGame(bool isServer)
     {
-        _displayStageRenderer.enabled = false;
-        _displayStageRenderer.material = null;
+        DisableResultUIDisplay();
+        _isGameStarted = false;
+        _isGameFinished = false;
         _wrongOptionsList = new List<int>();
         if (isServer)
         {
@@ -145,19 +166,6 @@ public class FindTheMatchNetworkObject : MonoBehaviour
             _cmdRequestAnswerFromServerEvent.Invoke();
         }
     }
-    private void SetupRound()
-    {
-        if (!_isServer)
-        {
-            return;
-        }
-        _displayStageRenderer.enabled = false;
-        _displayStageRenderer.material = null;
-        _currentAnswer = pickRandomAnswer;
-        _answerModelReference.GetComponent<Animator>().SetFloat("ShowAnswer", _currentAnswer);
-        _answerModelReference.GetComponent<Animator>().Play("Answer");
-        _cmdSendAnswerEvent.Invoke(_currentAnswer, _optionModelReferences[_currentAnswer].transform.parent.name);
-    }
     public void GetAnswerFromServer()
     {
         if (!_isServer)
@@ -178,15 +186,12 @@ public class FindTheMatchNetworkObject : MonoBehaviour
         }
         DisplayOptions();
     }
-    public void UpdateStageTimerDisplay(string currentTime)
-    {
-        _displayCountdownTimerText.text = currentTime;
-    }
     public void DisplayResult(float value)
     {
-        _gameFinished = true;
-        _displayStageRenderer.material = _displayAnswerOnStageMaterials[(int)value];
-        _displayStageRenderer.enabled = true;
+        _displayStageResultRenderer.material = _displayAnswerOnStageMaterials[(int)value];
+        _displayStageCountdownTimerText.text = null;
+        _isDisplayResult = true;
+        _isGameFinished = true;
         _answerModelReference.GetComponent<Animator>().SetFloat("ShowResult", value);
         _answerModelReference.GetComponent<Animator>().CrossFade("Result", _crossFadingSpeed);
         for(int i = 0; i < _colliderOptions.Count; i++)
@@ -198,6 +203,25 @@ public class FindTheMatchNetworkObject : MonoBehaviour
             _optionModelReferences[i].GetComponent<Animator>().SetFloat("ShowResult", value);
             _optionModelReferences[i].GetComponent<Animator>().CrossFade("Result", _crossFadingSpeed);
         }
+    }
+    public void DisplayConfettiParticles()
+    {
+        foreach(ParticleSystem confettiParticle in _confettiParticles)
+        {
+            confettiParticle.Play();
+        }
+    }
+    private void SetupRound()
+    {
+        if (!_isServer)
+        {
+            return;
+        }
+        DisableResultUIDisplay();
+        _currentAnswer = pickRandomAnswer;
+        _answerModelReference.GetComponent<Animator>().SetFloat("ShowAnswer", _currentAnswer);
+        _answerModelReference.GetComponent<Animator>().Play("Answer");
+        _cmdSendAnswerEvent.Invoke(_currentAnswer, _optionModelReferences[_currentAnswer].transform.parent.name);
     }
     private void DisplayOptions()
     {

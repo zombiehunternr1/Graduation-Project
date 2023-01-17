@@ -162,9 +162,9 @@ MonoBehaviour:
   _rpcGetAnswerFromServerEvent: {fileID: 11400000, guid: 140f48e1af96da643a7ba1157fa5b57d, type: 2}
   _rpcUpdateAnswerEvent: {fileID: 11400000, guid: 614293e1aec4816449ef3d300011ac2d, type: 2}
   _rpcDisplayResultEvent: {fileID: 11400000, guid: 39f1d63c122c31d48ad5992440c7d756, type: 2}
-  _rpcUpdateStageDisplayEvent: {fileID: 11400000, guid: 4deb9b5853de42a408e38f83b4e1ce8f, type: 2}
-  _rpcDisableMenuUIEvent: {fileID: 11400000, guid: fe3cbf6a9841ae54fb76bce2b9e37b96, type: 2}
+  _rpcDisableUIElementEvent: {fileID: 11400000, guid: fe3cbf6a9841ae54fb76bce2b9e37b96, type: 2}
   _rpcDisplayKeyStatusEvent: {fileID: 11400000, guid: 20e86a4069c8a77499fe26959dd8be22, type: 2}
+  _rpcDisplayConfettiParticlesEvent: {fileID: 11400000, guid: cf90f2ddcae08e44d9d5e56ba1c4847d, type: 2}
   _startingCountDown: 10
   _countDownSpeed: 1
   _volumeFadingSpeed: 0.2

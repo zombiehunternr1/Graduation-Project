@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class FindTheMatchNetworkManager : NetworkBehaviour
 {
-    [SerializeField] private Renderer _stageRenderer;
+    [SerializeField] private List<Renderer> _stageRendererObjects;
     [SerializeField] private List<FindTheMatchNetworkObject> _matchObjects;
 
     public void Show(bool show)
     {
-        _stageRenderer.enabled = show;
-        foreach(FindTheMatchNetworkObject matchObject in _matchObjects)
+        foreach(Renderer stageRenderObject in _stageRendererObjects)
+        {
+            stageRenderObject.enabled = show;
+        }
+        foreach (FindTheMatchNetworkObject matchObject in _matchObjects)
         {
             matchObject.SetActiveState(show);
         }

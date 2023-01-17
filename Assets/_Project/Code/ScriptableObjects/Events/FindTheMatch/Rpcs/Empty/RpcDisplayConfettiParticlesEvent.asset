@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d68e932411b33ee4e8b3082287ee5cfc, type: 3}
-  m_Name: RpcDisableMenuUIEvent
+  m_Script: {fileID: 11500000, guid: 43d46177b3a9ba6499dccf8b8aaa6ff4, type: 3}
+  m_Name: RpcDisplayConfettiParticlesEvent
   m_EditorClassIdentifier: 

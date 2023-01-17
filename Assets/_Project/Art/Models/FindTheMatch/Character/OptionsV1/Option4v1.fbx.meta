@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 10af62b6bdf463b4997de9570bf7b7ae
+guid: 3d015a1dd2bf72240974e5db9075afb2
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -26,8 +26,8 @@ ModelImporter:
     second: {fileID: 2100000, guid: 2149f062daa07d44b842f7829c270cd2, type: 2}
   materials:
     materialImportMode: 1
-    materialName: 2
-    materialSearch: 2
+    materialName: 0
+    materialSearch: 1
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
@@ -53,11 +53,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Option3
+      name: Option4v1
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 163
+      lastFrame: 247
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class MenuUIManager : NetworkBehaviour
 {
     [SerializeField] private TextMeshProUGUI _debugField;
-    [SerializeField] private TextMeshProUGUI _resultField;
-    [SerializeField] private TextMeshProUGUI _timerField;
     [SerializeField] private TextMeshProUGUI _clientInformationField;
     [SerializeField] private TextMeshProUGUI _howToPlayInstructionText;
     [SerializeField] private TextMeshProUGUI _howToSeeARObjectsText;
@@ -37,14 +35,6 @@ public class MenuUIManager : NetworkBehaviour
     public void DisplayDebug(string text)
     {
         _debugField.text = text;
-    }
-    public void DisplayTimer(string text)
-    {
-        _timerField.text = text;
-    }
-    public void DisplayResult(string text)
-    {
-        _resultField.text = text;
     }
     public void StartGame()
     {
