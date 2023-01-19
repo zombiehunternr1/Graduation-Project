@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b1efa4809656924ba426421ad62bae1, type: 3}
-  m_Name: EnableStartBtnEvent
+  m_Name: EnableTryAgainBtnEvent
   m_EditorClassIdentifier: 

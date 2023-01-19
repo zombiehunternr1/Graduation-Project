@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public class FindTheMatchPlayerNetwork : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
-    [SerializeField] private EnableStartBtnEvent _enableStartBtnEvent;
+    [SerializeField] private EnableTryAgainBtnEvent _enableStartBtnEvent;
     [SerializeField] private UpdateTimerEvent _updateTimerEvent;
     [SerializeField] private UpdateResultEvent _updateResultEvent;
     [SerializeField] private CmdAnswerPressedEvent _cmdAnswerPressedEvent;
