@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class MenuUIManager : NetworkBehaviour
 {
     [SerializeField] private TextMeshProUGUI _debugField;
-    [SerializeField] private TextMeshProUGUI _clientInformationField;
-    [SerializeField] private TextMeshProUGUI _howToPlayInstructionText;
     [SerializeField] private TextMeshProUGUI _howToSeeARObjectsText;
+    [SerializeField] private TextMeshProUGUI _howToPlayInstructionText;
+    [SerializeField] private TextMeshProUGUI _clientInformationField;
     [SerializeField] private RawImage _howToPlayInstructionImgReference;
     [SerializeField] private Texture2D _howToPlayMimicTexture;
     [SerializeField] private Texture2D _howToPlayGuessTexture;
@@ -24,7 +24,6 @@ public class MenuUIManager : NetworkBehaviour
             _howToPlayInstructionImgReference.texture = _howToPlayGuessTexture;
             _howToSeeARObjectsText.text = "Hold your phone's camera in front of the QR-Code to see the options";
             _startGameBtn.gameObject.SetActive(false);
-            DisableTryAgainBtn();
         }
         else
         {

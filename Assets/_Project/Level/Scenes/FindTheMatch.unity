@@ -5158,10 +5158,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _debugField: {fileID: 8768777410556434664}
+  _howToSeeARObjectsText: {fileID: 1772757851}
+  _howToPlayInstructionText: {fileID: 1980133285}
   _clientInformationField: {fileID: 1036746775}
-  _howToPlayInstructionText: {fileID: 0}
-  _howToSeeARObjectsText: {fileID: 0}
-  _howToPlayInstructionImgReference: {fileID: 0}
+  _howToPlayInstructionImgReference: {fileID: 1744523652}
   _howToPlayMimicTexture: {fileID: 2800000, guid: 4520d159bc814a1479b709429ea132b2, type: 3}
   _howToPlayGuessTexture: {fileID: 2800000, guid: 38627c201fccb3c4eb91a6f48f76793b, type: 3}
   _startGameBtn: {fileID: 1276066202}
