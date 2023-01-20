@@ -19441,8 +19441,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8149738235890543230}
-  - component: {fileID: 8149738235890543231}
   - component: {fileID: 3151642981677684560}
+  - component: {fileID: 8149738235890543231}
   - component: {fileID: 4694479653936007663}
   m_Layer: 0
   m_Name: FindMatchManager
@@ -19467,26 +19467,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8149738235890543231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8149738235890543229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45555e5c5687e954a9ddedc293922d3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  _stageRendererObjects:
-  - {fileID: 4546139364714155418}
-  - {fileID: 7802123431205629700}
-  - {fileID: 917724313753476331}
-  _matchObjects:
-  - {fileID: 8149738236978697876}
 --- !u!114 &3151642981677684560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19504,6 +19484,21 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 7b439ec62fd254f438a1bd5ca015f033
   hasSpawned: 0
+--- !u!114 &8149738235890543231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8149738235890543229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45555e5c5687e954a9ddedc293922d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  _matchObject: {fileID: 8149738236978697876}
 --- !u!114 &4694479653936007663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19599,12 +19594,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32f3ad8411cee4145a7a0566194885f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
-  _cmdRequestAnswerFromServerEvent: {fileID: 11400000, guid: c64619615ae58e04fa2c40f2ee42cb08, type: 2}
-  _cmdSendAnswerEvent: {fileID: 11400000, guid: 6d79f01253433e54f863d3cfa7365e50, type: 2}
   _displayStageCountdownTimerText: {fileID: 4014181762494394406}
   _displayStageRoundText: {fileID: 7140324734758262174}
   _displayStageResultRenderer: {fileID: 8991920548122751117}
+  _answerModelReference: {fileID: 9121746659687168055}
+  _optionModelReferences:
+  - {fileID: 1847643648831843045}
+  - {fileID: 7683635842516742073}
+  - {fileID: 2682460660597863205}
+  - {fileID: 6163633465439631760}
+  _stageModelRenderers:
+  - {fileID: 4546139364714155418}
+  - {fileID: 7802123431205629700}
+  - {fileID: 917724313753476331}
+  _optionModelRenderers: []
+  _answerModelRenderers: []
+  _crossFadingSpeed: 0.1
   _confettiParticles:
   - {fileID: 9169774420042763603}
   - {fileID: 7972344626583178808}
@@ -19616,15 +19621,9 @@ MonoBehaviour:
   - {fileID: 8086569100562407870}
   - {fileID: 4269422178786529307}
   - {fileID: 3645563394807430168}
-  _optionModelReferences:
-  - {fileID: 1847643648831843045}
-  - {fileID: 7683635842516742073}
-  - {fileID: 2682460660597863205}
-  - {fileID: 6163633465439631760}
-  _answerModelReference: {fileID: 9121746659687168055}
-  _optionModelRenderers: []
-  _answerModelRenderers: []
-  _crossFadingSpeed: 0.1
+  _debugEvent: {fileID: 11400000, guid: 36fb672d5cd2eff4c8137cf1b55ab136, type: 2}
+  _cmdRequestAnswerFromServerEvent: {fileID: 11400000, guid: c64619615ae58e04fa2c40f2ee42cb08, type: 2}
+  _cmdSendAnswerEvent: {fileID: 11400000, guid: 6d79f01253433e54f863d3cfa7365e50, type: 2}
 --- !u!114 &1091892531523234505
 MonoBehaviour:
   m_ObjectHideFlags: 0

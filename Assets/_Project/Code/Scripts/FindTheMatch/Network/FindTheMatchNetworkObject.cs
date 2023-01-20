@@ -4,24 +4,31 @@ using UnityEngine;
 
 public class FindTheMatchNetworkObject : MonoBehaviour
 {
-    [SerializeField] private DebugEvent _debugEvent;
-    [SerializeField] private CmdRequestAnswerFromServerEvent _cmdRequestAnswerFromServerEvent;
-    [SerializeField] private CmdSendAnswerEvent _cmdSendAnswerEvent;
+    [SerializeField] private float _crossFadingSpeed = 0.1f;
+    [Header("UI object references")]
     [SerializeField] private TextMeshPro _displayStageCountdownTimerText;
     [SerializeField] private TextMeshPro _displayStageRoundText;
     [SerializeField] private Renderer _displayStageResultRenderer;
+    [Header("GameObject references")]
+    [SerializeField] private GameObject _answerModelReference;
+    [SerializeField] private List<GameObject> _optionModelReferences;
+    [Header("Renderer references")]
+    [SerializeField] private List<Renderer> _stageModelRenderers;
+    [HideInInspector][SerializeField] private List<Renderer> _optionModelRenderers;
+    [HideInInspector][SerializeField] private List<Renderer> _answerModelRenderers;
+    [Header("Component references")]
     [SerializeField] private List<ParticleSystem> _confettiParticles;
     [SerializeField] private List<Material> _displayAnswerOnStageMaterials;
     [SerializeField] private List<Collider> _colliderOptions;
-    [SerializeField] private List<GameObject> _optionModelReferences;
-    [SerializeField] private GameObject _answerModelReference;
-    [HideInInspector][SerializeField] private List<Renderer> _optionModelRenderers;
-    [HideInInspector][SerializeField] private List<Renderer> _answerModelRenderers;
-    [SerializeField] private float _crossFadingSpeed = 0.1f;
+    [Header("Events")]
+    [SerializeField] private DebugEvent _debugEvent;
+    [SerializeField] private CmdRequestAnswerFromServerEvent _cmdRequestAnswerFromServerEvent;
+    [SerializeField] private CmdSendAnswerEvent _cmdSendAnswerEvent;
     private List<int> _wrongOptionsList;
     private bool _isGameStarted = false;
     private bool _isGameFinished = false;
     private bool _isDisplayResult = false;
+    private bool _allowStageDisplay = false;
     private int _currentAnswer;
     private int _previousAnswer = -1;
     private bool _isServer;
@@ -76,6 +83,7 @@ public class FindTheMatchNetworkObject : MonoBehaviour
                 option.GetComponent<Animator>().SetFloat("GameMode", 1);
             }
         }
+        _allowStageDisplay = true;
     }
     public void UpdateStageResultDisplay(string result)
     {
@@ -98,9 +106,10 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     }
     public void ReturnedToMenu()
     {
+        _allowStageDisplay = false;
         _isGameStarted = false;
         _isGameFinished = false;
-        _isDisplayResult = false;
+        DisableResultUIDisplay();
     }
     public void DisableResultUIDisplay()
     {
@@ -112,6 +121,17 @@ public class FindTheMatchNetworkObject : MonoBehaviour
         if (_isDisplayResult)
         {
             _displayStageResultRenderer.enabled = value;
+        }
+        foreach (Renderer stageRenderer in _stageModelRenderers)
+        {
+            if (_allowStageDisplay)
+            {
+                stageRenderer.enabled = value;
+            }
+            else
+            {
+                stageRenderer.enabled = false;
+            }
         }
         if (_isServer)
         {
@@ -245,6 +265,7 @@ public class FindTheMatchNetworkObject : MonoBehaviour
         DisableResultUIDisplay();
         _currentAnswer = pickRandomAnswer;
         _answerModelReference.GetComponent<Animator>().SetFloat("ShowAnswer", _currentAnswer);
+        _answerModelReference.GetComponent<Animator>().Play("GameModeAnswers");
         _cmdSendAnswerEvent.Invoke(_currentAnswer, _optionModelReferences[_currentAnswer].transform.parent.name);
     }
     private void DisplayOptions()
@@ -254,10 +275,12 @@ public class FindTheMatchNetworkObject : MonoBehaviour
             if (i == _currentAnswer)
             {
                 _optionModelReferences[i].GetComponent<Animator>().SetFloat("ShowAnswer", _currentAnswer);
+                _optionModelReferences[i].GetComponent<Animator>().Play("GameModeAnswers");
             }
             else
             {
                 _optionModelReferences[i].GetComponent<Animator>().SetFloat("ShowAllWrongs", pickRandomwWrong);
+                _optionModelReferences[i].GetComponent<Animator>().Play("GameModeOptions");
             }
         }
     }
