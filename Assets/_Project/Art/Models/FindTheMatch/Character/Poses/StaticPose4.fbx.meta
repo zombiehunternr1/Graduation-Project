@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Option4V2
+      name: StaticPose4
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0

@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5134483060972523237}
   - component: {fileID: 1975980537082167921}
   - component: {fileID: 6435389884894060988}
+  - component: {fileID: 7839024918841978163}
   m_Layer: 0
   m_Name: PlayerFindTheMatch
   m_TagString: Untagged
@@ -157,12 +158,14 @@ MonoBehaviour:
   _updateResultEvent: {fileID: 11400000, guid: 2687d9fe9cec1604c908b6b8414a90c0, type: 2}
   _cmdAnswerPressedEvent: {fileID: 11400000, guid: 61a83347992527f4081cfae058e44870, type: 2}
   _rpcDisableBtnEvent: {fileID: 11400000, guid: 237226ab3be4986439ddff04e9dfcfc5, type: 2}
+  _rpcSetupGameModeEvent: {fileID: 11400000, guid: 0940e1c73c060e0468c6e2eac8157c52, type: 2}
   _rpcStartPuzzleEvent: {fileID: 11400000, guid: 41e2737d10214ac42878ec64dd3489d4, type: 2}
   _rpcStopPuzzleEvent: {fileID: 11400000, guid: 072a7fa4bf94ea1498eccdfb77fb1ec4, type: 2}
   _rpcGetAnswerFromServerEvent: {fileID: 11400000, guid: 140f48e1af96da643a7ba1157fa5b57d, type: 2}
   _rpcUpdateAnswerEvent: {fileID: 11400000, guid: 614293e1aec4816449ef3d300011ac2d, type: 2}
   _rpcDisplayResultEvent: {fileID: 11400000, guid: 39f1d63c122c31d48ad5992440c7d756, type: 2}
   _rpcDisableUIElementEvent: {fileID: 11400000, guid: fe3cbf6a9841ae54fb76bce2b9e37b96, type: 2}
+  _rpcReturnToMenuEvent: {fileID: 11400000, guid: be04c669519f57744bea0e12965a127d, type: 2}
   _rpcDisplayKeyStatusEvent: {fileID: 11400000, guid: 20e86a4069c8a77499fe26959dd8be22, type: 2}
   _rpcDisplayConfettiParticlesEvent: {fileID: 11400000, guid: cf90f2ddcae08e44d9d5e56ba1c4847d, type: 2}
   _startingCountDown: 10
@@ -230,7 +233,7 @@ MonoBehaviour:
       - m_Target: {fileID: 5826950998073158961}
         m_TargetAssemblyTypeName: FindTheMatchPlayerNetwork, Assembly-CSharp
         m_MethodName: StartGame
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -343,6 +346,34 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: FindTheMatchPlayerNetwork, Assembly-CSharp
         m_MethodName: CmdSendAnswer
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7839024918841978163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5826950998073158966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11d1ccb6890dc8941b68c6b37d037e07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 94af46f83077b694e852d874404d36d1, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5826950998073158961}
+        m_TargetAssemblyTypeName: FindTheMatchPlayerNetwork, Assembly-CSharp
+        m_MethodName: CmdReturnToMenu
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

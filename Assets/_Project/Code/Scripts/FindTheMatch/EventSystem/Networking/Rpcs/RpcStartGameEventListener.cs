@@ -1,3 +1,3 @@
-public class RpcStartGameEventListener : BaseEventEmptyListener
+public class RpcStartGameEventListener : BaseEventSingleGenericTypeListener<bool>
 {
 }

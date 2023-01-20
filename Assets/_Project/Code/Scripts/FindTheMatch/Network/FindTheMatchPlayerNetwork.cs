@@ -8,17 +8,19 @@ using UnityEngine.InputSystem;
 public class FindTheMatchPlayerNetwork : NetworkBehaviour
 {
     [SerializeField] private DebugEvent _debugEvent;
-    [SerializeField] private EnableTryAgainBtnEvent _enableStartBtnEvent;
+    [SerializeField] private EnableGameOverButtonsEvent _enableStartBtnEvent;
     [SerializeField] private UpdateTimerEvent _updateTimerEvent;
     [SerializeField] private UpdateResultEvent _updateResultEvent;
     [SerializeField] private CmdAnswerPressedEvent _cmdAnswerPressedEvent;
-    [SerializeField] private RpcDisableBtnEvent _rpcDisableBtnEvent;
+    [SerializeField] private RpcDisableGameOverButtonsEvent _rpcDisableBtnEvent;
+    [SerializeField] private RpcSetupGameModeEvent _rpcSetupGameModeEvent;
     [SerializeField] private RpcStartPuzzleEvent _rpcStartPuzzleEvent;
     [SerializeField] private RpcStopPuzzleEvent _rpcStopPuzzleEvent;
     [SerializeField] private RpcGetAnswerFromServerEvent _rpcGetAnswerFromServerEvent;
     [SerializeField] private RpcUpdateAnswerEvent _rpcUpdateAnswerEvent;
     [SerializeField] private RpcDisplayResultEvent _rpcDisplayResultEvent;
     [SerializeField] private RpcDisableUIElementEvent _rpcDisableUIElementEvent;
+    [SerializeField] private RpcReturnToMenuEvent _rpcReturnToMenuEvent;
     [SerializeField] private RpcDisplayKeyStatusEvent _rpcDisplayKeyStatusEvent;
     [SerializeField] private RpcDisplayConfettiParticlesEvent _rpcDisplayConfettiParticlesEvent;
     [SerializeField] private float _startingCountDown = 10;
@@ -72,9 +74,14 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         }
     }
     #region FindTheMatchManager
-    public void StartGame()
+    public void StartGame(bool isDancing)
     {
-        RpcSetupGame();
+        RpcSetupGame(isDancing);
+    }
+    private void StopMusic()
+    {
+        StopAllCoroutines();
+        _backgroundInstance.setVolume(0);
     }
     private void StartCountDown()
     {
@@ -302,13 +309,13 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
         _backgroundInstance.release();
     }
     [ClientRpc]
-    private void RpcSetupGame()
+    private void RpcSetupGame(bool isDancing)
     {
         _rpcDisplayKeyStatusEvent.Invoke("Hidden");
+        _rpcSetupGameModeEvent.Invoke(isDancing);
         _currentTime = _startingCountDown;
         _decreasedTime = _startingCountDown;
         _currentRound = 1;
-        RpcDisableUIElement();
         StartCoroutine(FadeOutVolume(false));
         StartCountDown();
     }
@@ -374,6 +381,17 @@ public class FindTheMatchPlayerNetwork : NetworkBehaviour
     private void RpcStartPuzzle()
     {
         _rpcStartPuzzleEvent.Invoke();
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdReturnToMenu()
+    {
+        RpcReturnToMenu();
+    }
+    [ClientRpc]
+    private void RpcReturnToMenu()
+    {
+        StopMusic();
+        _rpcReturnToMenuEvent.Invoke();
     }
     #endregion
 }

@@ -58,6 +58,25 @@ public class FindTheMatchNetworkObject : MonoBehaviour
             return chosenRandomValue;
         }
     }
+    public void SetupGameMode(bool isDancing)
+    {
+        if (isDancing)
+        {
+            _answerModelReference.GetComponent<Animator>().SetFloat("GameMode", 0);
+            foreach(GameObject option in _optionModelReferences)
+            {
+                option.GetComponent<Animator>().SetFloat("GameMode", 0);
+            }
+        }
+        else
+        {
+            _answerModelReference.GetComponent<Animator>().SetFloat("GameMode", 1);
+            foreach (GameObject option in _optionModelReferences)
+            {
+                option.GetComponent<Animator>().SetFloat("GameMode", 1);
+            }
+        }
+    }
     public void UpdateStageResultDisplay(string result)
     {
         _displayStageRoundText.text = result;
@@ -76,6 +95,12 @@ public class FindTheMatchNetworkObject : MonoBehaviour
     {
         _isGameStarted = false;
         _isDisplayResult = true;
+    }
+    public void ReturnedToMenu()
+    {
+        _isGameStarted = false;
+        _isGameFinished = false;
+        _isDisplayResult = false;
     }
     public void DisableResultUIDisplay()
     {
@@ -220,7 +245,6 @@ public class FindTheMatchNetworkObject : MonoBehaviour
         DisableResultUIDisplay();
         _currentAnswer = pickRandomAnswer;
         _answerModelReference.GetComponent<Animator>().SetFloat("ShowAnswer", _currentAnswer);
-        _answerModelReference.GetComponent<Animator>().Play("Answer");
         _cmdSendAnswerEvent.Invoke(_currentAnswer, _optionModelReferences[_currentAnswer].transform.parent.name);
     }
     private void DisplayOptions()
@@ -230,12 +254,10 @@ public class FindTheMatchNetworkObject : MonoBehaviour
             if (i == _currentAnswer)
             {
                 _optionModelReferences[i].GetComponent<Animator>().SetFloat("ShowAnswer", _currentAnswer);
-                _optionModelReferences[i].GetComponent<Animator>().Play("Answer");
             }
             else
             {
                 _optionModelReferences[i].GetComponent<Animator>().SetFloat("ShowAllWrongs", pickRandomwWrong);
-                _optionModelReferences[i].GetComponent<Animator>().Play("WrongAnswers");
             }
         }
     }

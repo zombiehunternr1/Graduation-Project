@@ -19545,6 +19545,7 @@ GameObject:
   - component: {fileID: 8149738236978697876}
   - component: {fileID: 1091892531523234505}
   - component: {fileID: 7143943500980380123}
+  - component: {fileID: 2806412318975707451}
   - component: {fileID: 3039629388998945669}
   - component: {fileID: 9086746266070244080}
   - component: {fileID: 2672804792138113504}
@@ -19552,6 +19553,7 @@ GameObject:
   - component: {fileID: 6301270798466457088}
   - component: {fileID: 8306223814297935411}
   - component: {fileID: 2212560320098101090}
+  - component: {fileID: 9043082231881566446}
   m_Layer: 0
   m_Name: PuzzleOne
   m_TagString: Untagged
@@ -19670,6 +19672,34 @@ MonoBehaviour:
       - m_Target: {fileID: 8149738236978697876}
         m_TargetAssemblyTypeName: FindTheMatchNetworkObject, Assembly-CSharp
         m_MethodName: UpdateStageTimerDisplay
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2806412318975707451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8149738236978697887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da42930304a0d94a82d4cfa7494be5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: 0940e1c73c060e0468c6e2eac8157c52, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8149738236978697876}
+        m_TargetAssemblyTypeName: FindTheMatchNetworkObject, Assembly-CSharp
+        m_MethodName: SetupGameMode
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19866,6 +19896,34 @@ MonoBehaviour:
       - m_Target: {fileID: 8149738236978697876}
         m_TargetAssemblyTypeName: FindTheMatchNetworkObject, Assembly-CSharp
         m_MethodName: DisplayConfettiParticles
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &9043082231881566446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8149738236978697887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9d438bd456e19418a2d0747c9c67ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEvent: {fileID: 11400000, guid: be04c669519f57744bea0e12965a127d, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8149738236978697876}
+        m_TargetAssemblyTypeName: FindTheMatchNetworkObject, Assembly-CSharp
+        m_MethodName: ReturnedToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
