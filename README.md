@@ -1,6 +1,21 @@
 # AR Escape Room
 Graduation project for Fontys InnovationLab Eindhoven
 
+<h1>Helpful documentation</h1>
+
+To get the image detection working with AR I used Unity's AR tracked image manager:
+- https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/manual/tracked-image-manager.html
+
+<h3>Important insight!</h3>
+To get a better understanding how Unity's AR basics work, I would advise you to follow this tutorial:
+
+- https://learn.unity.com/course/create-with-ar-markers-and-planes?uv=2021.3
+
+For making communication working over the network I've made use of Mirror:
+- https://mirror-networking.gitbook.io/docs/
+
+<h1>Project information</h1>
+
 Within the <b>Assets folder</b> I have created the following folder structure for my project.
 
 <h2>Project folder structure</h2>
