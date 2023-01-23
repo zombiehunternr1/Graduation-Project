@@ -11,7 +11,7 @@ To get a better understanding how Unity's AR basics work, I would advise you to 
 
 - https://learn.unity.com/course/create-with-ar-markers-and-planes?uv=2021.3
 
-For making communication working over the network I've made use of Mirror:
+For making communication work over the network I've made use of Mirror:
 - https://mirror-networking.gitbook.io/docs/
 
 <h1>Project information</h1>
@@ -48,3 +48,15 @@ I'll be using the <b>Find The Match</b> prototype as an example:
 - <b>AR:</b> In the <b>Scripts</b> folder I keep the script that handles the detecting and tracking of the image references. In the <b>Scriptable Objects</b> folder under <b>Games</b> I keep the image reference library asset that is being used to keep track of which images are being used as trackables
 - <b>EventSystem:</b> In the <b>Scripts</b> folder I keep all the scripts that handle the communication that should be handled only on the server and over the network. Inside the <b>networking</b> folder I have separated the <b>Commands</b> that goes from the client to the server, and the <b>ClientRpc</b> that sends a task from the server to all currently connected clients.
 - <b>Network</b>: In this folder I keep all the scripts that are being used network objects, these will exist as long as the session is active.
+
+<h1>How to continue</h1>
+These are the following items that should be looked into when continuing this project.
+<h3>Research escape room games</h3>
+
+My advice is to do more research into more different kinds of escape rooms to see how they made their props fit their theme so well to create a unique experience. Due to time constraint I won't be able to fully dive into this part of the research, but at least I have a some guidelines for how to design a theme and story for my escape room and puzzles.
+<h3>Research escape room theme</h3>
+
+My advice is to do more research into what makes a good escape room theme and how can this be implemented into the Fontys TQ environment even better. Due to that I needed to learn how AR Foundations work, how this would benefit the project and can be played together, I went with a theme that would help me solve linking the different mini-games, that are spread over the entire 4.2 floor, together. I suggest making different themes and stories to validate which one they like the most to have a more concrete reason why that specific theme works best.
+
+<h3>Dedicated server</h3>
+My advice is to create a dedicated server that players can connect to in order to host their own session. This can be achieved by having a database that stores all the session's information while active. Players should be able to request a list of available sessions and have the option to join with a session with a single button press. Currently, this is now being done manually by typing in the hosts IP-adress. This is very inefficient, unsecure and not user-friendly.
