@@ -61,3 +61,4 @@ My advice is to do more research into what makes a good escape room theme and ho
 <h3>Dedicated server</h3>
 
 My advice is to create a dedicated server that players can connect to in order to host their own session. This can be achieved by having a database that stores all the session's information while the session is currently active. Players should be able to request a list of available sessions and have the option to join with a session with a single button press. Currently, this is now being done manually by typing in the hosts IP-adress. This is very inefficient, unsecure and not user-friendly.
+Once the users are connected, their information must be updated with the latest information from the host to be synchronized with all the participants.
