@@ -59,4 +59,5 @@ My advice is to do more research into more different kinds of escape rooms to se
 My advice is to do more research into what makes a good escape room theme and how can this be implemented into the Fontys TQ environment even better. Due to that I needed to learn how AR Foundations work, how this would benefit the project and can be played together, I went with a theme that would help me solve linking the different mini-games, that are spread over the entire 4.2 floor, together. I suggest making different themes and stories to validate which one they like the most to have a more concrete reason why that specific theme works best.
 
 <h3>Dedicated server</h3>
+
 My advice is to create a dedicated server that players can connect to in order to host their own session. This can be achieved by having a database that stores all the session's information while active. Players should be able to request a list of available sessions and have the option to join with a session with a single button press. Currently, this is now being done manually by typing in the hosts IP-adress. This is very inefficient, unsecure and not user-friendly.
